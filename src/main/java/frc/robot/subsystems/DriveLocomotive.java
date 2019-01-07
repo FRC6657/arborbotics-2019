@@ -11,6 +11,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ArcadeDrive;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveLocomotive extends Subsystem {
   
@@ -18,7 +19,9 @@ public class DriveLocomotive extends Subsystem {
 	private WPI_TalonSRX motorBackLeft = new WPI_TalonSRX(RobotMap.motorBackLeftID);	
 	private WPI_TalonSRX motorFrontRight = new WPI_TalonSRX(RobotMap.motorFrontRightID);
   private WPI_TalonSRX motorBackRight = new WPI_TalonSRX(RobotMap.motorBackRightID);
-  
+	
+	private DifferentialDrive drive;
+	
 	private static double distancePerRevolution = 15.2 * Math.PI;
 	private static double pulsesPerRevolution = 1440;
 	private static double distancePerPulse = distancePerRevolution / pulsesPerRevolution;
@@ -28,7 +31,6 @@ public class DriveLocomotive extends Subsystem {
   public DriveLocomotive() {		
 		motorBackLeft.follow(motorFrontLeft);
 		motorBackRight.follow(motorFrontRight);
-		
 		motorFrontLeft.configOpenloopRamp(0.3, 0);
 		motorFrontRight.configOpenloopRamp(0.3, 0);
 	}
@@ -50,6 +52,10 @@ public class DriveLocomotive extends Subsystem {
 		drive.tankDrive(left, right);
 	}
 	
+	public void reset() {
+
+	}
+
 	public void stop() {
 		drive.tankDrive(0, 0);
 	}

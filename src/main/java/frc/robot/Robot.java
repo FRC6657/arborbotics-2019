@@ -24,7 +24,7 @@ import frc.robot.subsystems.DriveLocomotive;
 public class Robot extends TimedRobot {
  
   public static DriveLocomotive driveLocomotive = new DriveLocomotive();
-  public static OI m_oi;
+  public static OI oi;
   public static double driveMaxOutput = 1.0d;
   
   Command m_autonomousCommand;
@@ -32,12 +32,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    m_oi = new OI();
+    oi = new OI();
     SmartDashboard.putData("Auto mode", m_chooser);
+    driveLocomotive.reset();
   }
- 
-
-  DriveLocomotive.reset();
+  
   @Override
   public void robotPeriodic() {
  
