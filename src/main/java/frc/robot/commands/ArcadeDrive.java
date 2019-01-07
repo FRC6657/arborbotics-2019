@@ -7,38 +7,30 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
+import frc.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ArcadeDrive extends Command {
   public ArcadeDrive() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.driveLocomotive);
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
-
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.driveLocomotive.arcadeDrive(Robot.oi.getArcadeSpeed(), Robot.oi.getArcadeRoationThrottle());
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  @Override
+  protected void end() {
+    Robot.driveLocomotive.stop();
+  }
+
   @Override
   protected boolean isFinished() {
     return false;
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }
