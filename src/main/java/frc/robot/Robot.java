@@ -17,12 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.DriveLocomotive;
 
-
-
-
-
 public class Robot extends TimedRobot {
- 
+
   public static DriveLocomotive driveLocomotive = new DriveLocomotive();
   public static OI oi;
   public static double driveMaxOutput = 1.0d;

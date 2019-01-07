@@ -15,13 +15,14 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
     
-    private Joystick happyStick = new Joystick(RobotMap.driveControllerID);
-    public double getArcadeSpeed() {
+	private Joystick happyStick = new Joystick(RobotMap.driveControllerID);
+	
+	public double getArcadeSpeed() {
 		double supaY = ((Joystick) happyStick).getY();
 		return -supaY*supaY*Math.signum(supaY) * RobotMap.joystickArcadeSpeedModifier;
-    }
-    
-    public double getArcadeRotation() {
+  }
+   
+  public double getArcadeRotation() {
 		double supaTwist = ((Joystick) happyStick).getTwist();
 		return supaTwist * RobotMap.joystickArcadeRotationModifier;
 	}
@@ -34,5 +35,5 @@ public class OI {
 	public double getScaledThrottle() {
 		double supaThrottle = ((Joystick) happyStick).getThrottle();
 		return (0.5 * supaThrottle) + 0.5;
-    }
+  }
 }
