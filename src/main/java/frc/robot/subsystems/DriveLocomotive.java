@@ -33,6 +33,7 @@ public class DriveLocomotive extends Subsystem {
 		motorBackRight.follow(motorFrontRight);
 		motorFrontLeft.configOpenloopRamp(0.3, 0);
 		motorFrontRight.configOpenloopRamp(0.3, 0);
+		drive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
 	}
 
   @Override

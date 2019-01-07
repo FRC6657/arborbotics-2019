@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    
+  
 	private Joystick happyStick = new Joystick(RobotMap.driveControllerID);
 	
 	public double getArcadeSpeed() {
