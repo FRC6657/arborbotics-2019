@@ -34,6 +34,5 @@ public class OI {
 	public double getScaledThrottle() {
 		double supaThrottle = ((Joystick) happyStick).getThrottle();
 		return (0.5 * supaThrottle) + 0.5;
-    
-}
+    }
 }
