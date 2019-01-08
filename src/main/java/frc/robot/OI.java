@@ -7,7 +7,11 @@
 
 package frc.robot;
 
+import frc.robot.commands.VacuumGrab;
+import frc.robot.commands.VacuumHooked;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -15,14 +19,28 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
   
-	private Joystick happyStick = new Joystick(RobotMap.driveControllerID);
-	
+	private Joystick happyStick;
+	public JoystickButton vacuumGrab;
+	public JoystickButton vacuumHooked;
+
+	public OI() {
+		happyStick = new Joystick(RobotMap.driveControllerID);
+		vacuumGrab = new JoystickButton(happyStick, 3);
+		vacuumHooked = new JoystickButton(happyStick, 4);
+		
+		VacuumGrab vg = new VacuumGrab();
+		vacuumGrab.whileHeld(vg);
+		
+		VacuumHooked vh = new VacuumHooked();
+		vacuumHooked.whileHeld(vh);
+	}
+
 	public double getArcadeSpeed() {
 		double supaY = ((Joystick) happyStick).getY();
 		return -supaY*supaY*Math.signum(supaY) * RobotMap.joystickArcadeSpeedModifier;
-  }
+	}
    
-  public double getArcadeRotation() {
+ 	public double getArcadeRotation() {
 		double supaTwist = ((Joystick) happyStick).getTwist();
 		return supaTwist * RobotMap.joystickArcadeRotationModifier;
 	}
