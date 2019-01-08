@@ -18,6 +18,6 @@ public class RobotMap {
 	public static double joystickArcadeSpeedModifier = 1.0;
 	public static double joystickArcadeRotationModifier = 1.0;
 
-	public static double vacuumSpeedInitial = 0.75;
-	public static double vacuumSpeedHooked = 0.25;
+	public static double vacuumSpeedInitial = 1d;
+	public static double vacuumSpeedHooked = 1;
 }

@@ -19,8 +19,8 @@ import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.Vacuum;
 
 public class Robot extends TimedRobot {
-  public static Vacuum vacuum;
-  public static DriveLocomotive driveLocomotive;
+  public static Vacuum vacuum = new Vacuum();
+  public static DriveLocomotive driveLocomotive  = new DriveLocomotive();
   public static OI oi;
   public static double driveMaxOutput = 1.0d;
   
@@ -34,10 +34,6 @@ public class Robot extends TimedRobot {
     oi = new OI();
 
     pidStraight = new PIDDriveStraight(20);
-    driveLocomotive = new DriveLocomotive();
-    SmartDashboard.putData(driveLocomotive);
-    vacuum = new Vacuum();
-    SmartDashboard.putData(vacuum);
     autoChooser.addDefault("BaseDriveTimed", pidStraight);
 		SmartDashboard.putData("Auto mode", autoChooser);
     

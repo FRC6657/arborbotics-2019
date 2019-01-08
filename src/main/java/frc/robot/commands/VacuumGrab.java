@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class VacuumGrab extends Command {
 
 	public VacuumGrab() {
-		requires(Robot.Vacuum);
+		requires(Robot.vacuum);
 	}
 	
 	@Override
@@ -24,7 +24,7 @@ public class VacuumGrab extends Command {
 	
 	@Override
 	protected void end() {
-		Robot.Vacuum.stop();
+		Robot.vacuum.stop();
 	}
 
 	@Override
