@@ -13,6 +13,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.cameraserver.*;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class DriveLocomotive extends Subsystem {
 	
@@ -23,6 +25,10 @@ public class DriveLocomotive extends Subsystem {
 	private WPI_TalonSRX motorFrontRight = new WPI_TalonSRX(RobotMap.motorFrontRightID);
   private WPI_TalonSRX motorBackRight = new WPI_TalonSRX(RobotMap.motorBackRightID);
 	
+	private Encoder encoderLeft = new Encoder(0, 1, true, Encoder.EncodingType.k2X);
+	private Encoder encoderRight = new Encoder(2, 3, false, Encoder.EncodingType.k2X);
+	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
 	private DifferentialDrive drive;
 	
 	private static double distancePerRevolution = 15.2 * Math.PI;
@@ -31,9 +37,13 @@ public class DriveLocomotive extends Subsystem {
   
   private double driveMax = 1.0d;
   
-  public DriveLocomotive() {		
+  public DriveLocomotive() {
+		encoderLeft.setDistancePerPulse(distancePerPulse);
+		encoderRight.setDistancePerPulse(distancePerPulse);
+
 		motorBackLeft.follow(motorFrontLeft);
 		motorBackRight.follow(motorFrontRight);
+
 		motorFrontLeft.configOpenloopRamp(0.3, 0);
 		motorFrontRight.configOpenloopRamp(0.3, 0);
 		drive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
@@ -57,10 +67,33 @@ public class DriveLocomotive extends Subsystem {
 	}
 	
 	public void reset() {
+		encoderLeft.reset();
+		encoderRight.reset();
+		gyro.reset();
+	}
 
+	public double getDistance() {
+		return ((encoderLeft.getDistance()  + encoderRight.getDistance()) / 2);
+	}
+	
+	public double getEncoderLeft() {
+		return encoderLeft.getDistance();
+	}
+	
+	public double getEncoderRight() {
+		return encoderRight.getDistance();
+	}
+	
+	public double getAngle() {
+		return gyro.getAngle();
+	}
+	
+	public void gyroCalibrate() {
+		gyro.calibrate();
 	}
 
 	public void stop() {
 		drive.tankDrive(0, 0);
+		reset();
 	}
 }

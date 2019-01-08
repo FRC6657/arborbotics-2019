@@ -8,13 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import frc.robot.commands.PIDDriveStraight;
 import frc.robot.subsystems.DriveLocomotive;
 
 public class Robot extends TimedRobot {
@@ -26,10 +26,17 @@ public class Robot extends TimedRobot {
   Command autonomousCommand;
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
+  PIDDriveStraight pidStraight = new PIDDriveStraight(20);
+
   @Override
   public void robotInit() {
     oi = new OI();
-    SmartDashboard.putData("Auto mode", autoChooser);
+
+    pidStraight = new PIDDriveStraight(20);
+
+    autoChooser.addDefault("BaseDriveTimed", pidStraight);
+		SmartDashboard.putData("Auto mode", autoChooser);
+    
     driveLocomotive.reset();
   }
   

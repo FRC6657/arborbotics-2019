@@ -7,38 +7,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
+import frc.robot.Robot;
 
-public class PIDDriveStraight extends Command {
-  public PIDDriveStraight() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class PIDDriveStraight extends PIDCommand {
+  public PIDDriveStraight(double distance) {
+    super(0.5, 0.0, 0.0);
+		
+		requires(Robot.driveLocomotive);
+		
+		getPIDController().reset();
+		getPIDController().setOutputRange(-0.5d,  0.5d);
+		getPIDController().setAbsoluteTolerance(0.05);
+		getPIDController().setContinuous(false);
+		
+		setSetpoint(distance);
   }
 
-  // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
-  }
+	public void initialize() {
+		Robot.driveLocomotive.reset();
+	}
+	
+	@Override
+	protected double returnPIDInput() {
+		return Robot.driveLocomotive.getDistance();
+	}
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
+	@Override
+	protected void usePIDOutput(double output) {
+		Robot.driveLocomotive.drive(output, output);	
+	}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
+	@Override
+	protected boolean isFinished() {
+		return getPIDController().onTarget();
   }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+  
 }
