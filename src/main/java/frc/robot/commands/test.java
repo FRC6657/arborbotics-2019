@@ -7,44 +7,23 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
-import frc.robot.Robot;
-import frc.robot.subsystems.DriveLocomotive;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class GyroRight extends PIDCommand {
-  public GyroRight() {
-    super(0.5,0.0,0.0);
-    requires(Robot.driveLocomotive);  
-    getPIDController().reset();
-		getPIDController().setOutputRange(-0.5d,  0.5d);
-		getPIDController().setAbsoluteTolerance(0.05);
-    getPIDController().setContinuous(false);
-    
+public class test extends Command {
+  public test() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveLocomotive.reset();
-  
-}
-
-  @Override
-	protected double returnPIDInput() {
-		return Robot.driveLocomotive.getDistance();
-	}
-
-  @Override
-	protected void usePIDOutput(double output) {
-    double angle = Robot.driveLocomotive.getAngle();
-    while (angle < 85d) 
-    {
-      Robot.driveLocomotive.drive(0.2, -0.2);
-      Robot.driveLocomotive.stop();
-    }
   }
-  
 
+  // Called repeatedly when this Command is scheduled to run
+  @Override
+  protected void execute() {
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -59,7 +38,5 @@ public class GyroRight extends PIDCommand {
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+  
 }

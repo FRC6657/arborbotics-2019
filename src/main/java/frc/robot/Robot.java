@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.GyroTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.Vacuum;
@@ -27,14 +28,17 @@ public class Robot extends TimedRobot {
   Command autonomousCommand;
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-  PIDDriveStraight pidStraight = new PIDDriveStraight(20);
+  PIDDriveStraight pidStraight;
+  GyroTurn gyroTurn;
 
   @Override
   public void robotInit() {
     oi = new OI();
 
     pidStraight = new PIDDriveStraight(20);
-    autoChooser.addDefault("BaseDriveTimed", pidStraight);
+    autoChooser.addOption("PID Straight", pidStraight);
+    gyroTurn = new GyroTurn(90);
+    autoChooser.addOption("Gyro Turn", gyroTurn);
 		SmartDashboard.putData("Auto mode", autoChooser);
     
     driveLocomotive.reset();
