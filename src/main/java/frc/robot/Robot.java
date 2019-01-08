@@ -8,7 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.TimedRobot;;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -23,13 +23,13 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static double driveMaxOutput = 1.0d;
   
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  Command autonomousCommand;
+  SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
     oi = new OI();
-    SmartDashboard.putData("Auto mode", m_chooser);
+    SmartDashboard.putData("Auto mode", autoChooser);
     driveLocomotive.reset();
   }
   
@@ -50,13 +50,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-
- 
-
+    autonomousCommand = autoChooser.getSelected();
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+    if (autonomousCommand != null) {
+      autonomousCommand.start();
     }
   }
   
@@ -67,18 +64,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
   }
-
   
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
   }
-
 
   @Override
   public void testPeriodic() {
