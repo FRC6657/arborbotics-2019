@@ -20,7 +20,7 @@ public class GyroTurn extends PIDCommand {
 		getPIDController().setOutputRange(-0.5d,  0.5d);
 		getPIDController().setAbsoluteTolerance(0.05);
     getPIDController().setContinuous(false);
-    targetAngle = degrees;
+    targetAngle = degrees + Robot.driveLocomotive.getAngle();
   }
 
   // Called just before this Command runs the first time
@@ -37,9 +37,11 @@ public class GyroTurn extends PIDCommand {
 
     @Override
 	protected void usePIDOutput(double output) {
-		Robot.driveLocomotive.arcadeDrive(0.5, targetAngle);
+		  
+    while (output < targetAngle) {
+    Robot.driveLocomotive.arcadeDrive(0.0, 0.5);
+    }
 	}
-  
 
 
   // Make this return true when this Command no longer needs to run execute()

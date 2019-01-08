@@ -40,7 +40,8 @@ public class Robot extends TimedRobot {
     gyroTurn = new GyroTurn(90);
     autoChooser.addOption("Gyro Turn", gyroTurn);
 		SmartDashboard.putData("Auto mode", autoChooser);
-    
+    SmartDashboard.putNumber("Gyro Angle", Robot.driveLocomotive.getAngle());
+
     driveLocomotive.reset();
   }
   
