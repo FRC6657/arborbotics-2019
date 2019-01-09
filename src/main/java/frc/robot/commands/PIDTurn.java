@@ -7,48 +7,45 @@
 
 package frc.robot.commands;
 
-
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import frc.robot.Robot;
 
-
-public class gyroTurn extends Command {
+public class PIDTurn extends PIDCommand {
   private double targetAngle;
-  public gyroTurn(double degrees) {
-    
+  public PIDTurn(double angleTo) {
+    super(5.0, 0, 0);
     requires(Robot.driveLocomotive);
-    targetAngle = degrees + Robot.driveLocomotive.getAngle();
+		
+		getPIDController().reset();
+		getPIDController().setOutputRange(-0.5d,  0.5d);
+		getPIDController().setAbsoluteTolerance(0.05);
+		getPIDController().setContinuous(false);
+		targetAngle = angleTo;
+		setSetpoint(angleTo);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.driveLocomotive.reset();
-    
+  }
+
+  @Override
+  protected double returnPIDInput() {
+    return Robot.driveLocomotive.getAngle();
+  }
+
+  @Override
+  protected void usePIDOutput(double output) {
+    Robot.driveLocomotive.drive(-1*output, output);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if( Math.abs(Robot.driveLocomotive.getAngle()) >= Math.abs(targetAngle))  {
-      
-      Robot.driveLocomotive.drive(0, 0);
-    
-    } else if( targetAngle > Robot.driveLocomotive.getAngle() ) {
-    
-      Robot.driveLocomotive.drive(-0.5, 0.5);
-    
-    } else {
-
-      Robot.driveLocomotive.drive(0.5, 0.5);
-
-    }
-
     if(Math.abs(Robot.driveLocomotive.getAngle() - targetAngle) <= 2) {
       Robot.driveLocomotive.stop();
     }
-
-
   }
 
   // Make this return true when this Command no longer needs to run execute()

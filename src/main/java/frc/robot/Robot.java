@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.GyroTurn;
+import frc.robot.commands.gyroTurn;
 import frc.robot.commands.PIDDriveStraight;
+import frc.robot.commands.PIDTurn;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.Vacuum;
 
@@ -29,7 +30,8 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   PIDDriveStraight pidStraight;
-  GyroTurn gyroTurn;
+  gyroTurn gyroTurn;
+  PIDTurn pidTurn;
 
   @Override
   public void robotInit() {
@@ -37,8 +39,10 @@ public class Robot extends TimedRobot {
 
     pidStraight = new PIDDriveStraight(20);
     autoChooser.addOption("PID Straight", pidStraight);
-    gyroTurn = new GyroTurn(90);
+    gyroTurn = new gyroTurn(90);
     autoChooser.addOption("Gyro Turn", gyroTurn);
+    pidTurn = new PIDTurn(90);
+    autoChooser.addOption("PID Turn", pidTurn);
 		SmartDashboard.putData("Auto mode", autoChooser);
     SmartDashboard.putNumber("Gyro Angle", Robot.driveLocomotive.getAngle());
 
@@ -72,6 +76,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Gyro Angle", Robot.driveLocomotive.getAngle());
+
   }
 
   @Override
@@ -84,6 +90,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Gyro Angle", Robot.driveLocomotive.getAngle());
   }
 
   @Override
