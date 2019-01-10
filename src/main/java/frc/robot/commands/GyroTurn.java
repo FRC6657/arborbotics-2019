@@ -7,14 +7,12 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-
-public class gyroTurn extends Command {
+public class GyroTurn extends Command {
   private double targetAngle;
-  public gyroTurn(double degrees) {
+  public GyroTurn(double degrees) {
     
     requires(Robot.driveLocomotive);
     targetAngle = degrees + Robot.driveLocomotive.getAngle();

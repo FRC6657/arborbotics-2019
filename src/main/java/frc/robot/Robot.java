@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.gyroTurn;
+import frc.robot.commands.GyroTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
 import frc.robot.subsystems.DriveLocomotive;
@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   PIDDriveStraight pidStraight;
-  gyroTurn gyroTurn;
+  GyroTurn gyroTurn;
   PIDTurn pidTurn;
 
   @Override
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
 
     pidStraight = new PIDDriveStraight(20);
     autoChooser.addOption("PID Straight", pidStraight);
-    gyroTurn = new gyroTurn(90);
+    gyroTurn = new GyroTurn(90);
     autoChooser.addOption("Gyro Turn", gyroTurn);
     pidTurn = new PIDTurn(90);
     autoChooser.addOption("PID Turn", pidTurn);
