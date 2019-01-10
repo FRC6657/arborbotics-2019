@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class PIDDriveStraight extends PIDCommand {
   public PIDDriveStraight(double distance) {
-    super(0.5, 0.0, 0.0);
+    super(0.6, 0.0, 0.0);
 		
 		requires(Robot.driveLocomotive);
 		

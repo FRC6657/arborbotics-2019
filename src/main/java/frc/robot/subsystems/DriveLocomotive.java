@@ -22,18 +22,18 @@ public class DriveLocomotive extends Subsystem {
 	//Locomotives are better than trains.
 	
   private WPI_TalonSRX motorFrontLeft = new WPI_TalonSRX(RobotMap.motorFrontLeftID);   //Declaration of Motors using RobotMap ID's
-	private WPI_TalonSRX motorBackLeft = new WPI_TalonSRX(RobotMap.motorBackLeftID);	
-	private WPI_TalonSRX motorFrontRight = new WPI_TalonSRX(RobotMap.motorFrontRightID);
+  private WPI_TalonSRX motorBackLeft = new WPI_TalonSRX(RobotMap.motorBackLeftID);	
+  private WPI_TalonSRX motorFrontRight = new WPI_TalonSRX(RobotMap.motorFrontRightID);
   private WPI_TalonSRX motorBackRight = new WPI_TalonSRX(RobotMap.motorBackRightID);
 	
-	private Encoder encoderLeft = new Encoder(0, 1, true, Encoder.EncodingType.k2X);
-	private Encoder encoderRight = new Encoder(2, 3, false, Encoder.EncodingType.k2X);
+	private Encoder encoderLeft = new Encoder(0, 1, false, Encoder.EncodingType.k1X);
+	private Encoder encoderRight = new Encoder(2, 3, true, Encoder.EncodingType.k1X);
 	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	private DifferentialDrive drive;
 	
 	private static double distancePerRevolution = 15.2 * Math.PI;
-	private static double pulsesPerRevolution = 1440;
+	private static double pulsesPerRevolution = 360;
 	private static double distancePerPulse = distancePerRevolution / pulsesPerRevolution;
   
   private double driveMax = 1.0d;

@@ -37,21 +37,27 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI();
 
-    pidStraight = new PIDDriveStraight(20);
+    pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
     gyroTurn = new GyroTurn(90);
     autoChooser.addOption("Gyro Turn", gyroTurn);
     pidTurn = new PIDTurn(90);
     autoChooser.addOption("PID Turn", pidTurn);
-		SmartDashboard.putData("Auto mode", autoChooser);
-    SmartDashboard.putNumber("Gyro Angle", Robot.driveLocomotive.getAngle());
+    SmartDashboard.putData("Auto mode", autoChooser);
+    SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
+    SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
+    SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
+    SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
 
     driveLocomotive.reset();
   }
   
   @Override
   public void robotPeriodic() {
- 
+    SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
+    SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
+    SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
+    SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
   }
 
   @Override
@@ -76,7 +82,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putNumber("Gyro Angle", Robot.driveLocomotive.getAngle());
 
   }
 
@@ -90,7 +95,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putNumber("Gyro Angle", Robot.driveLocomotive.getAngle());
   }
 
   @Override
