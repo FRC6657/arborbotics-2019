@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.GyroTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
+import frc.robot.commands.UltrasonicAuto;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.Vacuum;
 
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
   PIDDriveStraight pidStraight;
   GyroTurn gyroTurn;
   PIDTurn pidTurn;
+  UltrasonicAuto ultraAuto;
 
   @Override
   public void robotInit() {
@@ -42,6 +44,7 @@ public class Robot extends TimedRobot {
     gyroTurn = new GyroTurn(90);
     autoChooser.addOption("Gyro Turn", gyroTurn);
     pidTurn = new PIDTurn(90);
+    ultraAuto = new UltrasonicAuto(50);
     autoChooser.addOption("PID Turn", pidTurn);
     SmartDashboard.putData("Auto mode", autoChooser);
     SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());

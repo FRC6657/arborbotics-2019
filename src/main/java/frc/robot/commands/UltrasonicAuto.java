@@ -7,50 +7,37 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class PIDTurn extends PIDCommand {
-  private double targetAngle;
-  public PIDTurn(double angleTo) {
-    super(0.6, 0, 0);
+public class UltrasonicAuto extends Command {
+  private double centimeterTarget;
+  public UltrasonicAuto(double centimetersTo) {
     requires(Robot.driveLocomotive);
-		
-		getPIDController().reset();
-		getPIDController().setOutputRange(-0.5d,  0.5d);
-		getPIDController().setAbsoluteTolerance(0.05);
-		getPIDController().setContinuous(false);
-		targetAngle = angleTo;
-		setSetpoint(angleTo);
+    centimeterTarget = centimetersTo;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.driveLocomotive.reset();
-  }
 
-  @Override
-  protected double returnPIDInput() {
-    return Robot.driveLocomotive.getAngle();
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    Robot.driveLocomotive.drive(-1*output, output);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Math.abs(Robot.driveLocomotive.getAngle() - targetAngle) <= 2) {
-      Robot.driveLocomotive.stop();
+  while(Robot.driveLocomotive.getUltraSonicDistance() > centimeterTarget) {
+    Robot.driveLocomotive.drive(0.4, 0.4);
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    if(Robot.driveLocomotive.getUltraSonicDistance() <= (centimeterTarget + 2.5) && Robot.driveLocomotive.getUltraSonicDistance() >= (centimeterTarget - 2.5)) {
+      Robot.driveLocomotive.stop();
+    }
     return false;
   }
 
