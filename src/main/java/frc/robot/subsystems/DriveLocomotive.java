@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
+import frc.robot.hardware.MB1013Ultrasonic;
 import frc.robot.commands.ArcadeDrive;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,13 +22,14 @@ public class DriveLocomotive extends Subsystem {
 	
 	//Locomotives are better than trains.
 	
-  private WPI_TalonSRX motorFrontLeft = new WPI_TalonSRX(RobotMap.motorFrontLeftID);   //Declaration of Motors using RobotMap ID's
-  private WPI_TalonSRX motorBackLeft = new WPI_TalonSRX(RobotMap.motorBackLeftID);	
-  private WPI_TalonSRX motorFrontRight = new WPI_TalonSRX(RobotMap.motorFrontRightID);
-  private WPI_TalonSRX motorBackRight = new WPI_TalonSRX(RobotMap.motorBackRightID);
-	
+  	private WPI_TalonSRX motorFrontLeft = new WPI_TalonSRX(RobotMap.motorFrontLeftID);   //Declaration of Motors using RobotMap ID's
+  	private WPI_TalonSRX motorBackLeft = new WPI_TalonSRX(RobotMap.motorBackLeftID);	
+  	private WPI_TalonSRX motorFrontRight = new WPI_TalonSRX(RobotMap.motorFrontRightID);
+	private WPI_TalonSRX motorBackRight = new WPI_TalonSRX(RobotMap.motorBackRightID);
+
+	private MB1013Ultrasonic ultrasonic = new MB1013Ultrasonic(0);
 	private Encoder encoderLeft = new Encoder(0, 1, false, Encoder.EncodingType.k1X);
-	private Encoder encoderRight = new Encoder(2, 3, true, Encoder.EncodingType.k1X);
+  	private Encoder encoderRight = new Encoder(2, 3, true, Encoder.EncodingType.k1X);
 	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	private DifferentialDrive drive;
@@ -96,5 +98,9 @@ public class DriveLocomotive extends Subsystem {
 	public void stop() {
 		drive.tankDrive(0, 0);
 		reset();
+	}
+	
+	public double getUltraSonicDistance() {
+		return ultrasonic.getDistance();
 	}
 }

@@ -43,5 +43,4 @@ public class PIDDriveStraight extends PIDCommand {
 	protected boolean isFinished() {
 		return getPIDController().onTarget();
   }
-  
 }

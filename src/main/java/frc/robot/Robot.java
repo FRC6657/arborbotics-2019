@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
+    SmartDashboard.putNumber("UltraSonic", driveLocomotive.getUltraSonicDistance());
 
     driveLocomotive.reset();
   }
@@ -58,6 +59,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
+    SmartDashboard.putNumber("UltraSonic", driveLocomotive.getUltraSonicDistance());
   }
 
   @Override
