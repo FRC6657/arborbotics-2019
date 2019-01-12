@@ -11,20 +11,20 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class VacuumGrab extends Command {
+public class ClawGrab extends Command {
 
-	public VacuumGrab() {
-		requires(Robot.vacuum);
+	public ClawGrab() {
+		requires(Robot.claw);
 	}
 	
 	@Override
 	protected void execute() {
-	Robot.vacuum.grab();
+	Robot.claw.grab();
 	}
 	
 	@Override
 	protected void end() {
-		Robot.vacuum.stop();
+		Robot.claw.stop();
 	}
 
 	@Override

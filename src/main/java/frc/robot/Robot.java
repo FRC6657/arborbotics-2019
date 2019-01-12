@@ -19,10 +19,10 @@ import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
 import frc.robot.commands.UltrasonicAuto;
 import frc.robot.subsystems.DriveLocomotive;
-import frc.robot.subsystems.Vacuum;
+import frc.robot.subsystems.WheelClaw;
 
 public class Robot extends TimedRobot {
-  public static Vacuum vacuum = new Vacuum();
+  public static WheelClaw claw = new WheelClaw();
   public static DriveLocomotive driveLocomotive  = new DriveLocomotive();
   public static OI oi;
   public static double driveMaxOutput = 1.0d;
@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
     SmartDashboard.putNumber("UltraSonic", driveLocomotive.getUltraSonicDistance());
+    SmartDashboard.putNumber("Throttle", oi.getScaledThrottle());
 
     driveLocomotive.reset();
   }
@@ -63,6 +64,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
     SmartDashboard.putNumber("UltraSonic", driveLocomotive.getUltraSonicDistance());
+    SmartDashboard.putNumber("Throttle", oi.getScaledThrottle());
   }
 
   @Override

@@ -7,8 +7,8 @@
 
 package frc.robot;
 
-import frc.robot.commands.VacuumGrab;
-import frc.robot.commands.VacuumHooked;
+import frc.robot.commands.ClawGrab;
+import frc.robot.commands.ClawRelease;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -20,19 +20,19 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   
 	private Joystick happyStick;
-	public JoystickButton vacuumGrab;
-	public JoystickButton vacuumHooked;
+	public JoystickButton clawGrab;
+	public JoystickButton clawRelease;
 
 	public OI() {
 		happyStick = new Joystick(RobotMap.driveControllerID);
-		vacuumGrab = new JoystickButton(happyStick, 3);
-		vacuumHooked = new JoystickButton(happyStick, 4);
+		clawGrab = new JoystickButton(happyStick, 5);
+		clawRelease = new JoystickButton(happyStick, 3);
 		
-		VacuumGrab vg = new VacuumGrab();
-		vacuumGrab.whileHeld(vg);
+		ClawGrab cg = new ClawGrab();
+		clawGrab.whileHeld(cg);
 		
-		VacuumHooked vh = new VacuumHooked();
-		vacuumHooked.whileHeld(vh);
+		ClawRelease cr = new ClawRelease();
+		clawRelease.whileHeld(cr);
 	}
 
 	public double getArcadeSpeed() {
