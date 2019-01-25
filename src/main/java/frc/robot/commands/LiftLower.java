@@ -7,28 +7,28 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
+public class LiftLower extends Command {
+  
+  public LiftLower() {
+    requires(Robot.lift);
+  }
 
-public class ClawRelease extends Command {
+  @Override
+  protected void execute() {
+    Robot.lift.lower();
+  }
 
-	public ClawRelease() {
-		requires(Robot.lift);
-	}
+  @Override
+	protected void end() {
+		Robot.lift.stop();
+  }
   
-	@Override
-	protected void execute() {
-	  Robot.lift.raise();
-	}
-  
-	@Override
-	  protected void end() {
-		  Robot.lift.stop();
-	  }
-  
-	@Override
-	protected boolean isFinished() {
-	  return false;
-	}
+  @Override
+  protected boolean isFinished() {
+    return false;
+  }
+
 }

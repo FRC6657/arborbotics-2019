@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -11,7 +10,6 @@ public class WheelClaw extends Subsystem {
 	private Spark spark2 = new Spark(1);
 
 	public WheelClaw() {
-		
  	}
 
 	@Override

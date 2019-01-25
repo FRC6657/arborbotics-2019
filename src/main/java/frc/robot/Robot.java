@@ -20,9 +20,11 @@ import frc.robot.commands.PIDTurn;
 import frc.robot.commands.UltrasonicAuto;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.WheelClaw;
+import frc.robot.subsystems.Lift;
 
 public class Robot extends TimedRobot {
   public static WheelClaw claw = new WheelClaw();
+  public static Lift lift = new Lift();
   public static DriveLocomotive driveLocomotive  = new DriveLocomotive();
   public static OI oi;
   public static double driveMaxOutput = 1.0d;

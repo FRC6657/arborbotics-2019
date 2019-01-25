@@ -12,6 +12,8 @@ public class RobotMap {
 	public static int motorBackLeftID = 2;
 	public static int motorFrontRightID = 3;
 	public static int motorBackRightID = 4;
+	public static int gyroID = 5;
+	public static int liftID = 6;
 	
 	public static int driveControllerID = 0;
 	
@@ -19,4 +21,5 @@ public class RobotMap {
 	public static double joystickArcadeRotationModifier = 1.0;
 
 	public static double wheelClawSpeed = 0.4d;
+	public static double liftSpeed = 0.3d;
 }

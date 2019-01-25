@@ -11,9 +11,9 @@ import frc.robot.RobotMap;
 import frc.robot.hardware.MB1013Ultrasonic;
 import frc.robot.commands.ArcadeDrive;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class DriveLocomotive extends Subsystem {
@@ -28,7 +28,7 @@ public class DriveLocomotive extends Subsystem {
 	private MB1013Ultrasonic ultrasonic = new MB1013Ultrasonic(0);
 	private Encoder encoderLeft = new Encoder(0, 1, false, Encoder.EncodingType.k1X);
   	private Encoder encoderRight = new Encoder(2, 3, true, Encoder.EncodingType.k1X);
-	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	private PigeonIMU gyro = new PigeonIMU(RobotMap.gyroID);
 
 	private DifferentialDrive drive;
 	
@@ -44,10 +44,12 @@ public class DriveLocomotive extends Subsystem {
 
 		motorBackLeft.follow(motorFrontLeft);
 		motorBackRight.follow(motorFrontRight);
-
+		
+		gyro.configFactoryDefault();
 		motorFrontLeft.configOpenloopRamp(0.3, 0);
 		motorFrontRight.configOpenloopRamp(0.3, 0);
 		drive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
+
 	}
 
   @Override
@@ -70,7 +72,6 @@ public class DriveLocomotive extends Subsystem {
 	public void reset() {
 		encoderLeft.reset();
 		encoderRight.reset();
-		gyro.reset();
 	}
 
 	public double getDistance() {
@@ -86,11 +87,13 @@ public class DriveLocomotive extends Subsystem {
 	}
 	
 	public double getAngle() {
-		return gyro.getAngle();
+		double[] ypr = new double[3];
+		gyro.getYawPitchRoll(ypr);
+		return ypr[0];
 	}
 	
 	public void gyroCalibrate() {
-		gyro.calibrate();
+		
 	}
 
 	public void stop() {
