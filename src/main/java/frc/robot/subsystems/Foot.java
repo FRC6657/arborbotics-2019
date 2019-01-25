@@ -5,29 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
-public class LiftLower extends Command {
+
+public class Foot extends Subsystem {
   
-  public LiftLower() {
-    requires(Robot.lift);
+  private Spark spark = new Spark(2);
+
+  public Foot() {
   }
 
   @Override
-  protected void execute() {
-    Robot.lift.lower();
+  public void initDefaultCommand() {
   }
 
-  @Override
-	protected void end() {
-		Robot.lift.stop();
-  }
-  
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+	public void forward() {
+		spark.set(RobotMap.footSpeed);
+	}
+	
+	public void reverse() {
+		spark.set(-(RobotMap.footSpeed));
+	}
+	
+	public void stop() {
+		spark.set(0);
+	}
+
 }

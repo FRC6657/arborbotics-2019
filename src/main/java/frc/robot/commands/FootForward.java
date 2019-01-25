@@ -10,20 +10,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class LiftLower extends Command {
-  
-  public LiftLower() {
-    requires(Robot.lift);
+public class FootForward extends Command {
+  public FootForward() {
+    requires(Robot.foot);
   }
 
   @Override
   protected void execute() {
-    Robot.lift.lower();
+    Robot.foot.forward();
   }
 
   @Override
 	protected void end() {
-		Robot.lift.stop();
+		Robot.foot.stop();
   }
   
   @Override
