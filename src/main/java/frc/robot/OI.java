@@ -34,8 +34,8 @@ public class OI {
 		happyStick = new Joystick(RobotMap.driveControllerID);
 		clawGrab = new JoystickButton(happyStick, 5);
 		clawRelease = new JoystickButton(happyStick, 3);
-		liftUp = new JoystickButton(happyStick, 1);
-		liftDown = new JoystickButton(happyStick, 2);
+		liftUp = new JoystickButton(happyStick, 2);
+		liftDown = new JoystickButton(happyStick, 1);
 		footForward = new JoystickButton(happyStick, 9);
 		footBackward = new JoystickButton(happyStick, 11);
 		

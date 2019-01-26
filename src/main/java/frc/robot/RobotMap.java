@@ -13,7 +13,7 @@ public class RobotMap {
 	public static int motorFrontRightID = 3;
 	public static int motorBackRightID = 4;
 	public static int gyroID = 5;
-	public static int liftID = 6;
+	public static int liftID = 1;
 	
 	public static int driveControllerID = 0;
 	

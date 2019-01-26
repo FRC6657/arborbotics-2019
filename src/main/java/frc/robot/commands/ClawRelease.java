@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClawRelease extends Command {
 
 	public ClawRelease() {
-		requires(Robot.lift);
+		requires(Robot.claw);
 	}
   
 	@Override
 	protected void execute() {
-	  Robot.lift.raise();
+	  Robot.claw.release();
 	}
   
 	@Override
 	  protected void end() {
-		  Robot.lift.stop();
+		  Robot.claw.stop();
 	  }
   
 	@Override
