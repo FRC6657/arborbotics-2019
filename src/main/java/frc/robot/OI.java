@@ -9,7 +9,10 @@ package frc.robot;
 
 import frc.robot.commands.ClawGrab;
 import frc.robot.commands.ClawRelease;
-
+import frc.robot.commands.LiftRaise;
+import frc.robot.commands.LiftLower;
+import frc.robot.commands.FootForward;
+import frc.robot.commands.FootReverse;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -22,17 +25,34 @@ public class OI {
 	private Joystick happyStick;
 	public JoystickButton clawGrab;
 	public JoystickButton clawRelease;
+	public JoystickButton liftUp;
+	public JoystickButton liftDown;
+	public JoystickButton footForward;
+	public JoystickButton footBackward;
 
 	public OI() {
 		happyStick = new Joystick(RobotMap.driveControllerID);
 		clawGrab = new JoystickButton(happyStick, 5);
 		clawRelease = new JoystickButton(happyStick, 3);
+		liftUp = new JoystickButton(happyStick, 1);
+		liftDown = new JoystickButton(happyStick, 2);
+		footForward = new JoystickButton(happyStick, 4);
+		footBackward = new JoystickButton(happyStick, 11);
 		
 		ClawGrab cg = new ClawGrab();
 		clawGrab.whileHeld(cg);
-		
 		ClawRelease cr = new ClawRelease();
 		clawRelease.whileHeld(cr);
+		
+		LiftRaise lu = new LiftRaise();
+		liftUp.whileHeld(lu);
+		LiftLower ld = new LiftLower();
+		liftDown.whileHeld(ld);
+
+		FootForward ff = new FootForward();
+		footForward.whileHeld(ff);
+		FootReverse fb = new FootReverse();
+		footBackward.whileHeld(fb);
 	}
 
 	public double getArcadeSpeed() {
