@@ -36,7 +36,7 @@ public class OI {
 		clawRelease = new JoystickButton(happyStick, 3);
 		liftUp = new JoystickButton(happyStick, 1);
 		liftDown = new JoystickButton(happyStick, 2);
-		footForward = new JoystickButton(happyStick, 4);
+		footForward = new JoystickButton(happyStick, 9);
 		footBackward = new JoystickButton(happyStick, 11);
 		
 		ClawGrab cg = new ClawGrab();

@@ -42,22 +42,28 @@ public class DriveLocomotive extends Subsystem {
 		encoderLeft.setDistancePerPulse(distancePerPulse);
 		encoderRight.setDistancePerPulse(distancePerPulse);
 
-		motorBackLeft.follow(motorFrontLeft);
-		motorBackRight.follow(motorFrontRight);
-		
+		motorFrontLeft.configFactoryDefault();
+		motorBackLeft.configFactoryDefault();
+		motorFrontRight.configFactoryDefault();
+		motorBackRight.configFactoryDefault();
 		gyro.configFactoryDefault();
+
 		motorFrontLeft.configOpenloopRamp(0.3, 0);
 		motorFrontRight.configOpenloopRamp(0.3, 0);
 		drive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
 
+		motorBackLeft.follow(motorFrontLeft);
+		motorBackRight.follow(motorFrontRight);
+
+		reset();
 	}
 
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new ArcadeDrive());
-  }
+    @Override
+    public void initDefaultCommand() {
+      	setDefaultCommand(new ArcadeDrive());
+    }
 
-  public void setMax(double max) {
+    public void setMax(double max) {
 		driveMax = max;
 	}
 	
@@ -72,6 +78,7 @@ public class DriveLocomotive extends Subsystem {
 	public void reset() {
 		encoderLeft.reset();
 		encoderRight.reset();
+		gyroCalibrate();
 	}
 
 	public double getDistance() {
@@ -87,13 +94,15 @@ public class DriveLocomotive extends Subsystem {
 	}
 	
 	public double getAngle() {
-		double[] ypr = new double[3];
-		gyro.getYawPitchRoll(ypr);
-		return ypr[0];
+		//double[] ypr = new double[3];
+		//gyro.getYawPitchRoll(ypr);
+		return gyro.getFusedHeading()/*ypr[0]*/;
 	}
 	
 	public void gyroCalibrate() {
-		
+		gyro.setFusedHeading(0, 30);
+		//gyro.setYaw(0);
+		//gyro.setAccumZAngle(0);
 	}
 
 	public void stop() {

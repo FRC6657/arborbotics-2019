@@ -7,62 +7,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-public class PIDTurn extends PIDCommand {
-  public PIDTurn(double angleTo) {
-    super(0.3, 0, 0.2);
+public class TimedReverse extends TimedCommand {
+  public TimedReverse() {
+    super(5);
     requires(Robot.driveLocomotive);
-		
-    getPIDController().reset();
-    getPIDController().setInputRange(-23040, 23040);
-		getPIDController().setOutputRange(-0.5d,  0.5d);
-		getPIDController().setAbsoluteTolerance(0.10);
-		getPIDController().setContinuous(false);
-		setSetpoint(angleTo);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveLocomotive.reset();
-  }
-
-  @Override
-  protected double returnPIDInput() {
-    return Robot.driveLocomotive.getAngle();
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    Robot.driveLocomotive.drive(-output, output);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    /*if(Math.abs(Robot.driveLocomotive.getAngle() - targetAngle) <= 2) {
-      Robot.driveLocomotive.stop();
-    }*/
+    Robot.driveLocomotive.drive(-0.5, -0.5);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return getPIDController().onTarget();
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveLocomotive.stop();
+    Robot.driveLocomotive.drive(0, 0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.driveLocomotive.stop();
   }
 }

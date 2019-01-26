@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.GyroTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
+import frc.robot.commands.TimedReverse;
 import frc.robot.commands.UltrasonicAuto;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.WheelClaw;
@@ -37,6 +38,7 @@ public class Robot extends TimedRobot {
   GyroTurn gyroTurn;
   PIDTurn pidTurn;
   UltrasonicAuto ultraAuto;
+  TimedReverse reverseTimed;
 
   @Override
   public void robotInit() {
@@ -44,11 +46,14 @@ public class Robot extends TimedRobot {
 
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
-    gyroTurn = new GyroTurn(90);
+    gyroTurn = new GyroTurn(30);
     autoChooser.addOption("Gyro Turn", gyroTurn);
-    pidTurn = new PIDTurn(90);
-    ultraAuto = new UltrasonicAuto(50);
+    pidTurn = new PIDTurn(-30);
     autoChooser.addOption("PID Turn", pidTurn);
+    ultraAuto = new UltrasonicAuto(50);
+    autoChooser.addOption("Ultrasonic Auto", ultraAuto);
+    reverseTimed = new TimedReverse();
+    autoChooser.addOption("Timed Reverse", reverseTimed);
     SmartDashboard.putData("Auto mode", autoChooser);
     SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
     SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
@@ -82,6 +87,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    driveLocomotive.reset();
     autonomousCommand = autoChooser.getSelected();
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {

@@ -22,5 +22,5 @@ public class RobotMap {
 
 	public static double wheelClawSpeed = 0.4d;
 	public static double liftSpeed = 0.3d;
-	public static double footSpeed = 0.25d;
+	public static double footSpeed = 0.4d;
 }
