@@ -16,6 +16,9 @@ public class RobotMap {
 	public static int liftID = 1;
 	
 	public static int driveControllerID = 0;
+
+	public static double joystickSpeedDeadband = 0.35;
+	public static double joystickRotationDeadband = 0.35;
 	
 	public static double joystickArcadeSpeedModifier = 1.0;
 	public static double joystickArcadeRotationModifier = 1.0;

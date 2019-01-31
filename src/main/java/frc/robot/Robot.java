@@ -61,6 +61,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
     SmartDashboard.putNumber("UltraSonic", driveLocomotive.getUltraSonicDistance());
     SmartDashboard.putNumber("Throttle", oi.getScaledThrottle());
+    SmartDashboard.putNumber("Rotation", oi.getArcadeRotation());
+    SmartDashboard.putNumber("Speed", oi.getArcadeSpeed());
 
     driveLocomotive.reset();
   }
@@ -73,6 +75,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
     SmartDashboard.putNumber("UltraSonic", driveLocomotive.getUltraSonicDistance());
     SmartDashboard.putNumber("Throttle", oi.getScaledThrottle());
+    SmartDashboard.putNumber("Rotation", oi.getArcadeRotation());
+    SmartDashboard.putNumber("Speed", oi.getArcadeSpeed());
   }
 
   @Override

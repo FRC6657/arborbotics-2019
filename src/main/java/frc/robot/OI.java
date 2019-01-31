@@ -56,22 +56,22 @@ public class OI {
 	}
 
 	public double getArcadeSpeed() {
-		double supaY = ((Joystick) happyStick).getY();
-		return -supaY*supaY*Math.signum(supaY) * RobotMap.joystickArcadeSpeedModifier;
+		double supaY = happyStick.getY();
+		return supaY > RobotMap.joystickSpeedDeadband ? (-supaY*supaY*Math.signum(supaY) + 0.1) * RobotMap.joystickArcadeSpeedModifier : 0;
 	}
-   
+
  	public double getArcadeRotation() {
-		double supaTwist = ((Joystick) happyStick).getTwist();
-		return supaTwist * RobotMap.joystickArcadeRotationModifier;
+		double supaTwist =  happyStick.getTwist();
+		return supaTwist > RobotMap.joystickRotationDeadband ? (supaTwist + 0.1) * RobotMap.joystickArcadeRotationModifier : 0;
 	}
 	
 	public double getArcadeRoationThrottle() {
-		double supaTwist = ((Joystick) happyStick).getTwist();
+		double supaTwist = happyStick.getTwist();
 		return supaTwist;
 	}
 	
 	public double getScaledThrottle() {
-		double supaThrottle = ((Joystick) happyStick).getThrottle();
+		double supaThrottle = happyStick.getThrottle();
 		return (0.5 * supaThrottle) + 0.5;
   }
 }

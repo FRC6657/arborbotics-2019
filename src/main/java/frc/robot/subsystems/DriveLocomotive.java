@@ -50,6 +50,8 @@ public class DriveLocomotive extends Subsystem {
 
 		motorFrontLeft.configOpenloopRamp(0.3, 0);
 		motorFrontRight.configOpenloopRamp(0.3, 0);
+		//motorFrontLeft.configNeutralDeadband(0.35);
+		//motorFrontRight.configNeutralDeadband(0.35);
 		drive = new DifferentialDrive(motorFrontLeft, motorFrontRight);
 
 		motorBackLeft.follow(motorFrontLeft);
