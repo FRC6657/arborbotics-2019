@@ -36,9 +36,9 @@ public class DriveLocomotive extends Subsystem {
 	private static double pulsesPerRevolution = 360;
 	private static double distancePerPulse = distancePerRevolution / pulsesPerRevolution;
   
-  private double driveMax = 1.0d;
+  	private double driveMax = 1.0d;
   
-  public DriveLocomotive() {
+  	public DriveLocomotive() {
 		encoderLeft.setDistancePerPulse(distancePerPulse);
 		encoderRight.setDistancePerPulse(distancePerPulse);
 

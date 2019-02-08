@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.commands.GyroTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
@@ -31,6 +34,10 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static double driveMaxOutput = 1.0d;
   
+  public static NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  NetworkTableEntry angleEntry;
+  double angle;
+
   Command autonomousCommand;
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -43,6 +50,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     oi = new OI();
+
+    NetworkTable table = inst.getTable("jetsoncamera");
+    angleEntry = table.getEntry("degrees");
 
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
@@ -102,7 +112,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-
   }
 
   @Override
