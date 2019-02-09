@@ -7,21 +7,23 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
-public class armPid extends Command {
+public class armPid extends InstantCommand {
+  private double pointTo;
 public armPid(double setPoint){
   requires(Robot.claw);
+  pointTo = setPoint;
 }
   @Override
   protected void execute() {
-    Robot.foot.reverse();
+    Robot.claw.armMovement(pointTo);
   }
 
   @Override
 	protected void end() {
-		Robot.foot.stop();
+    Robot.claw.armStop();
   }
   
   @Override
