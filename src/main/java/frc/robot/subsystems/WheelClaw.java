@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.*;
 
 public class WheelClaw extends Subsystem {
 	
@@ -17,10 +16,6 @@ public class WheelClaw extends Subsystem {
 	private Spark spark2 = new Spark(1);
 	private WPI_TalonSRX armJoint = new WPI_TalonSRX(RobotMap.motorArmJointID);
 
-
-	private static double distancePerRevolution = 15.2 * Math.PI;
-	private static double pulsesPerRevolution = 360;
-	private static double distancePerPulse = distancePerRevolution / pulsesPerRevolution;
 	public WheelClaw() {
 			armJoint.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 
 			RobotMap.kPIDLoopIdx,
