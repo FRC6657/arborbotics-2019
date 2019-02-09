@@ -86,7 +86,7 @@ public class OI {
 			liftDown = new JoystickButton(coolController, 6);
 		  	footForward = new JoystickButton(coolController, 4);
 		  	footBackward = new JoystickButton(coolController, 3);
-		    break;
+			break;
 		  default:
 		 	clawGrab = new JoystickButton(happyStick, 5);
 			clawRelease = new JoystickButton(happyStick, 3);
