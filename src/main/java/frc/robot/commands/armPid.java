@@ -12,10 +12,10 @@ import frc.robot.Robot;
 
 public class armPid extends InstantCommand {
   private double pointTo;
-public armPid(double setPoint){
-  requires(Robot.claw);
-  pointTo = setPoint;
-}
+  public armPid(double setPoint){
+    requires(Robot.claw);
+    pointTo = setPoint;
+  }
   @Override
   protected void execute() {
     Robot.claw.armMovement(pointTo);

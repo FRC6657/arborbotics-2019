@@ -23,16 +23,15 @@ public class Foot extends Subsystem {
   public void initDefaultCommand() {
   }
 
-	public void forward() {
-		spark.set(-(RobotMap.footSpeed));
-	}
+  public void forward() {
+	spark.set(-(RobotMap.footSpeed));
+  }
 	
-	public void reverse() {
-		spark.set(RobotMap.footSpeed);
-	}
+  public void reverse() {
+	spark.set(RobotMap.footSpeed);
+  }
 	
-	public void stop() {
-		spark.set(0);
-	}
-
+  public void stop() {
+	spark.set(0);
+  }
 }
