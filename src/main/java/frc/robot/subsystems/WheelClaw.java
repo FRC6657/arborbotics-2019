@@ -24,8 +24,8 @@ public class WheelClaw extends Subsystem {
 		/* Config the peak and nominal outputs, 12V means full */
 		armJoint.configNominalOutputForward(0, RobotMap.kTimeoutMs);
 		armJoint.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
-		armJoint.configPeakOutputForward(1, RobotMap.kTimeoutMs);
-		armJoint.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
+		armJoint.configPeakOutputForward(0.3, RobotMap.kTimeoutMs);
+		armJoint.configPeakOutputReverse(-0.3, RobotMap.kTimeoutMs);
 	
 		/**
 		 * Config the allowable closed-loop error, Closed-Loop output will be
