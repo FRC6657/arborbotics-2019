@@ -59,12 +59,12 @@ public class OI {
 
 	public double getArcadeSpeed() {
 		double supaY = happyStick.getY();
-		return supaY > RobotMap.joystickSpeedDeadband ? (-supaY*supaY*Math.signum(supaY) + 0.1) * RobotMap.joystickArcadeSpeedModifier : 0;
+		return (-supaY*supaY*Math.signum(supaY) + 0.1) * RobotMap.joystickArcadeSpeedModifier;
 	}
 
  	public double getArcadeRotation() {
 		double supaTwist =  happyStick.getTwist();
-		return supaTwist > RobotMap.joystickRotationDeadband ? (supaTwist + 0.1) * RobotMap.joystickArcadeRotationModifier : 0;
+		return (supaTwist) * RobotMap.joystickArcadeRotationModifier;
 	}
 	
 	public double getArcadeRoationThrottle() {

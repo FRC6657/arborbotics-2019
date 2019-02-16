@@ -8,12 +8,12 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Lift extends Subsystem {
   
-  private WPI_TalonSRX liftMoter = new WPI_TalonSRX(RobotMap.liftID);
+    private WPI_VictorSPX liftMoter = new WPI_VictorSPX(RobotMap.liftID);
 
 	public Lift() {
  	}
