@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.Encoder;
 
 public class DriveLocomotive extends Subsystem {
 	
-	//Locomotives are better than trains.
+	//Locomotives are better than trains!
 	
   	private WPI_TalonSRX motorFrontLeft = new WPI_TalonSRX(RobotMap.motorFrontLeftID);   //Declaration of Motors using RobotMap ID's
   	private WPI_TalonSRX motorBackLeft = new WPI_TalonSRX(RobotMap.motorBackLeftID);	
