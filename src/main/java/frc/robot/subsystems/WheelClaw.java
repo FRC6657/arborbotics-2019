@@ -62,8 +62,8 @@ public class WheelClaw extends Subsystem {
 	}
 	
 	public void grab() {
-		spark1.set(-(RobotMap.wheelClawSpeed));
-		spark2.set(-(RobotMap.wheelClawSpeed));
+		spark1.set(-(RobotMap.wheelClawSpeed + 0.25));
+		spark2.set(-(RobotMap.wheelClawSpeed + 0.25));
 	}
 	
 	public void armMovement(double setPoint){

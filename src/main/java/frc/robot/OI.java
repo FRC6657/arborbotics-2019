@@ -32,15 +32,15 @@ public class OI {
 	public JoystickButton footBackward;
 
 	public OI() {
-		happyStick = new Joystick(RobotMap.driveControllerID);
+		happyStick = new Joystick(RobotMap.joystickID);
 		coolController = new XboxController(RobotMap.gamePadID);
 		clawGrab = new JoystickButton(happyStick, 5);
 		clawRelease = new JoystickButton(happyStick, 3);
-		liftUp = new JoystickButton(happyStick, 2);
-		liftDown = new JoystickButton(happyStick, 1);
+		liftUp = new JoystickButton(happyStick, 1);
+		liftDown = new JoystickButton(happyStick, 2);
 		footForward = new JoystickButton(happyStick, 9);
 		footBackward = new JoystickButton(happyStick, 11);
-
+ 
 		ClawGrab cg = new ClawGrab();
 		clawGrab.whileHeld(cg);
 		ClawRelease cr = new ClawRelease();
@@ -78,23 +78,23 @@ public class OI {
   }
 
   public void setDriverProfile(String RFID) {
-	  switch(RFID) {
-		  case "DUAL":
-			clawGrab = new JoystickButton(coolController, 1);
-			clawRelease = new JoystickButton(coolController, 2);
-			liftUp = new JoystickButton(coolController, 5);
-			liftDown = new JoystickButton(coolController, 6);
-		  	footForward = new JoystickButton(coolController, 4);
-		  	footBackward = new JoystickButton(coolController, 3);
-			break;
-		  default:
-		 	clawGrab = new JoystickButton(happyStick, 5);
-			clawRelease = new JoystickButton(happyStick, 3);
-			liftUp = new JoystickButton(happyStick, 2);
-			liftDown = new JoystickButton(happyStick, 1);
-			footForward = new JoystickButton(happyStick, 9);
-			footBackward = new JoystickButton(happyStick, 11);
-			break;
+	switch(RFID) {
+	  case "DUAL":
+  		clawGrab = new JoystickButton(coolController, 1);
+		clawRelease = new JoystickButton(coolController, 2);
+		liftUp = new JoystickButton(happyStick, 1);
+		liftDown = new JoystickButton(happyStick, 2);
+		footForward = new JoystickButton(happyStick, 9);
+		footBackward = new JoystickButton(happyStick, 11);
+		break;
+	  default:
+	 	clawGrab = new JoystickButton(happyStick, 5);
+		clawRelease = new JoystickButton(happyStick, 3);
+		liftUp = new JoystickButton(happyStick, 1);
+		liftDown = new JoystickButton(happyStick, 2);
+		footForward = new JoystickButton(happyStick, 9);
+		footBackward = new JoystickButton(happyStick, 11);
+		break;
 	  }
   }
 }

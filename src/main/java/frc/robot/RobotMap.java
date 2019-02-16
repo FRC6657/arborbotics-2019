@@ -16,8 +16,8 @@ public class RobotMap {
 	public static int gyroID = 5;
 	public static int liftID = 7;
 	
-	public static int driveControllerID = 0;
 	public static int gamePadID = 1;
+	public static int joystickID = 0;
 
 	public static double joystickSpeedDeadband = 0.0;
 	public static double joystickRotationDeadband = 0.0;
@@ -26,8 +26,8 @@ public class RobotMap {
 	public static double joystickArcadeRotationModifier = 1.0;
 
 	public static double wheelClawSpeed = 0.4d;
-	public static double liftSpeed = 0.3d;
-	public static double footSpeed = 0.6d;
+	public static double liftSpeed = 0.65d;
+	public static double footSpeed = 0.4d;
 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
