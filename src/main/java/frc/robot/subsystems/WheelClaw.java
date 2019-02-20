@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public class WheelClaw extends Subsystem {
 	
@@ -15,7 +16,7 @@ public class WheelClaw extends Subsystem {
 	private WPI_TalonSRX armJoint = new WPI_TalonSRX(RobotMap.motorArmJointID);
 
 	public WheelClaw() {
-		armJoint.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 
+		/*armJoint.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 
 		RobotMap.kPIDLoopIdx,
 		RobotMap.kTimeoutMs);
 	
@@ -23,7 +24,7 @@ public class WheelClaw extends Subsystem {
 		armJoint.setInverted(RobotMap.kMotorInvert);
 	
 		/* Config the peak and nominal outputs, 12V means full */
-		armJoint.configNominalOutputForward(0, RobotMap.kTimeoutMs);
+		/*armJoint.configNominalOutputForward(0, RobotMap.kTimeoutMs);
 		armJoint.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
 		armJoint.configPeakOutputForward(0.3, RobotMap.kTimeoutMs);
 		armJoint.configPeakOutputReverse(-0.3, RobotMap.kTimeoutMs);
@@ -33,10 +34,10 @@ public class WheelClaw extends Subsystem {
 		 * neutral within this range. See Table in Section 17.2.1 for native
 		 * units per rotation.
 		 */
-		armJoint.configAllowableClosedloopError(0, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);
+		/*armJoint.configAllowableClosedloopError(0, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);
 	
 		/* Config Position Closed Loop gains in slot0, tsypically kF stays zero. */
-		armJoint.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kGains.kF, RobotMap.kTimeoutMs);
+		/*armJoint.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kGains.kF, RobotMap.kTimeoutMs);
 		armJoint.config_kP(RobotMap.kPIDLoopIdx, RobotMap.kGains.kP, RobotMap.kTimeoutMs);
 		armJoint.config_kI(RobotMap.kPIDLoopIdx, RobotMap.kGains.kI, RobotMap.kTimeoutMs);
 		armJoint.config_kD(RobotMap.kPIDLoopIdx, RobotMap.kGains.kD, RobotMap.kTimeoutMs);
@@ -45,15 +46,16 @@ public class WheelClaw extends Subsystem {
 		 * Grab the 360 degree position of the MagEncoder's absolute
 		 * position, and intitally set the relative sensor to match.
 		 */
-		int absolutePosition = armJoint.getSensorCollection().getPulseWidthPosition();
+		/*int absolutePosition = armJoint.getSensorCollection().getPulseWidthPosition();
 	
 		/* Mask out overflows, keep bottom 12 bits */
-		absolutePosition &= 0xFFF;
+		/*absolutePosition &= 0xFFF;
 		if (RobotMap.kSensorPhase) { absolutePosition *= -1; }
 		if (RobotMap.kMotorInvert) { absolutePosition *= -1; }
 			
 		/* Set the quadrature (relative) sensor to match absolute */
-		armJoint.setSelectedSensorPosition(absolutePosition, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);
+		/*armJoint.setSelectedSensorPosition(absolutePosition, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);*/
+		armJoint.setNeutralMode(NeutralMode.Brake);
 	}
 
 
@@ -67,7 +69,15 @@ public class WheelClaw extends Subsystem {
 	}
 	
 	public void armMovement(double setPoint){
-		armJoint.set(ControlMode.MotionMagic, setPoint);
+		/*armJoint.set(ControlMode.MotionMagic, setPoint);*/
+	}
+
+	public void armJointUp(){
+		armJoint.set(RobotMap.armSpeed);
+	}
+
+	public void armJointDown(){
+		armJoint.set(-(RobotMap.armSpeed));
 	}
 
 	public void armStop(){

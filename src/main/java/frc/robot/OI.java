@@ -13,6 +13,8 @@ import frc.robot.commands.LiftRaise;
 import frc.robot.commands.LiftLower;
 import frc.robot.commands.FootForward;
 import frc.robot.commands.FootReverse;
+import frc.robot.commands.ArmJointUp;
+import frc.robot.commands.ArmJointDown;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -30,6 +32,8 @@ public class OI {
 	public JoystickButton liftDown;
 	public JoystickButton footForward;
 	public JoystickButton footBackward;
+	public JoystickButton armJointUp;
+	public JoystickButton armJointDown;
 
 	public OI() {
 		happyStick = new Joystick(RobotMap.joystickID);
@@ -40,7 +44,14 @@ public class OI {
 		liftDown = new JoystickButton(happyStick, 2);
 		footForward = new JoystickButton(happyStick, 9);
 		footBackward = new JoystickButton(happyStick, 11);
- 
+		armJointUp = new JoystickButton(happyStick, 6);
+		armJointDown = new JoystickButton(happyStick, 4);
+
+		ArmJointUp aju = new ArmJointUp();
+		armJointUp.whileHeld(aju);
+		ArmJointDown ajd = new ArmJointDown();
+		armJointDown.whileHeld(ajd);
+
 		ClawGrab cg = new ClawGrab();
 		clawGrab.whileHeld(cg);
 		ClawRelease cr = new ClawRelease();
@@ -84,6 +95,8 @@ public class OI {
 		clawRelease = new JoystickButton(coolController, 2);
 		liftUp = new JoystickButton(happyStick, 1);
 		liftDown = new JoystickButton(happyStick, 2);
+		armJointUp = new JoystickButton(coolController, 3);
+		armJointDown = new JoystickButton(coolController, 4);
 		footForward = new JoystickButton(happyStick, 9);
 		footBackward = new JoystickButton(happyStick, 11);
 		break;

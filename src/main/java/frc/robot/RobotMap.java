@@ -28,6 +28,7 @@ public class RobotMap {
 	public static double wheelClawSpeed = 0.4d;
 	public static double liftSpeed = 0.65d;
 	public static double footSpeed = 0.4d;
+	public static double armSpeed = 0.15d;
 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
