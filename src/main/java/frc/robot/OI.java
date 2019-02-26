@@ -24,8 +24,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	//Controllers
 	private Joystick happyStick;
 	private XboxController coolController;
+	
+	//Buttons
 	public JoystickButton clawGrab;
 	public JoystickButton clawRelease;
 	public JoystickButton liftUp;
@@ -36,6 +39,7 @@ public class OI {
 	public JoystickButton armJointDown;
 
 	public OI() {
+		//Configures controllers and buttons
 		happyStick = new Joystick(RobotMap.joystickID);
 		coolController = new XboxController(RobotMap.gamePadID);
 		clawGrab = new JoystickButton(happyStick, 5);
@@ -47,49 +51,49 @@ public class OI {
 		armJointUp = new JoystickButton(happyStick, 6);
 		armJointDown = new JoystickButton(happyStick, 4);
 
-		ArmJointUp aju = new ArmJointUp();
+		ArmJointUp aju = new ArmJointUp(); //Arm Joint
 		armJointUp.whileHeld(aju);
 		ArmJointDown ajd = new ArmJointDown();
 		armJointDown.whileHeld(ajd);
 
-		ClawGrab cg = new ClawGrab();
+		ClawGrab cg = new ClawGrab(); //Claw
 		clawGrab.whileHeld(cg);
 		ClawRelease cr = new ClawRelease();
 		clawRelease.whileHeld(cr);
 		
-		LiftRaise lu = new LiftRaise();
+		LiftRaise lu = new LiftRaise(); //Lift
 		liftUp.whileHeld(lu);
 		LiftLower ld = new LiftLower();
 		liftDown.whileHeld(ld);
-
-		FootForward ff = new FootForward();
+		
+		FootForward ff = new FootForward();//Foot
 		footForward.whileHeld(ff);
 		FootReverse fb = new FootReverse();
 		footBackward.whileHeld(fb);
 	}
 
-	public double getArcadeSpeed() {
+	public double getArcadeSpeed() { //Gets modified joystick speed
 		double supaY = happyStick.getY();
 		return (-supaY*supaY*Math.signum(supaY) + 0.1) * RobotMap.joystickArcadeSpeedModifier;
 	}
 
- 	public double getArcadeRotation() {
+ 	public double getArcadeRotation() { //Gets joystick rotation
 		double supaTwist =  happyStick.getTwist();
 		return (supaTwist) * RobotMap.joystickArcadeRotationModifier;
 	}
 	
-	public double getArcadeRoationThrottle() {
+	public double getArcadeRoationThrottle() { //Gets joystick rotation
 		double supaTwist = happyStick.getTwist();
 		return supaTwist;
 	}
 	
-	public double getScaledThrottle() {
+	public double getScaledThrottle() { //Gets throttle switch as a double 0-1
 		double supaThrottle = happyStick.getThrottle();
 		return (0.5 * supaThrottle) + 0.5;
   }
 
-  public void setDriverProfile(String RFID) {
-	switch(RFID) {
+  public void setDriverProfile(String tag) { //Concept of using RFIDs for driver profiles (((even though they are objectively BAD)))
+	switch(tag) {
 	  case "DUAL":
   		clawGrab = new JoystickButton(coolController, 1);
 		clawRelease = new JoystickButton(coolController, 2);

@@ -27,33 +27,39 @@ import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Foot;
 
 public class Robot extends TimedRobot {
+  //Physical subsystems
   public static WheelClaw claw = new WheelClaw();
   public static Lift lift = new Lift();
   public static Foot foot = new Foot();
   public static DriveLocomotive driveLocomotive  = new DriveLocomotive();
-  public static OI oi;
-  public static double driveMaxOutput = 1.0d;
   
+  //Network table stuff
   public static NetworkTableInstance inst = NetworkTableInstance.getDefault();
   NetworkTableEntry angleEntry;
   double angle;
 
+  //Auto Commands & Selector
   Command autonomousCommand;
   SendableChooser<Command> autoChooser = new SendableChooser<>();
-
   PIDDriveStraight pidStraight;
   GyroTurn gyroTurn;
   PIDTurn pidTurn;
   UltrasonicAuto ultraAuto;
   TimedReverse reverseTimed;
 
+  //Other Constants
+  public static double driveMaxOutput = 1.0d;
+  public static OI oi;
+
   @Override
   public void robotInit() {
     oi = new OI();
-
+    
+    //Network table stuff
     NetworkTable table = inst.getTable("jetsoncamera");
     angleEntry = table.getEntry("degrees");
-
+    
+    //Auto Commands
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
     gyroTurn = new GyroTurn(30);
@@ -65,6 +71,8 @@ public class Robot extends TimedRobot {
     reverseTimed = new TimedReverse();
     autoChooser.addOption("Timed Reverse", reverseTimed);
     SmartDashboard.putData("Auto mode", autoChooser);
+
+    //Prints Numbers to SmartDash
     SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
     SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
@@ -79,6 +87,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotPeriodic() {
+    //Prints Numbers to SmartDash
     SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
     SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
