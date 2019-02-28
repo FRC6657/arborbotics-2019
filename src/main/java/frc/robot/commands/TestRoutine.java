@@ -16,8 +16,8 @@ import frc.robot.commands.ClawOpenTimed;
 public class TestRoutine extends CommandGroup {
   public TestRoutine() {
     
-    /*  CARGO AUTO  */
-    addSequential(new PIDDriveStraight(20));
+    /*  CARGO AUTO (Straight)  */
+    addSequential(new PIDDriveStraight(218));
     //addSequential(new LiftUpTimed(2));
     //addSequential(new ArmJointDown());
     //addSequential(new ClawOpenTimed(0.5));

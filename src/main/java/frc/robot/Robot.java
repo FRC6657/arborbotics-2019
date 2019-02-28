@@ -21,6 +21,7 @@ import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
 import frc.robot.commands.TimedReverse;
 import frc.robot.commands.UltrasonicAuto;
+import frc.robot.commands.TestRoutine;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.WheelClaw;
 import frc.robot.subsystems.Lift;
@@ -46,6 +47,7 @@ public class Robot extends TimedRobot {
   PIDTurn pidTurn;
   UltrasonicAuto ultraAuto;
   TimedReverse reverseTimed;
+  TestRoutine cargoStraight;
 
   //Other Constants
   public static double driveMaxOutput = 1.0d;
@@ -70,6 +72,8 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Ultrasonic Auto", ultraAuto);
     reverseTimed = new TimedReverse();
     autoChooser.addOption("Timed Reverse", reverseTimed);
+    cargoStraight = new TestRoutine();
+    autoChooser.addOption("Carge Straight Routine", cargoStraight);
     SmartDashboard.putData("Auto mode", autoChooser);
 
     //Prints Numbers to SmartDash
