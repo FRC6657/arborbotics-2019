@@ -85,13 +85,12 @@ public class WheelClaw extends Subsystem {
 	}
 
 	public void release() {
-		spark1.set(RobotMap.wheelClawSpeed);
-		spark2.set(RobotMap.wheelClawSpeed);
+		spark1.set(RobotMap.wheelClawSpeed + 0.15);
+		spark2.set(RobotMap.wheelClawSpeed + 0.15);
 	}
 	
 	public void stop() {
 		spark1.set(0);
 		spark2.set(0);
-	}
-		
+	}		
 }

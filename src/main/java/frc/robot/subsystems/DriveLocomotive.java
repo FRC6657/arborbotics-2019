@@ -28,8 +28,8 @@ public class DriveLocomotive extends Subsystem {
 
 	//Encoders, Gyro, and UltraSonic
 	private MB1013Ultrasonic ultrasonic = new MB1013Ultrasonic(0);
-	private Encoder encoderLeft = new Encoder(0, 1, false, Encoder.EncodingType.k1X);
-  	private Encoder encoderRight = new Encoder(2, 3, true, Encoder.EncodingType.k1X);
+	private Encoder encoderLeft = new Encoder(0, 1, true, Encoder.EncodingType.k1X);
+  	private Encoder encoderRight = new Encoder(2, 3, false, Encoder.EncodingType.k1X);
 	private PigeonIMU gyro = new PigeonIMU(RobotMap.gyroID);
 	
 	//Other Constants
@@ -116,4 +116,13 @@ public class DriveLocomotive extends Subsystem {
 	public double getUltraSonicDistance() { //Gets distance from ultrasonic
 		return ultrasonic.getDistance();
 	}
+
+	public double getDegreesFromEncoderValues() {
+		double leftDistance = getEncoderLeft();
+		double rightDistance = getEncoderRight();
+		double robotArcLength = (leftDistance-rightDistance)/2;
+		double robotDegrees = 360*(robotArcLength/(Math.PI*62.5));
+
+		return robotDegrees;
+    }
 }

@@ -17,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.commands.GyroTurn;
+import frc.robot.commands.EncoderTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
 import frc.robot.commands.TimedReverse;
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
   //Auto Commands & Selector
   Command autonomousCommand;
   SendableChooser<Command> autoChooser = new SendableChooser<>();
+  EncoderTurn encoderTurn;
   PIDDriveStraight pidStraight;
   GyroTurn gyroTurn;
   PIDTurn pidTurn;
@@ -62,8 +64,12 @@ public class Robot extends TimedRobot {
     angleEntry = table.getEntry("degrees");
     
     //Auto Commands
+    cargoStraight = new TestRoutine();
+    autoChooser.addOption("Cargo Straight Routine", cargoStraight);
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
+    encoderTurn = new EncoderTurn(90, 0.5);
+    autoChooser.addOption("EncoderTurn", encoderTurn);
     gyroTurn = new GyroTurn(30);
     autoChooser.addOption("Gyro Turn", gyroTurn);
     pidTurn = new PIDTurn(-30);
@@ -72,8 +78,6 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Ultrasonic Auto", ultraAuto);
     reverseTimed = new TimedReverse();
     autoChooser.addOption("Timed Reverse", reverseTimed);
-    cargoStraight = new TestRoutine();
-    autoChooser.addOption("Carge Straight Routine", cargoStraight);
     SmartDashboard.putData("Auto mode", autoChooser);
 
     //Prints Numbers to SmartDash
