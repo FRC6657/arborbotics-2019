@@ -7,27 +7,22 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
-public class armPid extends InstantCommand {
-  private double pointTo;
-  public armPid(double setPoint){
+public class ArmJointTimed extends TimedCommand {
+  public ArmJointTimed(double secs) {
+    super(secs);
     requires(Robot.lift);
-    pointTo = setPoint;
   }
+
   @Override
   protected void execute() {
-    Robot.claw.armMovement(pointTo);
+    Robot.lift.armJointDown();
   }
 
   @Override
 	protected void end() {
-    Robot.lift.armStop();
-  }
-  
-  @Override
-  protected boolean isFinished() {
-    return false;
+		Robot.lift.armStop();
   }
 }

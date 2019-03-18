@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
 public class TimedReverse extends TimedCommand {
-  public TimedReverse() {
-    super(5);
+  double speed;
+  public TimedReverse(double secs, double spd) {
+    super(secs);
+    speed = spd;
     requires(Robot.driveLocomotive);
   }
 
@@ -24,24 +26,12 @@ public class TimedReverse extends TimedCommand {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveLocomotive.drive(-0.5, -0.5);
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
+    Robot.driveLocomotive.drive(speed, speed);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.driveLocomotive.drive(0, 0);
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }

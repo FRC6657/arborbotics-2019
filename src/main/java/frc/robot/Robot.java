@@ -27,6 +27,9 @@ import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.WheelClaw;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Foot;
+import frc.robot.commands.LiftUpTimed;
+import frc.robot.commands.ArmJointTimed;
+import frc.robot.commands.ClawOpenTimed;
 
 public class Robot extends TimedRobot {
   //Physical subsystems
@@ -49,7 +52,11 @@ public class Robot extends TimedRobot {
   PIDTurn pidTurn;
   UltrasonicAuto ultraAuto;
   TimedReverse reverseTimed;
-  TestRoutine cargoStraight;
+  TimedReverse timedStraight;
+  TestRoutine cargoRoutine;
+  LiftUpTimed liftTimed;
+  ArmJointTimed armTimed;
+  ClawOpenTimed clawTimed;
 
   //Other Constants
   public static double driveMaxOutput = 1.0d;
@@ -64,11 +71,11 @@ public class Robot extends TimedRobot {
     angleEntry = table.getEntry("degrees");
     
     //Auto Commands
-    cargoStraight = new TestRoutine();
-    autoChooser.addOption("Cargo Straight Routine", cargoStraight);
+    cargoRoutine = new TestRoutine();
+    autoChooser.addOption("Cargo Routine", cargoRoutine);
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
-    encoderTurn = new EncoderTurn(90, 0.5);
+    encoderTurn = new EncoderTurn(90);
     autoChooser.addOption("EncoderTurn", encoderTurn);
     gyroTurn = new GyroTurn(30);
     autoChooser.addOption("Gyro Turn", gyroTurn);
@@ -76,8 +83,16 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("PID Turn", pidTurn);
     ultraAuto = new UltrasonicAuto(50);
     autoChooser.addOption("Ultrasonic Auto", ultraAuto);
-    reverseTimed = new TimedReverse();
-    autoChooser.addOption("Timed Reverse", reverseTimed);
+    reverseTimed = new TimedReverse(4, -0.5);
+    autoChooser.addOption("Level 2 (Reverse)", reverseTimed);
+    timedStraight = new TimedReverse(2, 0.5);
+    autoChooser.addOption("Level 1", timedStraight);
+    liftTimed = new LiftUpTimed(2);
+    autoChooser.addOption("Timed Lift", liftTimed);
+    armTimed = new ArmJointTimed(1);
+    autoChooser.addOption("Timed Arm", armTimed);
+    clawTimed = new ClawOpenTimed(0.75);
+    autoChooser.addOption("Timed Claw", clawTimed);
     SmartDashboard.putData("Auto mode", autoChooser);
 
     //Prints Numbers to SmartDash

@@ -13,13 +13,14 @@ import frc.robot.Robot;
 public class EncoderTurn extends PIDCommand {
   private double driveSpeed = 0;
   private double targetAngle = 0;
-  public EncoderTurn(double angle, double speed) {
-    super(0.6, 0.0, 0.0);
+  public EncoderTurn(double angle) {
+    super(0.03, 0.0, 0.05);
 
+    getPIDController().reset();
+    getPIDController().setPID(0.03, 0.0, 0.033, 0.10);
     getPIDController().setContinuous(false);
-    getPIDController().setAbsoluteTolerance(0.1);
-    getPIDController().setOutputRange(-0.5, 0.5);
-    driveSpeed = speed;
+    getPIDController().setAbsoluteTolerance(0.3);
+    getPIDController().setOutputRange(-0.7, 0.7);
     targetAngle = angle;
     
     requires(Robot.driveLocomotive);

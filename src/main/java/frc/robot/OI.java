@@ -11,8 +11,6 @@ import frc.robot.commands.ClawGrab;
 import frc.robot.commands.ClawRelease;
 import frc.robot.commands.LiftRaise;
 import frc.robot.commands.LiftLower;
-import frc.robot.commands.FootForward;
-import frc.robot.commands.FootReverse;
 import frc.robot.commands.ArmJointUp;
 import frc.robot.commands.ArmJointDown;
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,45 +29,50 @@ public class OI {
 	//Buttons
 	public JoystickButton clawGrab;
 	public JoystickButton clawRelease;
+	public JoystickButton clawGrab1;
+	public JoystickButton clawRelease1;
 	public JoystickButton liftUp;
 	public JoystickButton liftDown;
 	public JoystickButton footForward;
 	public JoystickButton footBackward;
 	public JoystickButton armJointUp;
 	public JoystickButton armJointDown;
+	public JoystickButton armJointUp1;
+	public JoystickButton armJointDown1;
 
 	public OI() {
 		//Configures controllers and buttons
 		happyStick = new Joystick(RobotMap.joystickID);
 		coolController = new XboxController(RobotMap.gamePadID);
-		clawGrab = new JoystickButton(happyStick, 5);
-		clawRelease = new JoystickButton(happyStick, 3);
 		liftUp = new JoystickButton(happyStick, 1);
 		liftDown = new JoystickButton(happyStick, 2);
-		footForward = new JoystickButton(happyStick, 9);
-		footBackward = new JoystickButton(happyStick, 11);
-		armJointUp = new JoystickButton(happyStick, 6);
-		armJointDown = new JoystickButton(happyStick, 4);
+		clawGrab1 = new JoystickButton(happyStick, 5);
+		clawRelease1 = new JoystickButton(happyStick, 3);
+		armJointUp1 = new JoystickButton(happyStick, 6);
+		armJointDown1 = new JoystickButton(happyStick, 4);
+		clawGrab = new JoystickButton(coolController, 1);
+		clawRelease = new JoystickButton(coolController, 2);
+		armJointUp = new JoystickButton(coolController, 6);
+		armJointDown = new JoystickButton(coolController, 5);
 
 		ArmJointUp aju = new ArmJointUp(); //Arm Joint
 		armJointUp.whileHeld(aju);
+		armJointUp1.whileHeld(aju);
 		ArmJointDown ajd = new ArmJointDown();
 		armJointDown.whileHeld(ajd);
+		armJointDown1.whileHeld(ajd);
 
 		ClawGrab cg = new ClawGrab(); //Claw
 		clawGrab.whileHeld(cg);
+		clawGrab1.whileHeld(cg);
 		ClawRelease cr = new ClawRelease();
 		clawRelease.whileHeld(cr);
+		clawRelease1.whileHeld(cr);
 		
 		LiftRaise lu = new LiftRaise(); //Lift
 		liftUp.whileHeld(lu);
 		LiftLower ld = new LiftLower();
 		liftDown.whileHeld(ld);
-		
-		FootForward ff = new FootForward();//Foot
-		footForward.whileHeld(ff);
-		FootReverse fb = new FootReverse();
-		footBackward.whileHeld(fb);
 	}
 
 	public double getArcadeSpeed() { //Gets modified joystick speed
@@ -79,30 +82,32 @@ public class OI {
 
  	public double getArcadeRotation() { //Gets joystick rotation
 		double supaTwist =  happyStick.getTwist();
-		return (supaTwist) * RobotMap.joystickArcadeRotationModifier;
+		return (supaTwist) * RobotMap.joystickArcadeRotationModifier * getScaledThrottle();
 	}
 	
 	public double getArcadeRoationThrottle() { //Gets joystick rotation
-		double supaTwist = happyStick.getTwist();
+		double supaTwist = happyStick.getTwist() * getScaledThrottle();
 		return supaTwist;
 	}
 	
 	public double getScaledThrottle() { //Gets throttle switch as a double 0-1
 		double supaThrottle = happyStick.getThrottle();
+		if (supaThrottle < 0.4) 
+			supaThrottle = 0.4;
 		return (0.5 * supaThrottle) + 0.5;
   }
 
   public void setDriverProfile(String tag) { //Concept of using RFIDs for driver profiles (((even though they are objectively BAD)))
 	switch(tag) {
 	  case "DUAL":
-  		clawGrab = new JoystickButton(coolController, 1);
-		clawRelease = new JoystickButton(coolController, 2);
-		liftUp = new JoystickButton(happyStick, 1);
-		liftDown = new JoystickButton(happyStick, 2);
-		armJointUp = new JoystickButton(coolController, 3);
-		armJointDown = new JoystickButton(coolController, 4);
-		footForward = new JoystickButton(happyStick, 9);
-		footBackward = new JoystickButton(happyStick, 11);
+	    clawGrab = new JoystickButton(coolController, 1);
+	    clawRelease = new JoystickButton(coolController, 2);
+	    liftUp = new JoystickButton(happyStick, 1);
+	    liftDown = new JoystickButton(happyStick, 2);
+	    armJointUp = new JoystickButton(coolController, 6);
+	    armJointDown = new JoystickButton(coolController, 5);
+	    footForward = new JoystickButton(happyStick, 9);
+	    footBackward = new JoystickButton(happyStick, 11);
 		break;
 	  default:
 	 	clawGrab = new JoystickButton(happyStick, 5);

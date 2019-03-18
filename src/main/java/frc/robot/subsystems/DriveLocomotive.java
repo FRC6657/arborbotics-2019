@@ -118,11 +118,6 @@ public class DriveLocomotive extends Subsystem {
 	}
 
 	public double getDegreesFromEncoderValues() {
-		double leftDistance = getEncoderLeft();
-		double rightDistance = getEncoderRight();
-		double robotArcLength = (leftDistance-rightDistance)/2;
-		double robotDegrees = 360*(robotArcLength/(Math.PI*62.5));
-
-		return robotDegrees;
+		return 180*(getEncoderLeft()-getEncoderRight())/(Math.PI*62.5);
     }
 }

@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ArmJointDown extends Command {
   public ArmJointDown() {
-    requires(Robot.claw);
+    requires(Robot.lift);
   }
 
   @Override
   protected void execute() {
-    Robot.claw.armJointDown();
+    Robot.lift.armJointDown();
   }
 
   @Override
 	protected void end() {
-		Robot.claw.armStop();
+		Robot.lift.armStop();
   }
   
   @Override

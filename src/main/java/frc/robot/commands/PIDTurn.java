@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class PIDTurn extends PIDCommand {
   public PIDTurn(double angleTo) {
-    super(0.3, 0, 0.2);
+    super(0.3, 0.0, 0.05, 0.15);
     requires(Robot.driveLocomotive);
 		
     getPIDController().reset();

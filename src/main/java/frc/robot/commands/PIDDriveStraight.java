@@ -12,12 +12,12 @@ import frc.robot.Robot;
 
 public class PIDDriveStraight extends PIDCommand {
   public PIDDriveStraight(double distance) {
-    super(0.6, 0.0, 0.0);
+    super(0.3, 0.0, 0.0);
 		
 		requires(Robot.driveLocomotive);
 		
 		getPIDController().reset();
-		getPIDController().setOutputRange(-0.5d,  0.5d);
+		getPIDController().setOutputRange(-0.7d,  0.7d);
 		getPIDController().setAbsoluteTolerance(0.05);
 		getPIDController().setContinuous(false);
 		

@@ -13,7 +13,6 @@ public class WheelClaw extends Subsystem {
 	
 	private Spark spark1 = new Spark(0);
 	private Spark spark2 = new Spark(1);
-	private WPI_TalonSRX armJoint = new WPI_TalonSRX(RobotMap.motorArmJointID);
 
 	public WheelClaw() {
 		/*armJoint.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 
@@ -55,7 +54,6 @@ public class WheelClaw extends Subsystem {
 			
 		/* Set the quadrature (relative) sensor to match absolute */
 		/*armJoint.setSelectedSensorPosition(absolutePosition, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);*/
-		armJoint.setNeutralMode(NeutralMode.Brake);
 	}
 
 
@@ -70,18 +68,6 @@ public class WheelClaw extends Subsystem {
 	
 	public void armMovement(double setPoint){
 		/*armJoint.set(ControlMode.MotionMagic, setPoint);*/
-	}
-
-	public void armJointUp(){
-		armJoint.set(RobotMap.armSpeed);
-	}
-
-	public void armJointDown(){
-		armJoint.set(-(RobotMap.armSpeed));
-	}
-
-	public void armStop(){
-		armJoint.stopMotor();
 	}
 
 	public void release() {

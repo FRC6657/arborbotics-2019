@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
 public class ClawOpenTimed extends TimedCommand {
-  public ClawOpenTimed(int secs) {
+  public ClawOpenTimed(double secs) {
     super(secs);
     requires(Robot.claw);
   }
