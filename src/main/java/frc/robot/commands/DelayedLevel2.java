@@ -7,29 +7,13 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
-import edu.wpi.first.wpilibj.command.Command;
+public class DelayedLevel2 extends CommandGroup {
 
-public class ClawRelease extends Command {
-
-	public ClawRelease() {
-		requires(Robot.claw);
-		
-	}
-  
-	@Override
-	protected void execute() {
-	  Robot.claw.release();
-	}
-  
-	@Override
-	  protected void end() {
-		  Robot.claw.stop();
-	  }
-  
-	@Override
-	protected boolean isFinished() {
-	  return false;
-	}
+  public DelayedLevel2() {
+    addSequential(new SleepDrive(7)); //wait 7 secconds
+    addSequential(new TimedDrive(4, -0.5)); //drive backwards
+  }
 }

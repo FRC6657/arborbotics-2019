@@ -7,22 +7,24 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.TimedCommand;
+import frc.robot.Robot;
 
-public class ArmJointTimed extends TimedCommand {
-  public ArmJointTimed(double secs) {
+public class ClawReleaseTimed extends TimedCommand {
+  double ReleaseSpeed;
+  public ClawReleaseTimed(double secs, double speed) {
     super(secs);
-    requires(Robot.lift);
+    requires(Robot.claw);
+    this.ReleaseSpeed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.lift.armJointDown();
+    Robot.claw.release(ReleaseSpeed);
   }
 
   @Override
-	protected void end() {
-		Robot.lift.armStop();
+  protected void end() {
+    Robot.claw.stop();
   }
 }

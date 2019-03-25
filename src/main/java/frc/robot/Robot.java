@@ -7,35 +7,46 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.commands.GyroTurn;
+import frc.robot.commands.LiftFire;
 import frc.robot.commands.EncoderTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
-import frc.robot.commands.TimedReverse;
+import frc.robot.commands.StandardTurnCalibration;
+import frc.robot.commands.SystemsCheck;
+import frc.robot.commands.TimedDrive;
 import frc.robot.commands.UltrasonicAuto;
-import frc.robot.commands.TestRoutine;
+import frc.robot.subsystems.ArmJoint;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.WheelClaw;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Foot;
 import frc.robot.commands.LiftUpTimed;
-import frc.robot.commands.ArmJointTimed;
-import frc.robot.commands.ClawOpenTimed;
+import frc.robot.commands.ACAutoTesting;
+import frc.robot.commands.ArmJointMoveTimed;
+import frc.robot.commands.ClawIntakeTimed;
+import frc.robot.commands.DelayedLevel2;
+
 
 public class Robot extends TimedRobot {
   //Physical subsystems
   public static WheelClaw claw = new WheelClaw();
   public static Lift lift = new Lift();
   public static Foot foot = new Foot();
+  public static ArmJoint joint = new ArmJoint();
   public static DriveLocomotive driveLocomotive  = new DriveLocomotive();
   
   //Network table stuff
@@ -51,17 +62,17 @@ public class Robot extends TimedRobot {
   GyroTurn gyroTurn;
   PIDTurn pidTurn;
   UltrasonicAuto ultraAuto;
-  TimedReverse reverseTimed;
-  TimedReverse timedStraight;
-  TestRoutine cargoRoutine;
+  TimedDrive reverseTimed;
+  TimedDrive timedStraight;
   LiftUpTimed liftTimed;
-  ArmJointTimed armTimed;
-  ClawOpenTimed clawTimed;
+  ArmJointMoveTimed armTimed;
+  ClawIntakeTimed clawTimed;
 
   //Other Constants
   public static double driveMaxOutput = 1.0d;
   public static OI oi;
 
+  
   @Override
   public void robotInit() {
     oi = new OI();
@@ -69,10 +80,10 @@ public class Robot extends TimedRobot {
     //Network table stuff
     NetworkTable table = inst.getTable("jetsoncamera");
     angleEntry = table.getEntry("degrees");
+
     
     //Auto Commands
-    cargoRoutine = new TestRoutine();
-    autoChooser.addOption("Cargo Routine", cargoRoutine);
+
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
     encoderTurn = new EncoderTurn(90);
@@ -83,17 +94,27 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("PID Turn", pidTurn);
     ultraAuto = new UltrasonicAuto(50);
     autoChooser.addOption("Ultrasonic Auto", ultraAuto);
-    reverseTimed = new TimedReverse(4, -0.5);
+    reverseTimed = new TimedDrive(4, -0.5);
     autoChooser.addOption("Level 2 (Reverse)", reverseTimed);
-    timedStraight = new TimedReverse(2, 0.5);
+    timedStraight = new TimedDrive(2, 0.5);
     autoChooser.addOption("Level 1", timedStraight);
-    liftTimed = new LiftUpTimed(2);
+
+    liftTimed = new LiftUpTimed(2, 0.7);
     autoChooser.addOption("Timed Lift", liftTimed);
-    armTimed = new ArmJointTimed(1);
+    armTimed = new ArmJointMoveTimed(1, RobotMap.armSpeed);
     autoChooser.addOption("Timed Arm", armTimed);
-    clawTimed = new ClawOpenTimed(0.75);
+    clawTimed = new ClawIntakeTimed(0.75,0.4);
     autoChooser.addOption("Timed Claw", clawTimed);
-    SmartDashboard.putData("Auto mode", autoChooser);
+    autoChooser.addOption("None", null);
+    autoChooser.addOption("DelayedL2", new DelayedLevel2());
+    autoChooser.addOption("Actest", new ACAutoTesting());
+    autoChooser.addOption("Acturntest", new ACAutoTesting());
+    autoChooser.addOption("SystemsCheck", new SystemsCheck());
+    autoChooser.addOption("TurnCali", new StandardTurnCalibration());
+    autoChooser.addOption("LiftFire", new LiftFire());
+    SmartDashboard.putData("Auto Mode", autoChooser);
+    
+   
 
     //Prints Numbers to SmartDash
     SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
@@ -104,6 +125,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Throttle", oi.getScaledThrottle());
     SmartDashboard.putNumber("Rotation", oi.getArcadeRotation());
     SmartDashboard.putNumber("Speed", oi.getArcadeSpeed());
+
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setVideoMode(PixelFormat.kMJPEG, 400, 300, 10);
+    Shuffleboard.getTab("SmartDashboard").add("Video", camera);
 
     driveLocomotive.reset();
   }

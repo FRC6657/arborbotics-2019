@@ -78,5 +78,13 @@ public class WheelClaw extends Subsystem {
 	public void stop() {
 		spark1.set(0);
 		spark2.set(0);
+	}
+
+
+	public void release(double releasespeed) {
+	}
+
+
+	public void grab(double intakeSpeed) {
 	}		
 }

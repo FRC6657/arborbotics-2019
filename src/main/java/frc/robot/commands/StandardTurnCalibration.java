@@ -7,26 +7,13 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ArmJointUp extends Command {
-  public ArmJointUp() {
-    requires(Robot.lift);
-  }
-
-  @Override
-  protected void execute() {
-    Robot.lift.armJointUp();
-  }
-
-  @Override
-	protected void end() {
-		Robot.lift.armStop();
-  }
-  
-  @Override
-  protected boolean isFinished() {
-    return false;
+public class StandardTurnCalibration extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public StandardTurnCalibration() {
+  addSequential(new ACTurn(1));
   }
 }

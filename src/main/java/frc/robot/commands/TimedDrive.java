@@ -7,27 +7,31 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-public class armPid extends InstantCommand {
-  private double pointTo;
-  public armPid(double setPoint){
-    requires(Robot.lift);
-    pointTo = setPoint;
-  }
-  @Override
-  protected void execute() {
-    Robot.claw.armMovement(pointTo);
+public class TimedDrive extends TimedCommand {
+  double speed;
+  public TimedDrive(double secs, double spd) {
+    super(secs);
+    speed = spd;
+    requires(Robot.driveLocomotive);
   }
 
+  // Called just before this Command runs the first time
   @Override
-	protected void end() {
-    Robot.joint.armStop();
+  protected void initialize() {
   }
-  
+
+  // Called repeatedly when this Command is scheduled to run
   @Override
-  protected boolean isFinished() {
-    return false;
+  protected void execute() {
+    Robot.driveLocomotive.drive(speed, speed);
+  }
+
+  // Called once after isFinished returns true
+  @Override
+  protected void end() {
+    Robot.driveLocomotive.drive(0, 0);
   }
 }

@@ -11,25 +11,25 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ClawRelease extends Command {
+public class ClawIntake extends Command {
 
-	public ClawRelease() {
+	public ClawIntake() {
 		requires(Robot.claw);
-		
 	}
-  
+	
 	@Override
 	protected void execute() {
-	  Robot.claw.release();
+	Robot.claw.grab();
 	}
-  
+	
 	@Override
-	  protected void end() {
-		  Robot.claw.stop();
-	  }
-  
+	protected void end() {
+		Robot.claw.stop();
+	}
+
 	@Override
 	protected boolean isFinished() {
-	  return false;
+		return false;
 	}
+
 }

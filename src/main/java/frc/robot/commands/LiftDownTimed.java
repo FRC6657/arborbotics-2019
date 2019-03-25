@@ -7,29 +7,24 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
+public class LiftDownTimed extends TimedCommand {
+  double liftspeed;
+  public LiftDownTimed(int secs, double speed) {
+    super(secs);
+    requires(Robot.lift);
+    this.liftspeed = speed;
+  }
 
-public class ClawRelease extends Command {
+  @Override
+  protected void execute() {
+    Robot.lift.lower(liftspeed);
+  }
 
-	public ClawRelease() {
-		requires(Robot.claw);
-		
-	}
-  
-	@Override
-	protected void execute() {
-	  Robot.claw.release();
-	}
-  
-	@Override
-	  protected void end() {
-		  Robot.claw.stop();
-	  }
-  
-	@Override
-	protected boolean isFinished() {
-	  return false;
-	}
+  @Override
+  protected void end() {
+    Robot.lift.stop();
+  }
 }

@@ -17,11 +17,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
   
 	private WPI_VictorSPX liftMoter = new WPI_VictorSPX(RobotMap.liftID);
-	private WPI_TalonSRX armJoint = new WPI_TalonSRX(RobotMap.motorArmJointID);
+
 
 	public Lift() {
 		liftMoter.setNeutralMode(NeutralMode.Brake);
-		armJoint.setNeutralMode(NeutralMode.Brake);
+
  	}
 
 	@Override
@@ -29,18 +29,6 @@ public class Lift extends Subsystem {
 		
 	}
 
-	public void armJointUp(){
-		armJoint.set(RobotMap.armSpeed);
-	}
-
-	public void armJointDown(){
-		armJoint.set(-(RobotMap.armSpeed));
-	}
-
-	public void armStop(){
-		armJoint.stopMotor();
-	}
-	
 	public void raise() {
     	liftMoter.set(RobotMap.liftSpeed);
 	}
@@ -51,5 +39,11 @@ public class Lift extends Subsystem {
 	
 	public void stop() {
     	liftMoter.set(0);
+	}
+
+	public void lower(double liftspeed) {
+	}
+
+	public void raise(double liftspeed) {
 	}
 }

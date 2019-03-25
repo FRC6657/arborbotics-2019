@@ -7,12 +7,12 @@
 
 package frc.robot;
 
-import frc.robot.commands.ClawGrab;
+import frc.robot.commands.ClawIntake;
 import frc.robot.commands.ClawRelease;
 import frc.robot.commands.LiftRaise;
 import frc.robot.commands.LiftLower;
-import frc.robot.commands.ArmJointUp;
-import frc.robot.commands.ArmJointDown;
+import frc.robot.commands.ArmJointMove;
+import frc.robot.commands.ArmJointMoveTimed;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -55,14 +55,14 @@ public class OI {
 		armJointUp = new JoystickButton(coolController, 6);
 		armJointDown = new JoystickButton(coolController, 5);
 
-		ArmJointUp aju = new ArmJointUp(); //Arm Joint
+		ArmJointMove aju = new ArmJointMove(RobotMap.armSpeed); //Arm Joint
 		armJointUp.whileHeld(aju);
 		armJointUp1.whileHeld(aju);
-		ArmJointDown ajd = new ArmJointDown();
+		ArmJointMove ajd = new ArmJointMove(- RobotMap.armSpeed);
 		armJointDown.whileHeld(ajd);
 		armJointDown1.whileHeld(ajd);
 
-		ClawGrab cg = new ClawGrab(); //Claw
+		ClawIntake cg = new ClawIntake(); //Claw
 		clawGrab.whileHeld(cg);
 		clawGrab1.whileHeld(cg);
 		ClawRelease cr = new ClawRelease();

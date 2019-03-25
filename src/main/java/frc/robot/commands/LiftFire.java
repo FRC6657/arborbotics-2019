@@ -7,29 +7,17 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.subsystems.DriveLocomotive;
 
-import edu.wpi.first.wpilibj.command.Command;
+public class LiftFire extends CommandGroup {
 
-public class ClawRelease extends Command {
+  public LiftFire() {
 
-	public ClawRelease() {
-		requires(Robot.claw);
-		
-	}
-  
-	@Override
-	protected void execute() {
-	  Robot.claw.release();
-	}
-  
-	@Override
-	  protected void end() {
-		  Robot.claw.stop();
-	  }
-  
-	@Override
-	protected boolean isFinished() {
-	  return false;
-	}
+    addSequential(new LiftUpTimed(2, 0.75));
+    addSequential(new ArmJointMoveTimed(1, -0.2));
+    addSequential(new ClawReleaseTimed(1, 0.4));
+    addSequential(new ArmJointMoveTimed(1, 0.3));
+    addSequential(new LiftDownTimed(1, 0.75));
+  }
 }

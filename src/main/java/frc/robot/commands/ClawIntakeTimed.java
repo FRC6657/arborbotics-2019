@@ -7,26 +7,24 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmJointDown extends Command {
-  public ArmJointDown() {
-    requires(Robot.lift);
+public class ClawIntakeTimed extends TimedCommand {
+  double IntakeSpeed;
+  public ClawIntakeTimed(double secs, double speed) {
+    super(secs);
+    requires(Robot.claw);
+    this.IntakeSpeed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.lift.armJointDown();
+    Robot.claw.grab(IntakeSpeed);
   }
 
   @Override
-	protected void end() {
-		Robot.lift.armStop();
-  }
-  
-  @Override
-  protected boolean isFinished() {
-    return false;
+  protected void end() {
+    Robot.claw.stop();
   }
 }

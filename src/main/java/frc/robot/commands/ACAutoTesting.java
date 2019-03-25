@@ -7,29 +7,11 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import edu.wpi.first.wpilibj.command.Command;
+public class ACAutoTesting extends CommandGroup {
 
-public class ClawGrab extends Command {
-
-	public ClawGrab() {
-		requires(Robot.claw);
-	}
-	
-	@Override
-	protected void execute() {
-	Robot.claw.grab();
-	}
-	
-	@Override
-	protected void end() {
-		Robot.claw.stop();
-	}
-
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
-
+  public ACAutoTesting() {
+    addSequential(new ACTurn(2));
+  }
 }
