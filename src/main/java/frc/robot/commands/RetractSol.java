@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import java.io.Console;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
@@ -19,6 +20,7 @@ public class RetractSol extends InstantCommand {
    */
   public RetractSol() {
     super();
+    requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -27,6 +29,7 @@ public class RetractSol extends InstantCommand {
   @Override
   protected void initialize() {
     Robot.pneumatics.retractSol();
+    System.out.print("SolRetracted");
   }
 
 }

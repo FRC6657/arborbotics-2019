@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
+import frc.robot.subsystems.Pneumatics;
 
 /**
  * Add your docs here.
@@ -19,6 +20,7 @@ public class FireSolenoid extends InstantCommand {
    */
   public FireSolenoid() {
     super();
+    requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -27,6 +29,7 @@ public class FireSolenoid extends InstantCommand {
   @Override
   protected void initialize() {
     Robot.pneumatics.fireSol();
+    System.out.print("SolFire");
   }
 
 }

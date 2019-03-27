@@ -9,7 +9,10 @@ package frc.robot;
 
 import frc.robot.commands.ClawIntake;
 import frc.robot.commands.ClawRelease;
+import frc.robot.commands.FireSolenoid;
 import frc.robot.commands.LiftRaise;
+import frc.robot.commands.FireSolenoid;
+import frc.robot.commands.RetractSol;
 import frc.robot.commands.LiftLower;
 import frc.robot.commands.ArmJointMove;
 import frc.robot.commands.ArmJointMoveTimed;
@@ -39,6 +42,8 @@ public class OI {
 	public JoystickButton armJointDown;
 	public JoystickButton armJointUp1;
 	public JoystickButton armJointDown1;
+	public JoystickButton solOut;
+	public JoystickButton solIn;
 
 	public OI() {
 		//Configures controllers and buttons
@@ -54,6 +59,8 @@ public class OI {
 		clawRelease = new JoystickButton(coolController, 2);
 		armJointUp = new JoystickButton(coolController, 6);
 		armJointDown = new JoystickButton(coolController, 5);
+		solIn = new JoystickButton(coolController, 3);
+		solOut = new JoystickButton(coolController, 4);
 
 		ArmJointMove aju = new ArmJointMove(RobotMap.armSpeed); //Arm Joint
 		armJointUp.whileHeld(aju);
@@ -73,6 +80,12 @@ public class OI {
 		liftUp.whileHeld(lu);
 		LiftLower ld = new LiftLower();
 		liftDown.whileHeld(ld);
+
+		FireSolenoid si = new FireSolenoid(); //Pistons
+		solIn.whileHeld(si);
+		RetractSol sr = new RetractSol();
+		solOut.whileHeld(sr);
+
 	}
 
 	public double getArcadeSpeed() { //Gets modified joystick speed
@@ -95,7 +108,8 @@ public class OI {
 		if (supaThrottle < 0.4) 
 			supaThrottle = 0.4;
 		return (0.5 * supaThrottle) + 0.5;
-  }
+	}
+
 
   public void setDriverProfile(String tag) { //Concept of using RFIDs for driver profiles (((even though they are objectively BAD)))
 	switch(tag) {
@@ -117,6 +131,8 @@ public class OI {
 		footForward = new JoystickButton(happyStick, 9);
 		footBackward = new JoystickButton(happyStick, 11);
 		break;
-	  }
-  }
+		}
+	}
 }
+
+
