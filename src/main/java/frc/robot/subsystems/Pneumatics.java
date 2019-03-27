@@ -7,34 +7,31 @@
 
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 
 
 public class Pneumatics extends Subsystem {
-  private Spark spark3 = new Spark(2);
-  private Solenoid s1,s2;
+
+//DoubleSolenoid sol1 = new DoubleSolenoid(forwardChannel, reverseChannel);
+//DoubleSolenoid sol2 = new DoubleSolenoid(forwardChannel, reverseChannel);
 
   @Override
   public void initDefaultCommand() {
-    
-    s1 = new Solenoid(1);
-    s2 = new Solenoid(2);
-
-
-
   }
   public void fireSol() {
 
-    s1.set(true);
-    s2.set(true);
+  //sol1.set(Value.kForward);
+  //sol2.set(Value.kForward);
 
   }
   public void retractSol() {
     
-    s1.set(false);
-    s2.set(false);
+    //sol1.set(Value.kReverse);
+    //sol2.set(Value.kReverse);
   
   }
+  
 }
