@@ -33,6 +33,7 @@ import frc.robot.subsystems.ArmJoint;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.WheelClaw;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Foot;
 import frc.robot.commands.LiftUpTimed;
 import frc.robot.commands.ACAutoTesting;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
   public static Foot foot = new Foot();
   public static ArmJoint joint = new ArmJoint();
   public static DriveLocomotive driveLocomotive  = new DriveLocomotive();
+  public static Pneumatics pneumatics = new Pneumatics();
   
   //Network table stuff
   public static NetworkTableInstance inst = NetworkTableInstance.getDefault();
