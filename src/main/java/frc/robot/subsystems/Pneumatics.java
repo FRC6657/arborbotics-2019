@@ -11,27 +11,28 @@ import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 
 
 public class Pneumatics extends Subsystem {
 
-//DoubleSolenoid sol1 = new DoubleSolenoid(forwardChannel, reverseChannel);
-//DoubleSolenoid sol2 = new DoubleSolenoid(forwardChannel, reverseChannel);
+DoubleSolenoid sol1 = new DoubleSolenoid(0, 1);
+DoubleSolenoid sol2 = new DoubleSolenoid(2, 3);
 
   @Override
   public void initDefaultCommand() {
   }
   public void fireSol() {
 
-  //sol1.set(Value.kForward);
-  //sol2.set(Value.kForward);
+  sol1.set(Value.kForward);
+  sol2.set(Value.kForward);
 
   }
   public void retractSol() {
     
-    //sol1.set(Value.kReverse);
-    //sol2.set(Value.kReverse);
+    sol1.set(Value.kReverse);
+    sol2.set(Value.kReverse);
   
   }
   

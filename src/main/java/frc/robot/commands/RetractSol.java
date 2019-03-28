@@ -31,5 +31,4 @@ public class RetractSol extends InstantCommand {
     Robot.pneumatics.retractSol();
     System.out.print("SolRetracted");
   }
-
 }
