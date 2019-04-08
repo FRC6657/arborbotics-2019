@@ -14,11 +14,11 @@ import frc.robot.subsystems.Pneumatics;
 /**
  * Add your docs here.
  */
-public class FireSolenoid extends InstantCommand {
+public class SolOut extends InstantCommand {
   /**
    * Add your docs here.
    */
-  public FireSolenoid() {
+  public SolOut() {
     super();
     requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
@@ -29,7 +29,7 @@ public class FireSolenoid extends InstantCommand {
   @Override
   protected void initialize() {
     Robot.pneumatics.fireSol();
-    System.out.print("SolFire");
+    System.out.print("SolOut");
   }
 
 }

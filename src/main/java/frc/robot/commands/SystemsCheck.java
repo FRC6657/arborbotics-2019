@@ -30,8 +30,8 @@ public class SystemsCheck extends CommandGroup {
     addSequential(new ClawIntakeTimed(1, 0.4));//Run intake in for 1 seccond at 40%
     addSequential(new ClawReleaseTimed(1, 0.4));//Run intake out for 1 seccond at 40%
 
-    addSequential(new FireSolenoid()); //Fire Pistons
-    addSequential(new RetractSol()); //Retract Pistons
+    addSequential(new SolOut()); //Fire Pistons
+    addSequential(new SolIn()); //Retract Pistons
 
   }
 }

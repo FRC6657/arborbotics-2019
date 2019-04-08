@@ -9,10 +9,9 @@ package frc.robot;
 
 import frc.robot.commands.ClawIntake;
 import frc.robot.commands.ClawRelease;
-import frc.robot.commands.FireSolenoid;
+import frc.robot.commands.SolIn;
 import frc.robot.commands.LiftRaise;
-import frc.robot.commands.FireSolenoid;
-import frc.robot.commands.RetractSol;
+import frc.robot.commands.SolOut;
 import frc.robot.commands.LiftLower;
 import frc.robot.commands.ArmJointMove;
 import frc.robot.commands.ArmJointMoveTimed;
@@ -81,9 +80,9 @@ public class OI {
 		LiftLower ld = new LiftLower();
 		liftDown.whileHeld(ld);
 
-		FireSolenoid si = new FireSolenoid(); //Pistons
+		SolIn si = new SolIn(); //Pistons
 		solIn.whileHeld(si);
-		RetractSol sr = new RetractSol();
+		SolOut sr = new SolOut();
 		solOut.whileHeld(sr);
 
 	}

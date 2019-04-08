@@ -25,6 +25,7 @@ import frc.robot.commands.LiftFire;
 import frc.robot.commands.EncoderTurn;
 import frc.robot.commands.PIDDriveStraight;
 import frc.robot.commands.PIDTurn;
+import frc.robot.commands.PistonTest;
 import frc.robot.commands.StandardTurnCalibration;
 import frc.robot.commands.SystemsCheck;
 import frc.robot.commands.TimedDrive;
@@ -114,6 +115,7 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("SystemsCheck", new SystemsCheck());
     autoChooser.addOption("TurnCali", new StandardTurnCalibration());
     autoChooser.addOption("LiftFire", new LiftFire());
+    autoChooser.addOption("PistonTest", new PistonTest());
     SmartDashboard.putData("Auto Mode", autoChooser);
     
    

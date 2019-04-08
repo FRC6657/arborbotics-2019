@@ -14,11 +14,11 @@ import frc.robot.Robot;
 /**
  * Add your docs here.
  */
-public class RetractSol extends InstantCommand {
+public class SolIn extends InstantCommand {
   /**
    * Add your docs here.
    */
-  public RetractSol() {
+    public SolIn() {
     super();
     requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
@@ -29,6 +29,6 @@ public class RetractSol extends InstantCommand {
   @Override
   protected void initialize() {
     Robot.pneumatics.retractSol();
-    System.out.print("SolRetracted");
+    System.out.print("SolIn");
   }
 }
