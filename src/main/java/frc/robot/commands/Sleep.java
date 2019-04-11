@@ -13,11 +13,11 @@ import frc.robot.Robot;
 /**
  * Add your docs here.
  */
-public class SleepDrive extends TimedCommand {
+public class Sleep extends TimedCommand {
   /**
    * Add your docs here.
    */
-  public SleepDrive(double timeout) {
+  public Sleep(double timeout) {
     super(timeout);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

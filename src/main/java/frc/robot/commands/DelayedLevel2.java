@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class DelayedLevel2 extends CommandGroup {
 
   public DelayedLevel2() {
-    addSequential(new SleepDrive(7)); //wait 7 secconds
+    addSequential(new Sleep(7)); //wait 7 secconds
     addSequential(new TimedDrive(4, -0.5)); //drive backwards
   }
 }
