@@ -1,4 +1,3 @@
-
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
@@ -62,8 +61,8 @@ public class WheelClaw extends Subsystem {
 	}
 	
 	public void grab() {
-		spark1.set(-(RobotMap.wheelClawSpeed + 0.25));
-		spark2.set(-(RobotMap.wheelClawSpeed + 0.25));
+		spark1.set(-(RobotMap.wheelClawSpeed + 0.20));
+		spark2.set(-(RobotMap.wheelClawSpeed + 0.20));
 	}
 	
 	public void armMovement(double setPoint){

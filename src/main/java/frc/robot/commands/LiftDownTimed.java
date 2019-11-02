@@ -15,12 +15,11 @@ public class LiftDownTimed extends TimedCommand {
   public LiftDownTimed(int secs, double speed) {
     super(secs);
     requires(Robot.lift);
-    this.liftspeed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.lift.lower(liftspeed);
+    Robot.lift.lower();
   }
 
   @Override

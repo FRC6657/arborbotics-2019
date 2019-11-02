@@ -39,7 +39,6 @@ public class DriveLocomotive extends Subsystem {
     private double driveMax = 1.0d;
 
   	public DriveLocomotive() {
-		//Configuring encoders, motors, and gyro
 		encoderLeft.setDistancePerPulse(distancePerPulse);
 		encoderRight.setDistancePerPulse(distancePerPulse);
 
@@ -63,57 +62,57 @@ public class DriveLocomotive extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-      	setDefaultCommand(new ArcadeDrive()); //Used to drive the robot
-    }
+		setDefaultCommand(new ArcadeDrive()); 
+	}
 
-    public void setMax(double max) { //Sets driveMax
+    public void setMax(double max) { 
 		driveMax = max;
 	}
 	
-	public void arcadeDrive(double speed, double rotation) { //Drives with a speed and rotation
+	public void arcadeDrive(double speed, double rotation) { 
 		drive.arcadeDrive(driveMax * speed, driveMax * rotation);
 	}
 	
-	public void drive(double left, double right) { //Drives with power inputs to left and right sides of the drivetrain
+	public void drive(double left, double right) { 
 		drive.tankDrive(left, right);
 	}
 	
-	public void reset() { //Resets encoders and calibrates gyro
+	public void reset() { 
 		encoderLeft.reset();
 		encoderRight.reset();
 		gyroCalibrate();
 	}
 
-	public double getDistance() { //Gets averaged distance from encoders
+	public double getDistance() { 
 		return ((encoderLeft.getDistance()  + encoderRight.getDistance()) / 2);
 	}
 	
-	public double getEncoderLeft() { //Gets left encoder distance
+	public double getEncoderLeft() { 
 		return encoderLeft.getDistance();
 	}
 	
-	public double getEncoderRight() { //Gets Right encoder distance
+	public double getEncoderRight() { 
 		return encoderRight.getDistance();
 	}
 	
-	public double getAngle() { //Gets gyro heading (angle measure)
+	public double getAngle() { 
 		//double[] ypr = new double[3];
 		//gyro.getYawPitchRoll(ypr);
 		return gyro.getFusedHeading()/*ypr[0]*/;
 	}
 	
-	public void gyroCalibrate() { //Resets/calibrate gyro
+	public void gyroCalibrate() { 
 		gyro.setFusedHeading(0, 30);
 		//gyro.setYaw(0);
 		//gyro.setAccumZAngle(0);
 	}
 
-	public void stop() { //Stops bot and resets encoders and gyro
+	public void stop() { 
 		drive.tankDrive(0, 0);
 		reset();
 	}
 	
-	public double getUltraSonicDistance() { //Gets distance from ultrasonic
+	public double getUltraSonicDistance() { 
 		return ultrasonic.getDistance();
 	}
 

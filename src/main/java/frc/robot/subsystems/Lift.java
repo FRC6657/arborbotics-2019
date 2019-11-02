@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -41,9 +40,4 @@ public class Lift extends Subsystem {
     	liftMoter.set(0);
 	}
 
-	public void lower(double liftspeed) {
-	}
-
-	public void raise(double liftspeed) {
-	}
 }

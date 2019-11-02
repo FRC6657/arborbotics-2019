@@ -10,22 +10,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import frc.robot.commands.*;
-import frc.robot.Robot;
 
 public class MadTownAuto extends CommandGroup {
   /**
    * Add your docs here.
    */
   public MadTownAuto() {
-    TimedDrive timedDrive = new TimedDrive(5, 0.6);
-    LiftUpTimed liftUp = new LiftUpTimed(1, 0.7);
+    TimedDrive timedDrive = new TimedDrive(3, 0.6);
+    LiftUpTimed liftUp = new LiftUpTimed(4, 0.7);
     ArmJointMoveTimed armJointMoveTimed = new ArmJointMoveTimed(1, 0.15);
     ClawReleaseTimed clawReleaseTimed = new ClawReleaseTimed(2);
 
     addSequential(timedDrive);
-    /*addSequential(liftUp);
-    addSequential(armJointMoveTimed);
-    addSequential(clawReleaseTimed);*/
+    addSequential(liftUp);
+    //addSequential(armJointMoveTimed);
+    addSequential(clawReleaseTimed);
 
     // Add Commands here:
     // e.g. addSequential(new Command1());
