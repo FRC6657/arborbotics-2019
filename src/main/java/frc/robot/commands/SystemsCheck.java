@@ -27,8 +27,8 @@ public class SystemsCheck extends CommandGroup {
     addSequential(new ArmJointMoveTimed(1, -0.1));//Lower the arm joint at 10%
     addSequential(new ArmJointMoveTimed(1, 0.1));//Raist the arm joint at 10%
 
-    addSequential(new ClawIntakeTimed(1, 0.4));//Run intake in for 1 seccond at 40%
-    addSequential(new ClawReleaseTimed(1, 0.4));//Run intake out for 1 seccond at 40%
+    addSequential(new ClawIntakeTimed(1));//Run intake in for 1 seccond at 40%
+    addSequential(new ClawReleaseTimed(1));//Run intake out for 1 seccond at 40%
 
     addSequential(new SolOut()); //Fire Pistons
     addSequential(new SolIn()); //Retract Pistons

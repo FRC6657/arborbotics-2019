@@ -11,16 +11,14 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
 public class ClawReleaseTimed extends TimedCommand {
-  double ReleaseSpeed;
-  public ClawReleaseTimed(double secs, double speed) {
+  public ClawReleaseTimed(double secs) {
     super(secs);
     requires(Robot.claw);
-    this.ReleaseSpeed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.claw.release(ReleaseSpeed);
+    Robot.claw.release();
   }
 
   @Override

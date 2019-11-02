@@ -12,15 +12,14 @@ import frc.robot.Robot;
 
 public class ClawIntakeTimed extends TimedCommand {
   double IntakeSpeed;
-  public ClawIntakeTimed(double secs, double speed) {
+  public ClawIntakeTimed(double secs) {
     super(secs);
     requires(Robot.claw);
-    this.IntakeSpeed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.claw.grab(IntakeSpeed);
+    Robot.claw.grab();
   }
 
   @Override

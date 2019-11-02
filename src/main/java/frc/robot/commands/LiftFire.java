@@ -16,7 +16,7 @@ public class LiftFire extends CommandGroup {
 
     addSequential(new LiftUpTimed(2, 0.75));
     addSequential(new ArmJointMoveTimed(1, -0.2));
-    addSequential(new ClawReleaseTimed(1, 0.4));
+    addSequential(new ClawReleaseTimed(1));
     addSequential(new ArmJointMoveTimed(1, 0.3));
     addSequential(new LiftDownTimed(1, 0.75));
   }

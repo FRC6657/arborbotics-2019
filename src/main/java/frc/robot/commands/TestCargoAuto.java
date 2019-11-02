@@ -18,7 +18,7 @@ public class TestCargoAuto extends CommandGroup {
     addSequential(new TimedDrive(2, 0.35));
     addSequential(new LiftUpTimed(2, 0.7));
     addSequential(new ArmJointMoveTimed(1, -0.2));
-    addSequential(new ClawReleaseTimed(1, 0.3));
+    addSequential(new ClawReleaseTimed(1));
     addSequential(new ArmJointMoveTimed(1, 0.3));
     addSequential(new LiftDownTimed(1, 0.7));
     addSequential(new ACTurn(1));
