@@ -22,8 +22,8 @@ public class RobotMap {
 	public static double joystickSpeedDeadband = 0.0;
 	public static double joystickRotationDeadband = 0.0;
 	
-	public static double joystickArcadeSpeedModifier = 0.3;
-	public static double joystickArcadeRotationModifier = 0.4;
+	public static double joystickArcadeSpeedModifier = 0.8;
+	public static double joystickArcadeRotationModifier = 0.6;
 //SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/SPEEDS\/
 	public static double wheelClawSpeed = 0.4d;
 	public static double liftSpeed = 0.7;
