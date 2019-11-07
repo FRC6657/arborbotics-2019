@@ -8,13 +8,19 @@
 package frc.robot.Autos;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Commands.EncoderDrive;
+import frc.robot.Commands.*;
+import frc.robot.Commands.Timed.*;
+public class EncoderHatchAuto extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public EncoderHatchAuto() {
 
-public class EncoderAuto extends CommandGroup {
+    addSequential(new EncoderDrive(10.5, 0.5)); //Drive 10.5ft at 50% Power. This should get the robot to the cargoship.
 
-  public EncoderAuto() {
+    addParallel(new TimedTurnLeft(1, 0.5)); //Turn the robot to face the loading zone
 
-    addSequential(new EncoderDrive(3, 0.5)); //Drive 3ft at 50% speed
+    addSequential(new EncoderDrive(18.4, 0.5)); //Drive the robot towards the loading zone
 
   }
 }

@@ -20,8 +20,6 @@ public class Pneumatics extends Subsystem {
   
   @Override
   public void initDefaultCommand() {
-
-
   }
   public void solForward(){hatchIntake.set(Value.kReverse);}
   public void solReverse(){hatchIntake.set(Value.kReverse);}
