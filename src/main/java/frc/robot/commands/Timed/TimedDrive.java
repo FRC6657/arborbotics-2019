@@ -1,4 +1,4 @@
-package frc.robot.Commands;
+package frc.robot.Commands.Timed;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
@@ -10,7 +10,6 @@ public class TimedDrive extends TimedCommand{
     public TimedDrive(double secs, double spd){
 
         super(secs);
-        
         speed = spd;
 
     }
