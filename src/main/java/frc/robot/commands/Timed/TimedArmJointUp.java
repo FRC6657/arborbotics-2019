@@ -5,19 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Subsystems;
+package frc.robot.Commands.Timed;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.Constants.CanIDs;
+import edu.wpi.first.wpilibj.command.TimedCommand;
+import frc.robot.Robot;
 
-//This holds the Talon for the ArmJoint
-public class ArmJoint extends Subsystem {
+public class TimedArmJointUp extends TimedCommand {
   
-  public WPI_TalonSRX armJointMotor = new WPI_TalonSRX(CanIDs.armJointMotor.value);
+  double speed;
+
+  public TimedArmJointUp(double secs, double spd) {
+    super(secs);
+
+    speed = spd;
+
+  }
 
   @Override
-  public void initDefaultCommand() {
+  protected void initialize() {
+  }
 
+  @Override
+  protected void execute() {
+    Robot.armJoint.armJointMotor.set(-speed);
+  }
+
+  @Override
+  protected void end() {
+  }
+
+  @Override
+  protected void interrupted() {
   }
 }

@@ -5,19 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Subsystems;
+package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.Constants.CanIDs;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.Robot;
 
-//This holds the Talon for the ArmJoint
-public class ArmJoint extends Subsystem {
+public class CompressorControl extends InstantCommand {
+
+  boolean compressorState;
   
-  public WPI_TalonSRX armJointMotor = new WPI_TalonSRX(CanIDs.armJointMotor.value);
+  public CompressorControl(boolean state) {
+    super();
+
+    compressorState = state;
+
+  }
 
   @Override
-  public void initDefaultCommand() {
+  protected void initialize() {
 
+    if(compressorState = false){Robot.pneumatics.compressorOff();}
+    else if(compressorState = true){Robot.pneumatics.compressorOn();}
+    
   }
 }

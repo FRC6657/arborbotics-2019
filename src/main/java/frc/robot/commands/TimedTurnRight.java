@@ -1,19 +1,20 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
+
 import frc.robot.Robot;
 
-public class TimedDrive extends TimedCommand{
+public class TimedTurnRight extends TimedCommand {
 
     double speed;
 
-    public TimedDrive(double secs, double spd){
+    public TimedTurnRight(double secs, double spd) {
 
         super(secs);
         speed = spd;
 
     }
-    
+
     @Override
     protected void initialize() {
     }
@@ -23,11 +24,11 @@ public class TimedDrive extends TimedCommand{
 
         Robot.driveTrain.frontLeftMotor.set(speed);
         Robot.driveTrain.backLeftMotor.set(speed);
-        Robot.driveTrain.frontRightMotor.set(-speed);
-        Robot.driveTrain.backRightMotor.set(-speed);
+        Robot.driveTrain.frontRightMotor.set(speed);
+        Robot.driveTrain.backRightMotor.set(speed);
 
     }
-  
+
     @Override
     protected void end() {
         Robot.driveTrain.frontLeftMotor.set(0);
@@ -35,4 +36,4 @@ public class TimedDrive extends TimedCommand{
         Robot.driveTrain.frontRightMotor.set(0);
         Robot.driveTrain.backRightMotor.set(0);
     }
-  }
+}

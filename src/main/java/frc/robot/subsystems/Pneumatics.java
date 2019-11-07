@@ -5,35 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
-
-import frc.robot.RobotMap;
+package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Compressor;
 
-
-
+//This holds the Solenoid and Compressor.
 public class Pneumatics extends Subsystem {
 
-DoubleSolenoid sol1 = new DoubleSolenoid(0, 1);
-DoubleSolenoid sol2 = new DoubleSolenoid(2, 3);
-
+  private DoubleSolenoid hatchIntake = new DoubleSolenoid(0, 1);
+  private Compressor compressor = new Compressor();
+  
   @Override
   public void initDefaultCommand() {
-  }
-  public void fireSol() {
 
-  sol1.set(Value.kForward);
-  sol2.set(Value.kForward);
 
   }
-  public void retractSol() {
-    
-    sol1.set(Value.kReverse);
-    sol2.set(Value.kReverse);
-  
-  }
-  
+  public void solForward(){hatchIntake.set(Value.kReverse);}
+  public void solReverse(){hatchIntake.set(Value.kReverse);}
+  public void compressorOn(){compressor.setClosedLoopControl(false);}
+  public void compressorOff(){compressor.setClosedLoopControl(true);}
+
 }
+

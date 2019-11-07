@@ -5,19 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Subsystems;
+package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.Constants.CanIDs;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.Robot;
 
-//This holds the Talon for the ArmJoint
-public class ArmJoint extends Subsystem {
+public class Solenoid extends InstantCommand {
+
+  boolean solState;
   
-  public WPI_TalonSRX armJointMotor = new WPI_TalonSRX(CanIDs.armJointMotor.value);
+  public Solenoid(boolean state) {
+    
+    super();
+    solState = state;
+
+    requires(Robot.pneumatics);
+
+  }
 
   @Override
-  public void initDefaultCommand() {
+  protected void initialize() {
+
+    if(solState = false){Robot.pneumatics.solReverse();}
+    else if(solState = true){Robot.pneumatics.solForward();}
 
   }
 }

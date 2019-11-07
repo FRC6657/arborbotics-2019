@@ -1,4 +1,4 @@
-package frc.robot.Commands;
+package frc.robot.Commands.Timed;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;

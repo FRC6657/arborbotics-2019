@@ -5,19 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Subsystems;
+package frc.robot.Autos;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.Constants.CanIDs;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-//This holds the Talon for the ArmJoint
-public class ArmJoint extends Subsystem {
-  
-  public WPI_TalonSRX armJointMotor = new WPI_TalonSRX(CanIDs.armJointMotor.value);
+public class KillAllHumans extends CommandGroup {
 
-  @Override
-  public void initDefaultCommand() {
-
+  public KillAllHumans() {
+    //This is for future use.
   }
 }
