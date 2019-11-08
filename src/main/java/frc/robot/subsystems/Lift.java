@@ -5,21 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 
+import frc.robot.RobotMap;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Constants.CanIDs;
 
-//This holds the Talon for the Lift
 public class Lift extends Subsystem {
- 
-  public WPI_VictorSPX liftMotor = new WPI_VictorSPX(CanIDs.liftMotor.value);
+  
+	private WPI_VictorSPX liftMoter = new WPI_VictorSPX(RobotMap.liftID);
 
-  @Override
-  public void initDefaultCommand() {
 
-    
-  }
+	public Lift() {
+		liftMoter.setNeutralMode(NeutralMode.Brake);
+
+ 	}
+
+	@Override
+	protected void initDefaultCommand() {
+		
+	}
+
+	public void raise() {
+    	liftMoter.set(RobotMap.liftSpeed);
+	}
+	
+	public void lower() {
+   		liftMoter.set(-(RobotMap.liftSpeed));
+	}
+	
+	public void stop() {
+    	liftMoter.set(0);
+	}
+
 }

@@ -1,39 +1,37 @@
-package frc.robot.Commands;
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-public class TimedDrive extends TimedCommand{
-
-    double speed;
-
-    public TimedDrive(double secs, double spd){
-
-        super(secs);
-        
-        speed = spd;
-
-    }
-    
-    @Override
-    protected void initialize() {
-    }
-
-    @Override
-    protected void execute() {
-
-        Robot.driveTrain.frontLeftMotor.set(speed);
-        Robot.driveTrain.backLeftMotor.set(speed);
-        Robot.driveTrain.frontRightMotor.set(-speed);
-        Robot.driveTrain.backRightMotor.set(-speed);
-
-    }
-  
-    @Override
-    protected void end() {
-        Robot.driveTrain.frontLeftMotor.set(0);
-        Robot.driveTrain.backLeftMotor.set(0);
-        Robot.driveTrain.frontRightMotor.set(0);
-        Robot.driveTrain.backRightMotor.set(0);
-    }
+public class TimedDrive extends TimedCommand {
+  double speed;
+  public TimedDrive(double secs, double spd) {
+    super(secs);
+    speed = spd;
+    requires(Robot.driveLocomotive);
   }
+
+  // Called just before this Command runs the first time
+  @Override
+  protected void initialize() {
+  }
+
+  // Called repeatedly when this Command is scheduled to run
+  @Override
+  protected void execute() {
+    Robot.driveLocomotive.drive(speed, speed);
+  }
+
+  // Called once after isFinished returns true
+  @Override
+  protected void end() {
+    Robot.driveLocomotive.drive(0, 0);
+  }
+}
