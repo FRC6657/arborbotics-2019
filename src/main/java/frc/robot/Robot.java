@@ -63,6 +63,9 @@ public class Robot extends TimedRobot {
   SystemsCheck systemsCheck;
   EncoderAuto encoderAuto;
 
+  boolean isButton1Pressed;
+  boolean isButton2Pressed;
+
   @Override
   public void robotInit() {
 
@@ -75,6 +78,8 @@ public class Robot extends TimedRobot {
     //Gives assignes each controller to its value in driver station
     driveStick = new Joystick(ControlDeviceIDs.Joystick.value);
     controller = new XboxController(ControlDeviceIDs.Controller.value);
+
+
 
     //Assigns each button to a specific button on the joystick
     liftUp = new JoystickButton(driveStick, 1);
@@ -145,6 +150,7 @@ public class Robot extends TimedRobot {
     
     Robot.driveTrain.leftEncoder.reset();
     Robot.driveTrain.rightEncoder.reset();//Stops the autonomous if it is still running when TeleOp begins
+    
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -167,26 +173,37 @@ public class Robot extends TimedRobot {
     Robot.driveTrain.frontRightMotor.set(rightPower);
 
 
-    //Gives each button a command to run when it is held down.
-    liftUp.whileHeld(new LiftUp());
-    liftDown.whileHeld(new LiftDown());
+    if(driveStick.getRawButton(1) != isButton1Pressed) {
+      if(driveStick.getRawButton(1)) {
 
-    armJointUp1.whileHeld(new ArmJointUp());
-    armJointDown1.whileHeld(new ArmJointDown());
+        Robot.lift.liftMotor.set(Speeds.Lift);
+        isButton1Pressed = true;
 
-    armJointUp2.whileHeld(new ArmJointUp());
-    armJointDown2.whileHeld(new ArmJointDown());
+      }
+      else {
 
-    hatchGrab1.whenPressed(new HatchGrab());
-    hatchRelease1.whenPressed(new HatchRelease());
+        Robot.lift.liftMotor.set(0);
+        isButton1Pressed = false;
 
-    hatchGrab2.whenPressed(new HatchGrab());
-    hatchRelease2.whenPressed(new HatchRelease());
+      }
 
-    //Makes the slowMode button toggle SlowMode on and off.
-    slowMode.toggleWhenActive(new SlowMode());
+      //if(driveStick.getRawButton(2) != isButton2Pressed) {
+        //if(driveStick.getRawButton(2)) {
+  
+          //Robot.lift.liftMotor.set(-Speeds.Lift);
+          //isButton2Pressed = true;
+  
+        //}
+        //else {
 
-  }
+
+          //isButton2Pressed = false;
+  
+        }
+    }
+//  }
+
+  ///}
 
   @Override
   public void testInit() {

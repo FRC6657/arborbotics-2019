@@ -9,7 +9,6 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.Constants.Speeds;
 
@@ -28,12 +27,12 @@ public class LiftDown extends Command {
   @Override
   protected void execute() {
     Robot.lift.liftMotor.set(-Speeds.Lift);
-    DriverStation.reportError("LiftDown", false);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    Robot.lift.liftMotor.set(0);
     return false;
   }
 
