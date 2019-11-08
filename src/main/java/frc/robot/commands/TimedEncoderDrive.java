@@ -7,42 +7,38 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-public class EncoderDrive extends Command {
-
-  double dis;
+/**
+ * Add your docs here.
+ */
+public class TimedEncoderDrive extends TimedCommand {
+  
   double spd;
+  double sec;
 
-  public EncoderDrive(double distance, double speed) {
-    
-    dis = distance;
-    spd = speed;
-
+  public TimedEncoderDrive(double secs, double speed) {
+    super(secs);
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+
+    Robot.driveTrain.frontRightMotor.set(spd);
+    Robot.driveTrain.frontLeftMotor.set(-spd);
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    Robot.driveTrain.frontLeftMotor.set(0.5);
-    Robot.driveTrain.frontRightMotor.set(-0.5);
-
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
-  // Called once after isFinished returns true
+  // Called once after timeout
   @Override
   protected void end() {
   }

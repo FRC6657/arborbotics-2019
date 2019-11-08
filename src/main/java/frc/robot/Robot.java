@@ -63,8 +63,10 @@ public class Robot extends TimedRobot {
   SystemsCheck systemsCheck;
   EncoderAuto encoderAuto;
 
-  boolean isButton1Pressed;
-  boolean isButton2Pressed;
+  boolean isButton1Pressed = false;
+  boolean isButton2Pressed = false;
+  boolean isButton6Pressed = false;
+  boolean isButton4Pressed = false;
 
   @Override
   public void robotInit() {
@@ -72,8 +74,8 @@ public class Robot extends TimedRobot {
     Robot.driveTrain.leftEncoder.reset();
     Robot.driveTrain.rightEncoder.reset();
 
-    Robot.driveTrain.leftEncoder.setDistancePerPulse((6*Math.PI) * (12) * (360)); //Wheel Diameter * Pi * Inches * 360
-    Robot.driveTrain.rightEncoder.setDistancePerPulse((6*Math.PI) * (12) * (360));
+    Robot.driveTrain.leftEncoder.setDistancePerPulse((6*Math.PI) / (1) / (360)); //Wheel Diameter * Pi * Inches * 360
+    Robot.driveTrain.rightEncoder.setDistancePerPulse(((6*Math.PI) / (1) / (360)));
 
     //Gives assignes each controller to its value in driver station
     driveStick = new Joystick(ControlDeviceIDs.Joystick.value);
@@ -117,6 +119,8 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("EncoderTest", encoderAuto);
     //Adds the option to not have an auto
     autoChooser.addOption("No Auto", null);
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     //Adds a black and white camera to the driverstation that runs at 10fps at 400x300 resoluton
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -172,6 +176,24 @@ public class Robot extends TimedRobot {
     Robot.driveTrain.frontLeftMotor.set(leftPower);
     Robot.driveTrain.frontRightMotor.set(rightPower);
 
+    if(driveStick.getRawButton(6) == true & driveStick.getRawButton(4) == false){Robot.armJoint.armJointMotor.set(Speeds.armJoint);}
+    else if(driveStick.getRawButton(6) == false & driveStick.getRawButton(4) == true){Robot.armJoint.armJointMotor.set(-Speeds.armJoint);}
+    else{Robot.armJoint.armJointMotor.set(0);}
+
+    if(driveStick.getRawButton(2) != isButton2Pressed) {
+      if(driveStick.getRawButton(2)){
+
+        Robot.lift.liftMotor.set(-Speeds.Lift);
+        isButton2Pressed = true;
+
+      }
+      else {
+      
+        Robot.lift.liftMotor.set(0);
+        isButton2Pressed = false;
+
+      }
+    }
 
     if(driveStick.getRawButton(1) != isButton1Pressed) {
       if(driveStick.getRawButton(1)) {
@@ -187,23 +209,12 @@ public class Robot extends TimedRobot {
 
       }
 
-      //if(driveStick.getRawButton(2) != isButton2Pressed) {
-        //if(driveStick.getRawButton(2)) {
-  
-          //Robot.lift.liftMotor.set(-Speeds.Lift);
-          //isButton2Pressed = true;
-  
-        //}
-        //else {
 
 
-          //isButton2Pressed = false;
-  
-        }
-    }
-//  }
+   }
+ }
 
-  ///}
+
 
   @Override
   public void testInit() {
@@ -235,5 +246,6 @@ public class Robot extends TimedRobot {
 
     //Puts the angle from the gyro onto ShuffleBoard
     SmartDashboard.putNumber("Gyro Angle", Robot.driveTrain.gyro.getFusedHeading());
+    SmartDashboard.putBoolean("Button 6", driveStick.getRawButton(6));
   }
 }

@@ -8,13 +8,13 @@
 package frc.robot.Autos;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Commands.EncoderDrive;
+import frc.robot.Commands.TimedEncoderDrive;
 
 public class EncoderAuto extends CommandGroup {
 
   public EncoderAuto() {
 
-    addSequential(new EncoderDrive(3, 0.5)); //Drive 3ft at 50% speed
+    addSequential(new TimedEncoderDrive(3, 0.5)); //Drive 3ft at 50% speed
 
   }
 }
