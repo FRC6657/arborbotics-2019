@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.Pneumatics;
 
 /**
  * Add your docs here.
@@ -20,7 +19,7 @@ public class SolOut extends InstantCommand {
    */
   public SolOut() {
     super();
-    requires(Robot.pneumatics);
+    //requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -28,8 +27,8 @@ public class SolOut extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    Robot.pneumatics.fireSol();
-    System.out.print("SolOut");
+    //Robot.pneumatics.fireSol();
+    //System.out.print("SolOut");
   }
 
 }

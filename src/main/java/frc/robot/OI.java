@@ -14,7 +14,6 @@ import frc.robot.commands.LiftRaise;
 import frc.robot.commands.SolOut;
 import frc.robot.commands.LiftLower;
 import frc.robot.commands.ArmJointMove;
-import frc.robot.commands.ArmJointMoveTimed;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -41,8 +40,8 @@ public class OI {
 	public JoystickButton armJointDown;
 	public JoystickButton armJointUp1;
 	public JoystickButton armJointDown1;
-	public JoystickButton solOut;
-	public JoystickButton solIn;
+	//public JoystickButton solOut;
+	//public JoystickButton solIn;
 
 	public OI() {
 		//Configures controllers and buttons
@@ -58,8 +57,8 @@ public class OI {
 		clawRelease = new JoystickButton(coolController, 2);
 		armJointUp = new JoystickButton(coolController, 6);
 		armJointDown = new JoystickButton(coolController, 5);
-		solIn = new JoystickButton(coolController, 3);
-		solOut = new JoystickButton(coolController, 4);
+		//solIn = new JoystickButton(coolController, 3);
+		//solOut = new JoystickButton(coolController, 4);
 
 		ArmJointMove aju = new ArmJointMove(RobotMap.armSpeed); //Arm Joint
 		armJointUp.whileHeld(aju);
@@ -80,10 +79,12 @@ public class OI {
 		LiftLower ld = new LiftLower();
 		liftDown.whileHeld(ld);
 
+		/*
 		SolIn si = new SolIn(); //Pistons
 		solIn.whileHeld(si);
 		SolOut sr = new SolOut();
 		solOut.whileHeld(sr);
+		*/
 
 	}
 

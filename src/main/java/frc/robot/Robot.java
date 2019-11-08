@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
   public static Foot foot = new Foot();
   public static ArmJoint joint = new ArmJoint();
   public static DriveLocomotive driveLocomotive  = new DriveLocomotive();
-  public static Pneumatics pneumatics = new Pneumatics();
+  //public static Pneumatics pneumatics = new Pneumatics();
   
   //Network table stuff
   public static NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -97,6 +97,12 @@ public class Robot extends TimedRobot {
     madTownAutoLeftSide = new MadTownAutoLeftSide();
     autoChooser.addOption("MadTown Routine Left", madTownAutoLeftSide);
 
+    reverseTimed = new TimedDrive(4, -0.5);
+    autoChooser.addOption("Level 2 (Reverse)", reverseTimed);
+    timedStraight = new TimedDrive(3, 0.5);
+    autoChooser.addOption("Level 1", timedStraight);
+
+    /*
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
     encoderTurn = new EncoderTurn(90);
@@ -105,17 +111,14 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("PID Turn", pidTurn);
     ultraAuto = new UltrasonicAuto(50);
     autoChooser.addOption("Ultrasonic Auto", ultraAuto);
-    reverseTimed = new TimedDrive(4, -0.5);
-    autoChooser.addOption("Level 2 (Reverse)", reverseTimed);
-    timedStraight = new TimedDrive(3, 0.5);
-    autoChooser.addOption("Level 1", timedStraight);
+    
     //controls the times for how long the lift,arm and claw moves s
     liftTimed = new LiftUpTimed(2, 0.7);
     autoChooser.addOption("Timed Lift", liftTimed);
     armTimed = new ArmJointMoveTimed(1, RobotMap.armSpeed);
     autoChooser.addOption("Timed Arm", armTimed);
     clawTimed = new ClawIntakeTimed(0.75); 
-    autoChooser.addOption("Timed Claw", clawTimed);
+    autoChooser.addOption("Timed Claw", clawTimed); 
     autoChooser.addOption("None", null);
 
     autoChooser.addOption("Actest", new ACAutoTesting());
@@ -123,7 +126,7 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("SystemsCheck", new SystemsCheck());
     autoChooser.addOption("TurnCali", new StandardTurnCalibration());
     autoChooser.addOption("LiftFire", new LiftFire());
-    autoChooser.addOption("PistonTest", new PistonTest());
+    autoChooser.addOption("PistonTest", new PistonTest()); */
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     //  Puts data from the robot on to SmartDashboard

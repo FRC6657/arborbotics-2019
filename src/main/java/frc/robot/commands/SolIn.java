@@ -20,7 +20,7 @@ public class SolIn extends InstantCommand {
    */
     public SolIn() {
     super();
-    requires(Robot.pneumatics);
+    //requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -28,7 +28,7 @@ public class SolIn extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    Robot.pneumatics.retractSol();
-    System.out.print("SolIn");
+    //Robot.pneumatics.retractSol();
+    //System.out.print("SolIn");
   }
 }
