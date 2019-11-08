@@ -20,7 +20,7 @@ public class EncoderHatchAuto extends CommandGroup {
 
     addParallel(new TimedTurnLeft(1, 0.5)); //Turn the robot to face the loading zone
 
-    addSequential(new EncoderDrive(18.4, 0.5)); //Drive the robot towards the loading zone
+    addSequential(new EncoderDrive(18.4, 0.5)); //Drive the robot towards the loading zone at 50% power.
 
   }
 }

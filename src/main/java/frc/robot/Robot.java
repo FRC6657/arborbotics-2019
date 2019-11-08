@@ -21,9 +21,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import frc.robot.Autos.*;
+
 import frc.robot.Commands.*;
+import frc.robot.Commands.LiftDown;
 import frc.robot.Constants.*;
 import frc.robot.Subsystems.*;
 
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
   //Populates the autonomous picker combobox with autonomous commands
   BasicHatchAuto basicHatchAuto;
   SystemsCheck systemsCheck;
+  EncoderAuto encoderAuto;
 
   @Override
   public void robotInit() {
@@ -67,8 +69,8 @@ public class Robot extends TimedRobot {
     Robot.driveTrain.leftEncoder.reset();
     Robot.driveTrain.rightEncoder.reset();
 
-    Robot.driveTrain.leftEncoder.setDistancePerPulse(4./256.);
-    Robot.driveTrain.rightEncoder.setDistancePerPulse(4./256.);
+    Robot.driveTrain.leftEncoder.setDistancePerPulse((6*Math.PI) * (12) * (360)); //Wheel Diameter * Pi * Inches * 360
+    Robot.driveTrain.rightEncoder.setDistancePerPulse((6*Math.PI) * (12) * (360));
 
     //Gives assignes each controller to its value in driver station
     driveStick = new Joystick(ControlDeviceIDs.Joystick.value);
@@ -106,24 +108,32 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Basic Hatch Auto", basicHatchAuto);
     systemsCheck = new SystemsCheck();
     autoChooser.addOption("Systems Check", systemsCheck);
-
+    encoderAuto = new EncoderAuto();
+    autoChooser.addOption("EncoderTest", encoderAuto);
     //Adds the option to not have an auto
     autoChooser.addOption("No Auto", null);
 
     //Adds a black and white camera to the driverstation that runs at 10fps at 400x300 resoluton
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setVideoMode(PixelFormat.kGray, 400, 300, 10);
+    camera.setVideoMode(PixelFormat.kMJPEG, 400, 300, 10);
     Shuffleboard.getTab("SmartDashboard").add("Video", camera);
+
+    Robot.driveTrain.leftEncoder.reset();
+    Robot.driveTrain.rightEncoder.reset();
  
   }
 
   @Override
   public void autonomousInit() {
     //Runs the selected autonomous when the autonomous period starts
+    Robot.driveTrain.leftEncoder.reset();
+    Robot.driveTrain.rightEncoder.reset();
+
     autonomousCommand = autoChooser.getSelected();
     if (autonomousCommand != null) {
       autonomousCommand.start();
    }
+
   }
 
   @Override
@@ -132,7 +142,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    //Stops the autonomous if it is still running when TeleOp begins
+    
+    Robot.driveTrain.leftEncoder.reset();
+    Robot.driveTrain.rightEncoder.reset();//Stops the autonomous if it is still running when TeleOp begins
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -154,13 +166,6 @@ public class Robot extends TimedRobot {
     Robot.driveTrain.frontLeftMotor.set(leftPower);
     Robot.driveTrain.frontRightMotor.set(rightPower);
 
-
-    if(driveStick.getRawButton(1) == true){
-      Robot.lift.liftMotor.set(Speeds.Lift);
-    }
-    else if(driveStick.getRawButton(1) == false){
-      Robot.lift.liftMotor.set(Speeds.Lift);
-    }
 
     //Gives each button a command to run when it is held down.
     liftUp.whileHeld(new LiftUp());

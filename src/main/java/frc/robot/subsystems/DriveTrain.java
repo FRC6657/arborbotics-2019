@@ -29,7 +29,5 @@ public class DriveTrain extends Subsystem {
   public Encoder rightEncoder = new Encoder(2,3, false, Encoder.EncodingType.k2X);
 
   @Override
-  public void initDefaultCommand() {
-
-  }
+  public void initDefaultCommand() {}
 }
