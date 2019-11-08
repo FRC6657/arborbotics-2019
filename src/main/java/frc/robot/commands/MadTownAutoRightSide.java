@@ -13,19 +13,21 @@ import frc.robot.commands.TimedDrive;
 import frc.robot.commands.LiftUpTimed;
 import frc.robot.commands.ArmJointMoveTimed;
 import frc.robot.commands.ClawIntakeTimed;
+import frc.robot.commands.TimedTurnLeft;
 
-public class MadTownAuto extends CommandGroup {
+public class MadTownAutoRightSide extends CommandGroup {
 
-   public MadTownAuto() {
+   public MadTownAutoRightSide() {
     TimedDrive timedDrive = new TimedDrive(2.8, 0.6);
     LiftUpTimed liftUp = new LiftUpTimed(4, 0.7);
     ArmJointMoveTimed armJointMoveTimed = new ArmJointMoveTimed(0.15, -0.25);
     ClawIntakeTimed clawIntakeTimed = new ClawIntakeTimed(0.5);
+    TimedTurnLeft timedTurnLeft = new TimedTurnLeft(1);
 
     addSequential(timedDrive);
     addSequential(liftUp);
     addSequential(armJointMoveTimed);
+    addSequential(timedTurnLeft);
     addSequential(clawIntakeTimed);
-
   }
 }

@@ -30,7 +30,8 @@ import frc.robot.commands.PistonTest;
 import frc.robot.commands.StandardTurnCalibration;
 import frc.robot.commands.SystemsCheck;
 import frc.robot.commands.TimedDrive;
-import frc.robot.commands.MadTownAuto;
+import frc.robot.commands.MadTownAutoRightSide;
+import frc.robot.commands.MadTownAutoLeftSide;
 import frc.robot.commands.UltrasonicAuto;
 import frc.robot.subsystems.ArmJoint;
 import frc.robot.subsystems.DriveLocomotive;
@@ -72,7 +73,8 @@ public class Robot extends TimedRobot {
   LiftUpTimed liftTimed;
   ArmJointMoveTimed armTimed;
   ClawIntakeTimed clawTimed;
-  MadTownAuto madTownAuto;
+  MadTownAutoRightSide madTownAutoRightSide;
+  MadTownAutoLeftSide madTownAutoLeftSide;
 
 //Maximum drive value (so you dont go to fast?)  
   public static double driveMaxOutput = 1.0d;
@@ -90,8 +92,11 @@ public class Robot extends TimedRobot {
     
     
 //Allows the robot to function autonomously
-    madTownAuto = new MadTownAuto();
-    autoChooser.addOption("MadTown Routine", madTownAuto);
+    madTownAutoRightSide = new MadTownAutoRightSide();
+    autoChooser.addOption("MadTown Routine Right", madTownAutoRightSide);
+    madTownAutoLeftSide = new MadTownAutoLeftSide();
+    autoChooser.addOption("MadTown Routine Left", madTownAutoLeftSide);
+
     pidStraight = new PIDDriveStraight(100);
     autoChooser.addOption("PID Straight", pidStraight);
     encoderTurn = new EncoderTurn(90);
