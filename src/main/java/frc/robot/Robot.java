@@ -148,8 +148,8 @@ public class Robot extends TimedRobot {
     else if(driveStick.getRawButton(1) == false & driveStick.getRawButton(2) == true){Robot.lift.liftMotor.set(-Speeds.Lift);}
     else{Robot.lift.liftMotor.set(0);}
 
-    if(driveStick.getRawButton(5) == true & driveStick.getRawButton(3) == false){Robot.pneumatics.solForward();}
-    else if(driveStick.getRawButton(5) == false & driveStick.getRawButton(3) == true){Robot.pneumatics.solReverse();}
+    if(driveStick.getRawButton(5) == true & driveStick.getRawButton(3) == false | controller.getRawButton(4) == true & controller.getRawButton(3) == false){Robot.pneumatics.solForward();}
+    else if(driveStick.getRawButton(5) == false & driveStick.getRawButton(3) == true| controller.getRawButton(4) == false & controller.getRawButton(3) == true){Robot.pneumatics.solReverse();}
 
   }
  
