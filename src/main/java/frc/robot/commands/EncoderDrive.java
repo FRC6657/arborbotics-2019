@@ -16,7 +16,7 @@ public class EncoderDrive extends Command {
   double spd;
   double endDistance;
 
-  public EncoderDrive(double speed, double distance) {
+  public EncoderDrive(double distance, double speed) {
     
     requires(Robot.driveTrain);
     dis = distance;
