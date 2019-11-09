@@ -16,15 +16,12 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autos.*;
 
-import frc.robot.Commands.*;
-import frc.robot.Commands.LiftDown;
 import frc.robot.Constants.*;
 import frc.robot.Subsystems.*;
 
@@ -41,18 +38,6 @@ public class Robot extends TimedRobot {
   private Joystick driveStick;
   private XboxController controller;
 
-  //Button Declaration
-  public JoystickButton liftUp;
-  public JoystickButton liftDown;
-  public JoystickButton armJointUp1;
-  public JoystickButton armJointDown1;
-  public JoystickButton armJointUp2;
-  public JoystickButton armJointDown2;
-  public JoystickButton hatchGrab1;
-  public JoystickButton hatchRelease1;
-  public JoystickButton hatchGrab2;
-  public JoystickButton hatchRelease2;
-  public JoystickButton slowMode;
 
   //Creating the autonomous picker combo box in smart dashboard
   Command autonomousCommand;
@@ -62,11 +47,6 @@ public class Robot extends TimedRobot {
   BasicHatchAuto basicHatchAuto;
   SystemsCheck systemsCheck;
   EncoderAuto encoderAuto;
-
-  boolean isButton1Pressed = false;
-  boolean isButton2Pressed = false;
-  boolean isButton6Pressed = false;
-  boolean isButton4Pressed = false;
 
   @Override
   public void robotInit() {
@@ -81,22 +61,6 @@ public class Robot extends TimedRobot {
     driveStick = new Joystick(ControlDeviceIDs.Joystick.value);
     controller = new XboxController(ControlDeviceIDs.Controller.value);
 
-
-
-    //Assigns each button to a specific button on the joystick
-    liftUp = new JoystickButton(driveStick, 1);
-    liftDown = new JoystickButton(driveStick, 2);
-    armJointUp1 = new JoystickButton(driveStick, 6);
-    armJointDown1 = new JoystickButton(driveStick, 4);
-    hatchGrab1 = new JoystickButton(driveStick, 5);
-    hatchRelease1 = new JoystickButton(driveStick, 3);
-    slowMode = new JoystickButton(driveStick, 12);
-
-    //Assigns each button to a specific button on the controller
-    armJointUp2 = new JoystickButton(controller, 6);
-    armJointDown2 = new JoystickButton(controller, 5);
-    hatchGrab2 = new JoystickButton(controller, 3);
-    hatchRelease2 = new JoystickButton(controller, 4);
 
     //Inverts the master motors
     Robot.driveTrain.frontLeftMotor.setInverted(true);
@@ -176,43 +140,18 @@ public class Robot extends TimedRobot {
     Robot.driveTrain.frontLeftMotor.set(leftPower);
     Robot.driveTrain.frontRightMotor.set(rightPower);
 
-    if(driveStick.getRawButton(6) == true & driveStick.getRawButton(4) == false){Robot.armJoint.armJointMotor.set(Speeds.armJoint);}
-    else if(driveStick.getRawButton(6) == false & driveStick.getRawButton(4) == true){Robot.armJoint.armJointMotor.set(-Speeds.armJoint);}
+    if(driveStick.getRawButton(6) == true & driveStick.getRawButton(4) == false | controller.getRawButton(4) == true & controller.getRawButton(5) == false){Robot.armJoint.armJointMotor.set(Speeds.armJoint);}
+    else if(driveStick.getRawButton(6) == false & driveStick.getRawButton(4) == true | controller.getRawButton(4) == false & controller.getRawButton(5) == true){Robot.armJoint.armJointMotor.set(-Speeds.armJoint);}
     else{Robot.armJoint.armJointMotor.set(0);}
 
-    if(driveStick.getRawButton(2) != isButton2Pressed) {
-      if(driveStick.getRawButton(2)){
-
-        Robot.lift.liftMotor.set(-Speeds.Lift);
-        isButton2Pressed = true;
-
-      }
-      else {
-      
-        Robot.lift.liftMotor.set(0);
-        isButton2Pressed = false;
-
-      }
-    }
-
-    if(driveStick.getRawButton(1) != isButton1Pressed) {
-      if(driveStick.getRawButton(1)) {
-
-        Robot.lift.liftMotor.set(Speeds.Lift);
-        isButton1Pressed = true;
-
-      }
-      else {
-
-        Robot.lift.liftMotor.set(0);
-        isButton1Pressed = false;
-
-      }
+    if(driveStick.getRawButton(1) == true & driveStick.getRawButton(2) == false){Robot.lift.liftMotor.set(Speeds.Lift);}
+    else if(driveStick.getRawButton(1) == false & driveStick.getRawButton(2) == true){Robot.lift.liftMotor.set(-Speeds.Lift);}
+    else{Robot.lift.liftMotor.set(0);}
 
 
-
-   }
- }
+   
+  }
+ 
 
 
 
