@@ -30,4 +30,8 @@ public class DriveTrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {}
+  public double getLeftEncoderDistance(){return leftEncoder.getDistance();}
+  public double getRightEncoderDistance(){return rightEncoder.getDistance();}
+  public void stop(){frontLeftMotor.set(0); frontRightMotor.set(0);}
+  public void driveStrait(double speed){frontLeftMotor.set(speed); frontRightMotor.set(-speed);}
 }

@@ -14,9 +14,11 @@ public class EncoderDrive extends Command {
 
   double dis;
   double spd;
+  double endDistance;
 
-  public EncoderDrive(double distance, double speed) {
+  public EncoderDrive(double speed, double distance) {
     
+    requires(Robot.driveTrain);
     dis = distance;
     spd = speed;
 
@@ -25,31 +27,32 @@ public class EncoderDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    endDistance = Robot.driveTrain.getRightEncoderDistance() + dis;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
 
-    Robot.driveTrain.frontLeftMotor.set(0.5);
-    Robot.driveTrain.frontRightMotor.set(-0.5);
+    Robot.driveTrain.driveStrait(spd);
 
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return (Robot.driveTrain.getLeftEncoderDistance() >= endDistance);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

@@ -14,6 +14,7 @@ import edu.wpi.cscore.VideoMode.PixelFormat;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -56,6 +57,9 @@ public class Robot extends TimedRobot {
 
     Robot.driveTrain.leftEncoder.setDistancePerPulse((6*Math.PI) / (1) / (360)); //Wheel Diameter * Pi * Inches * 360
     Robot.driveTrain.rightEncoder.setDistancePerPulse(((6*Math.PI) / (1) / (360)));
+
+    Robot.driveTrain.leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+    Robot.driveTrain.rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
 
     //Gives assignes each controller to its value in driver station
     driveStick = new Joystick(ControlDeviceIDs.Joystick.value);
