@@ -30,7 +30,7 @@ public class DriveLocomotive extends Subsystem {
 	private MB1013Ultrasonic ultrasonic = new MB1013Ultrasonic(0);
 	private Encoder encoderLeft = new Encoder(0, 1, true, Encoder.EncodingType.k1X);
   	private Encoder encoderRight = new Encoder(2, 3, false, Encoder.EncodingType.k1X);
-	private PigeonIMU gyro = new PigeonIMU(RobotMap.gyroID);
+	//private PigeonIMU gyro = new PigeonIMU(RobotMap.gyroID);
 	
 	//Other Constants
 	private static double distancePerRevolution = 15.2 * Math.PI;
@@ -46,7 +46,7 @@ public class DriveLocomotive extends Subsystem {
 		motorBackLeft.configFactoryDefault();
 		motorFrontRight.configFactoryDefault();
 		motorBackRight.configFactoryDefault();
-		gyro.configFactoryDefault();
+		//gyro.configFactoryDefault();
 
 		motorFrontLeft.configOpenloopRamp(0.3, 0);
 		motorFrontRight.configOpenloopRamp(0.3, 0);
@@ -95,14 +95,14 @@ public class DriveLocomotive extends Subsystem {
 		return encoderRight.getDistance();
 	}
 	
-	public double getAngle() { 
+	//public double getAngle() { 
 		//double[] ypr = new double[3];
 		//gyro.getYawPitchRoll(ypr);
-		return gyro.getFusedHeading()/*ypr[0]*/;
-	}
+		//return gyro.getFusedHeading()/*ypr[0]*/;
+	//}
 	
 	public void gyroCalibrate() { 
-		gyro.setFusedHeading(0, 30);
+		//gyro.setFusedHeading(0, 30);
 		//gyro.setYaw(0);
 		//gyro.setAccumZAngle(0);
 	}

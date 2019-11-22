@@ -10,12 +10,12 @@ package frc.robot.subsystems;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Lift extends Subsystem {
   
-	private WPI_VictorSPX liftMoter = new WPI_VictorSPX(RobotMap.liftID);
+	private WPI_TalonSRX liftMoter = new WPI_TalonSRX(RobotMap.liftID);
 
 
 	public Lift() {

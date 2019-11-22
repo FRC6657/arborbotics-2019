@@ -25,10 +25,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.commands.LiftFire;
 import frc.robot.commands.EncoderTurn;
 import frc.robot.commands.PIDDriveStraight;
-import frc.robot.commands.PIDTurn;
-import frc.robot.commands.PistonTest;
-import frc.robot.commands.StandardTurnCalibration;
-import frc.robot.commands.SystemsCheck;
+
 import frc.robot.commands.TimedDrive;
 import frc.robot.commands.MadTownAutoRightSide;
 import frc.robot.commands.MadTownAutoLeftSide;
@@ -37,7 +34,7 @@ import frc.robot.subsystems.ArmJoint;
 import frc.robot.subsystems.DriveLocomotive;
 import frc.robot.subsystems.WheelClaw;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.Pneumatics;
+//import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Foot;
 import frc.robot.commands.LiftUpTimed;
 import frc.robot.commands.ACAutoTesting;
@@ -66,7 +63,6 @@ public class Robot extends TimedRobot {
   EncoderTurn encoderTurn;
   PIDDriveStraight pidStraight;
   
-  PIDTurn pidTurn;
   UltrasonicAuto ultraAuto;
   TimedDrive reverseTimed;
   TimedDrive timedStraight;
@@ -130,7 +126,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     //  Puts data from the robot on to SmartDashboard
-    SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
+    //SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
     SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
@@ -149,7 +145,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
    //takes the values from smart dashboard and asiggns them to parts on the robot
-    SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
+    //SmartDashboard.putNumber("Gyro Angle", driveLocomotive.getAngle());
     SmartDashboard.putNumber("Left Encoder", driveLocomotive.getEncoderLeft());
     SmartDashboard.putNumber("Right Encoder", driveLocomotive.getEncoderRight());
     SmartDashboard.putNumber("Distance", driveLocomotive.getDistance());
