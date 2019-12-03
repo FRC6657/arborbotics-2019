@@ -21,18 +21,19 @@ import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
 
+//Main Code File For the Robot
 public class Robot extends TimedRobot {
-
+  //Subsystem Initialization
   public static Drivetrain drivetrain = new Drivetrain();
   public static Carriage carriage = new Carriage();
   public static Lift lift = new Lift();
-
+  //Controller Initialization
   private Joystick driveStick;
   private XboxController controller;
-
+  //Creates Power Variables That Can be Printed
   private double leftPower = 0;
   private double rightPower = 0;
-
+  //This code runs when the robot code is turned on
   @Override
   public void robotInit() {
 
@@ -43,27 +44,28 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Power: ", rightPower);
 
   }
-
+  //This code runs when autonomous is started
   @Override
   public void autonomousInit() {}
-
+  //This code is a loop that runs when autonomous is happening
   @Override
   public void autonomousPeriodic() {}
-
+  //This code runs when TeleOp is started
   @Override
   public void teleopInit() {
     drivetrain.ResetEncoders();
   }
-
+  //This code is a loop that runs when TeleOp is happening
   @Override
   public void teleopPeriodic() {
+    //Localization of Encoder Distances scaled to 1ft = ~1
     double LED = drivetrain.getLeftEncoderDistance();
     double RED = drivetrain.getLeftEncoderDistance();
-    
+    //Gets the motor power that is scaled based on how far away the encoders are from the target
     double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);    //Value In Constructor is Target
     double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);  //Value In Constructor is Target
                                                                                                                        //________________\\
-                                                                                                                       //(Robot Position)\\
+    //This thicc code brick is what allows the robot to move to its target encoder positions                           // Robot Position \\                                                                                                                  //(Robot Position)\\
     if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){               //    !(0,0)      \\
       if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
       if((LED > Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
@@ -74,36 +76,31 @@ public class Robot extends TimedRobot {
       if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, 0);}    //     (+,0)      \\
       if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, 0);}    //     (-,0)      \\
                                                                                                                        //________________\\
-
+      //This code prints the encoder values scaled to 1ft = ~1 
       SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftEncoderDistance());
       SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightEncoderDistance());
-  
+      //This code prints the motor powers
       SmartDashboard.putNumber("Left Power: ", leftPower);
       SmartDashboard.putNumber("Right Power: ", rightPower);
 
     }
   }
+  //This code runs whenever the robot is turned on reguardless of state
   @Override
   public void robotPeriodic() {
-    
+    //This code prints the encoder values scaled to 1ft = ~1 
     SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftEncoderDistance());
     SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightEncoderDistance());
-
+    //This code prints the motor powers
     SmartDashboard.putNumber("Left Power: ", leftPower);
     SmartDashboard.putNumber("Right Power: ", rightPower);
   
   }
-
+  //This code runs when test mode is started
   @Override
   public void testInit() {}
-
+  //This code is a loop that runs when Test Mode is happening
   @Override
   public void testPeriodic() {}
-
-  @Override
-  public void startCompetition() {
-  
-    super.startCompetition();
-  }
 
 }
