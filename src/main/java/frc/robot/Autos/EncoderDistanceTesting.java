@@ -5,18 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.Autos;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.InstantCommands.EncoderDriveStrait;
 
-public class LiftFire extends CommandGroup {
 
-  public LiftFire() {
+public class EncoderDistanceTesting extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public EncoderDistanceTesting() {
 
-    addSequential(new LiftUpTimed(2, 0.75));
-    addSequential(new ArmJointMoveTimed(1, -0.2));
-    addSequential(new ClawReleaseTimed(1));
-    addSequential(new ArmJointMoveTimed(1, 0.3));
-    addSequential(new LiftDownTimed(1, 0.75));
+    addSequential(new EncoderDriveStrait(10)); //Drive forward 10...Idk how much 10 is
+
   }
 }
