@@ -56,6 +56,27 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         motorFR.set(-rightPower); //Right side is reversed so forward is + on each side
 
     }
+    public void driveRobotToTargetWithEncoders(double targetL, double targetR){
+        //Localization of Encoder Distances scaled to 1ft = ~1
+        double LED = getLeftEncoderDistance();
+        double RED = getRightEncoderDistance();
+        //Gets the motor power that is scaled based on how far away the encoders are from the target
+        double leftDriveSpeed = scaleLeftSpeedWithEncoders(targetL);  //Value In Constructor is Target
+        double rightDriveSpeed = scaleRightSpeedWithEncoders(targetR);//Value In Constructor is Target
+                                                                                                                  //________________\\ 
+        //This thicc code brick is what allows the robot to move to its target encoder positions                  // Robot Position \\  
+        if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){      //    !(0,0)      \\   
+            if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
+            if((LED > Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
+            if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, rightDriveSpeed);}              //     (+,-)      \\
+            if((LED > -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, -rightDriveSpeed);}             //     (-,+)      \\
+            if((!(LED < -Doubles.KTR) & !(LED > Doubles.KTR) & RED > Doubles.KTR)){Drive(0, -rightDriveSpeed);}   //     (0,+)      \\
+            if((!(LED < -Doubles.KTR) & !(LED > Doubles.KTR) & RED < -Doubles.KTR)){Drive(0, rightDriveSpeed);}   //     (0,-)      \\
+            if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED > Doubles.KTR)){Drive(-leftDriveSpeed, 0);}    //     (+,0)      \\
+            if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED < -Doubles.KTR)){Drive(leftDriveSpeed, 0);}    //     (-,0)      \\
+                                                                                                                  //________________\\
+        }
+    }
     //Code to stop the motors
     public void Stop(){
         //Sets each motor to 0
@@ -66,12 +87,18 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     //Code to reset the encoders on each side of the drivetrain
     public void ResetEncoders(){leftDriveEncoder.reset(); rightDriveEncoder.reset();}
 
-    public void driveRobotToCoordinate(double x, double y){
+    public void driveRobotToCoordinate(double x, double y) throws InterruptedException {
 
         double angle = Math.atan(x/y);
+        double hDistance = Math.sqrt((x*x)+(y*y));
 
-        //If y is negative turn 180 + -angle
-
+        if(y > 0 & x < 0){gyroTurn(-angle);}
+        else{if(y > 0 & x > 0){gyroTurn(angle);}
+        else{if(y < 0 & x < 0){gyroTurn(-angle - 90);}
+        else{if(y < 0 & x > 0){gyroTurn(180 - angle);}
+        else{gyroTurn(0);}}}}
+        Thread.sleep(500);
+        driveRobotToCoordinate(hDistance, hDistance);
 
     }
     public void gyroOverflowPrevention(){if((gyroGetAngle() > 360) || (gyroGetAngle() < -360)){gyroReset();}}

@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //Localization of Encoder Distances scaled to 1ft = ~1
     double LED = drivetrain.getLeftEncoderDistance();
-    double RED = drivetrain.getLeftEncoderDistance();
+    double RED = drivetrain.getRightEncoderDistance();
     //Gets the motor power that is scaled based on how far away the encoders are from the target
     double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);  //Value In Constructor is Target
     double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);//Value In Constructor is Target
@@ -92,6 +92,8 @@ public class Robot extends TimedRobot {
     //This code prints the motor powers
     SmartDashboard.putNumber("Left Power: ", leftPower);
     SmartDashboard.putNumber("Right Power: ", rightPower);
+
+    SmartDashboard.putNumber("Gyro Angle: ", drivetrain.gyroGetAngle());
   }
   //This code runs when test mode is started
   @Override
