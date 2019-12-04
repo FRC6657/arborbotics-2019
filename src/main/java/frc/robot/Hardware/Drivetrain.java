@@ -65,7 +65,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         double rightDriveSpeed = scaleRightSpeedWithEncoders(targetR);//Value In Constructor is Target
                                                                                                                   //________________\\ 
         //This thicc code brick is what allows the robot to move to its target encoder positions                  // Robot Position \\  
-        if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){      //    !(0,0)      \\   
+        while((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){      //    !(0,0)      \\   
             if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
             if((LED > Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
             if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, rightDriveSpeed);}              //     (+,-)      \\
@@ -92,14 +92,15 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         double angle = Math.atan(x/y);
         double hDistance = Math.sqrt((x*x)+(y*y));
 
+        while(((getLeftEncoderDistance() - hDistance > 0.1) || (getLeftEncoderDistance() - hDistance < -0.1)) & ((getRightEncoderDistance() - hDistance > 0.1) || (getRightEncoderDistance() - hDistance < -0.1))){
         if(y > 0 & x < 0){gyroTurn(-angle);}
         else{if(y > 0 & x > 0){gyroTurn(angle);}
         else{if(y < 0 & x < 0){gyroTurn(-angle - 90);}
         else{if(y < 0 & x > 0){gyroTurn(180 - angle);}
         else{gyroTurn(0);}}}}
-        Thread.sleep(500);
-        driveRobotToCoordinate(hDistance, hDistance);
-
+        Thread.sleep(5);
+        driveRobotToTargetWithEncoders(hDistance, hDistance);
+        }
     }
     public void gyroOverflowPrevention(){if((gyroGetAngle() > 360) || (gyroGetAngle() < -360)){gyroReset();}}
 

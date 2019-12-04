@@ -94,6 +94,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Power: ", rightPower);
 
     SmartDashboard.putNumber("Gyro Angle: ", drivetrain.gyroGetAngle());
+
+    drivetrain.gyroOverflowPrevention(); //Prevents gyro angle from getting over 360 or -360
   }
   //This code runs when test mode is started
   @Override
