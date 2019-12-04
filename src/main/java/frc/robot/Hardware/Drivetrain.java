@@ -3,13 +3,16 @@ package frc.robot.Hardware;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import frc.robot.Constants.*;
 //The comment in the class title is for if we ever get a pid source
 public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
@@ -28,6 +31,10 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     //private final double kP = 0;
     //private final double kI = 0;
     //private final double kD = 0;
+
+    private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+    private NetworkTableEntry xPositionEntry = tab.add("X:", 0).getEntry();
+    private NetworkTableEntry yPositionEntry = tab.add("Y: ", 0).getEntry();
 
     //Drivetrain Function
     public Drivetrain() {
@@ -65,7 +72,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         double rightDriveSpeed = scaleRightSpeedWithEncoders(targetR);//Value In Constructor is Target
                                                                                                                   //________________\\ 
         //This thicc code brick is what allows the robot to move to its target encoder positions                  // Robot Position \\  
-        while((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){      //    !(0,0)      \\   
+        while((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){   //    !(0,0)      \\   
             if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
             if((LED > Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
             if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, rightDriveSpeed);}              //     (+,-)      \\
@@ -93,13 +100,13 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         double hDistance = Math.sqrt((x*x)+(y*y));
 
         while(((getLeftEncoderDistance() - hDistance > 0.1) || (getLeftEncoderDistance() - hDistance < -0.1)) & ((getRightEncoderDistance() - hDistance > 0.1) || (getRightEncoderDistance() - hDistance < -0.1))){
-        if(y > 0 & x < 0){gyroTurn(-angle);}
-        else{if(y > 0 & x > 0){gyroTurn(angle);}
-        else{if(y < 0 & x < 0){gyroTurn(-angle - 90);}
-        else{if(y < 0 & x > 0){gyroTurn(180 - angle);}
-        else{gyroTurn(0);}}}}
-        Thread.sleep(5);
-        driveRobotToTargetWithEncoders(hDistance, hDistance);
+            if(y > 0 & x < 0){gyroTurn(-angle);}
+            else{if(y > 0 & x > 0){gyroTurn(angle);}
+            else{if(y < 0 & x < 0){gyroTurn(-angle - 90);}
+            else{if(y < 0 & x > 0){gyroTurn(180 - angle);}
+            else{gyroTurn(0);}}}}
+            Thread.sleep(5);
+            driveRobotToTargetWithEncoders(hDistance, hDistance);
         }
     }
     public void gyroOverflowPrevention(){if((gyroGetAngle() > 360) || (gyroGetAngle() < -360)){gyroReset();}}
@@ -160,6 +167,8 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         gyro.getYawPitchRoll(ypr);
         return ypr[0];
     }
+    public double shuffleboardGetX(){return xPositionEntry.getDouble(0);}
+    public double shuffleboardGetY(){return yPositionEntry.getDouble(0);}
 
     @Override
     protected void initDefaultCommand() {}

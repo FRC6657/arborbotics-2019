@@ -20,6 +20,7 @@ import frc.robot.Constants.Speeds;
 import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
+import frc.robot.Commands.*;
 
 //Main Code File For the Robot
 public class Robot extends TimedRobot {
@@ -94,6 +95,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Power: ", rightPower);
 
     SmartDashboard.putNumber("Gyro Angle: ", drivetrain.gyroGetAngle());
+
+    SmartDashboard.putData("Drive To Location: ",new DriveToLocation(drivetrain.shuffleboardGetY(),drivetrain.shuffleboardGetX()));//Drive(F/B, R/L) Direction is same as on coordinate plane
 
     drivetrain.gyroOverflowPrevention(); //Prevents gyro angle from getting over 360 or -360
   }
