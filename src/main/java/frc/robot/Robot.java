@@ -36,13 +36,12 @@ public class Robot extends TimedRobot {
   //This code runs when the robot code is turned on
   @Override
   public void robotInit() {
-
+    //This code prints the encoder values scaled to 1ft = ~1
     SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftEncoderDistance());
     SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightEncoderDistance());
-
+    //This code prints the motor powers
     SmartDashboard.putNumber("Left Power: ", leftPower);
     SmartDashboard.putNumber("Right Power: ", rightPower);
-
   }
   //This code runs when autonomous is started
   @Override
@@ -62,11 +61,11 @@ public class Robot extends TimedRobot {
     double LED = drivetrain.getLeftEncoderDistance();
     double RED = drivetrain.getLeftEncoderDistance();
     //Gets the motor power that is scaled based on how far away the encoders are from the target
-    double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);    //Value In Constructor is Target
-    double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);  //Value In Constructor is Target
+    double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);  //Value In Constructor is Target
+    double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);//Value In Constructor is Target
                                                                                                                        //________________\\
     //This thicc code brick is what allows the robot to move to its target encoder positions                           // Robot Position \\                                                                                                                  //(Robot Position)\\
-    if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){               //    !(0,0)      \\
+    if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){               //    !(0,0)      \\    
       if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
       if((LED > Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
       if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, rightDriveSpeed);}              //     (+,-)      \\
@@ -82,7 +81,6 @@ public class Robot extends TimedRobot {
       //This code prints the motor powers
       SmartDashboard.putNumber("Left Power: ", leftPower);
       SmartDashboard.putNumber("Right Power: ", rightPower);
-
     }
   }
   //This code runs whenever the robot is turned on reguardless of state
@@ -94,7 +92,6 @@ public class Robot extends TimedRobot {
     //This code prints the motor powers
     SmartDashboard.putNumber("Left Power: ", leftPower);
     SmartDashboard.putNumber("Right Power: ", rightPower);
-  
   }
   //This code runs when test mode is started
   @Override
@@ -102,5 +99,4 @@ public class Robot extends TimedRobot {
   //This code is a loop that runs when Test Mode is happening
   @Override
   public void testPeriodic() {}
-
 }
