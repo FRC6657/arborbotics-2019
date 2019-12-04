@@ -20,6 +20,7 @@ import frc.robot.Constants.Speeds;
 import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import frc.robot.Commands.*;
 
 //Main Code File For the Robot
@@ -34,6 +35,8 @@ public class Robot extends TimedRobot {
   //Creates Power Variables That Can be Printed
   private double leftPower = 0;
   private double rightPower = 0;
+  //Initialization of the Rio's built in accelerometer
+  private BuiltInAccelerometer accel = new BuiltInAccelerometer();
   //This code runs when the robot code is turned on
   @Override
   public void robotInit() {
@@ -95,6 +98,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Power: ", rightPower);
 
     SmartDashboard.putNumber("Gyro Angle: ", drivetrain.gyroGetAngle());
+
+    SmartDashboard.putString("Rio Accelerometer Value: X: ", accel.getX() + " Y: " + accel.getY()); //The Rio has a 3 axis Accelerometer but why would we ever need to use the Z axis
 
     SmartDashboard.putData("Drive To Location: ",new DriveToLocation(drivetrain.shuffleboardGetY(),drivetrain.shuffleboardGetX()));//Drive(F/B, R/L) Direction is same as on coordinate plane
 
