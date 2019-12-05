@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
     double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);//Value In Constructor is Target
                                                                                                                        //________________\\
     //This thicc code brick is what allows the robot to move to its target encoder positions                           // Robot Position \\                                                                                                                  //(Robot Position)\\
-    if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){               //    !(0,0)      \\    
+    if(((LED > Doubles.KTR) || (LED < -Doubles.KTR)) || ((RED > Doubles.KTR) || (RED < -Doubles.KTR))){                //    !(0,0)      \\                                                                                                       //    !(0,0)      \\    
       if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
       if((LED > Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
       if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, rightDriveSpeed);}              //     (+,-)      \\
@@ -79,14 +79,10 @@ public class Robot extends TimedRobot {
       if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, 0);}    //     (+,0)      \\
       if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, 0);}    //     (-,0)      \\
                                                                                                                        //________________\\
-      //This code prints the encoder values scaled to 1ft = ~1 
-      SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftEncoderDistance());
-      SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightEncoderDistance());
-      //This code prints the motor powers
-      SmartDashboard.putNumber("Left Power: ", leftPower);
-      SmartDashboard.putNumber("Right Power: ", rightPower);
     }
-  }
+  }                                                                                               //This code prints the encoder values scaled to 1ft = ~1 
+  
+  
   //This code runs whenever the robot is turned on reguardless of state
   @Override
   public void robotPeriodic() {

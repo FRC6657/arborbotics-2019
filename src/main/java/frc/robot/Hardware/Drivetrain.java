@@ -24,7 +24,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     private WPI_TalonSRX motorFR = new WPI_TalonSRX(Ports.frontRightMotor.value);//Declares the Front Right Motor
     private WPI_TalonSRX motorBL = new WPI_TalonSRX(Ports.backLeftMotor.value);  //Declares the Back Left Motor
     private WPI_TalonSRX motorBR = new WPI_TalonSRX(Ports.backRightMotor.value); //Declares the Back Right Motor
-    private PigeonIMU gyro = new PigeonIMU(Ports.gyro.value);
+    //private PigeonIMU gyro = new PigeonIMU(Ports.gyro.value);
     //This code is just incase we ever get a pid source
     //public final PIDController turnController;
 
@@ -51,7 +51,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         leftDriveEncoder.setMaxPeriod(15); //sets the max speed the robot can go to be considered moving.
         rightDriveEncoder.setMaxPeriod(15);//sets the max speed the robot can go to be considered moving.
 
-        gyro.configFactoryDefault();
+        //gyro.configFactoryDefault();
 
         //turnController = new PIDController(kP, kI, kD, source, this);
 
@@ -92,7 +92,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
 
     }
     //Code to reset the encoders on each side of the drivetrain
-    public void ResetEncoders(){leftDriveEncoder.reset(); rightDriveEncoder.reset();}
+    public void ResetEncoders(){leftDriveEncoder.reset(); rightDriveEncoder.reset();} 
 
     public void driveRobotToCoordinate(double x, double y) throws InterruptedException {
 
@@ -102,8 +102,8 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         while(((getLeftEncoderDistance() - hDistance > 0.1) || (getLeftEncoderDistance() - hDistance < -0.1)) & ((getRightEncoderDistance() - hDistance > 0.1) || (getRightEncoderDistance() - hDistance < -0.1))){
             if(y > 0 & x < 0){gyroTurn(-angle);}
             else{if(y > 0 & x > 0){gyroTurn(angle);}
-            else{if(y < 0 & x < 0){gyroTurn(-angle - 90);}
-            else{if(y < 0 & x > 0){gyroTurn(180 - angle);}
+            else{if(y < 0 & x < 0){gyroTurn(180 - angle);}
+            else{if(y < 0 & x > 0){gyroTurn(-180 + angle);}
             else{gyroTurn(0);}}}}
             Thread.sleep(5);
             driveRobotToTargetWithEncoders(hDistance, hDistance);
@@ -114,12 +114,12 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     public void gyroTurn(double angle){
         gyroReset();
         
-        if (!((gyroGetAngle() > 1) || (gyroGetAngle() < -1))){   
+        while (((gyroGetAngle() > 1) || (gyroGetAngle() < -1))){   
             if (gyroGetAngle() > angle){Drive(scaleTurnSpeedBasedOnTargetWithGyro(-angle), scaleTurnSpeedBasedOnTargetWithGyro(angle));}
             if (gyroGetAngle() < angle){Drive(scaleTurnSpeedBasedOnTargetWithGyro(-angle), scaleTurnSpeedBasedOnTargetWithGyro(angle));}
         }
     }
-    public void gyroReset(){gyro.setFusedHeading(0);}
+    public void gyroReset(){}//gyro.setFusedHeading(0);}
     public double scaleTurnSpeedBasedOnTargetWithGyro(double targetAngle){
 
         double Fast = Speeds.Fast;
@@ -164,7 +164,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     public double getRightEncoderDistance(){return rightDriveEncoder.getDistance();}
     public double gyroGetAngle(){
         double [] ypr = new double[3];
-        gyro.getYawPitchRoll(ypr);
+        //gyro.getYawPitchRoll(ypr);
         return ypr[0];
     }
     public double shuffleboardGetX(){return xPositionEntry.getDouble(0);}
