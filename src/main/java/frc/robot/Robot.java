@@ -49,18 +49,11 @@ public class Robot extends TimedRobot {
   }
   //This code runs when autonomous is started
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {drivetrain.ResetEncoders();}
   //This code is a loop that runs when autonomous is happening
   @Override
-  public void autonomousPeriodic() {}
-  //This code runs when TeleOp is started
-  @Override
-  public void teleopInit() {
-    drivetrain.ResetEncoders();
-  }
-  //This code is a loop that runs when TeleOp is happening
-  @Override
-  public void teleopPeriodic() {
+  public void autonomousPeriodic() {
+
     //Localization of Encoder Distances scaled to 1ft = ~1
     double LED = drivetrain.getLeftEncoderDistance();
     double RED = drivetrain.getRightEncoderDistance();
@@ -80,6 +73,23 @@ public class Robot extends TimedRobot {
       if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, 0);}   //     (-,0)      \\
                                                                                                                        //________________\\
     }
+  }
+  //This code runs when TeleOp is started
+  @Override
+  public void teleopInit() {}
+  //This code is a loop that runs when TeleOp is happening
+  @Override
+  public void teleopPeriodic() {
+    
+    double speed = -driveStick.getRawAxis(2) * Doubles.DriveSpeed;
+    double turn = driveStick.getRawAxis(1) * Doubles.DriveSpeed;
+    
+    //Calculates the motor powers for the left and right of the drivetrain
+    double leftPower = speed + turn;
+    double rightPower = speed - turn;
+
+    //Drives
+    drivetrain.Drive(leftPower,rightPower);
   }                                                                                               
   
   
