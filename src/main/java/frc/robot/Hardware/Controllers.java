@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Commands.*;
+
 import frc.robot.Constants.Ports;
 
 /**
@@ -22,13 +24,34 @@ public class Controllers extends Subsystem {
   private Joystick joystick = new Joystick(Ports.joyStick.value);
   private XboxController controller = new XboxController(Ports.Controller.value);
 
-  Button liftUp = new JoystickButton(joystick, 1),
-         liftDown = new JoystickButton(joystick, 2),
-         squishyIn = new JoystickButton(joystick,4),
-         squishyOut = new JoystickButton(joystick,6),
-         hingeUp = new JoystickButton(joystick, 5),
-         hingeDown = new JoystickButton(joystick, 3);
+  public class OI{
+    public JoystickButton liftUp;
+    public JoystickButton liftDown;
+    public JoystickButton squishyIn;
+    public JoystickButton squishyOut;
+    public JoystickButton hingeUp;
+    public JoystickButton hingeDown;
 
+    public OI(){
+      liftUp = new JoystickButton(joystick, 1);
+      liftDown = new JoystickButton(joystick, 2);
+      squishyIn = new JoystickButton(joystick,4);
+      squishyOut = new JoystickButton(joystick,6);
+      hingeUp = new JoystickButton(joystick, 5);
+      hingeDown = new JoystickButton(joystick, 3);
+
+      LiftUp lu = new LiftUp();
+      LiftDown ld = new LiftDown();
+      SquishyIn  si = new SquishyIn();
+      SquishyOut so = new SquishyOut();
+
+      liftUp.whileHeld(lu);
+      liftDown.whileHeld(ld);
+      squishyIn.whileHeld(si);
+      squishyOut.whileHeld(so);
+
+    }
+  }
   
 
   public double getJoystickAxis(int axis){return joystick.getRawAxis(axis);}
