@@ -51,7 +51,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         leftDriveEncoder.setMaxPeriod(15); //sets the max speed the robot can go to be considered moving.
         rightDriveEncoder.setMaxPeriod(15);//sets the max speed the robot can go to be considered moving.
 
-        //gyro.configFactoryDefault();
+        gyro.configFactoryDefault();
 
         //turnController = new PIDController(kP, kI, kD, source, this);
 
@@ -164,7 +164,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     public double getRightEncoderDistance(){return rightDriveEncoder.getDistance();}
     public double gyroGetAngle(){
         double [] ypr = new double[3];
-        //gyro.getYawPitchRoll(ypr);
+        gyro.getYawPitchRoll(ypr);
         return ypr[0];
     }
     public double shuffleboardGetX(){return xPositionEntry.getDouble(0);}
