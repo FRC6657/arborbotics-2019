@@ -74,13 +74,13 @@ public class Robot extends TimedRobot {
       if((LED > Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
       if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, -rightDriveSpeed);}              //     (+,-)      \\
       if((LED > -Doubles.KTR) & (RED < -Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, rightDriveSpeed);}             //     (-,+)      \\
-      if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED > Doubles.KTR)){drivetrain.Drive(0, -rightDriveSpeed);}   //     (0,+)      \\
-      if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED < -Doubles.KTR)){drivetrain.Drive(0, rightDriveSpeed);}   //     (0,-)      \\
-      if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, 0);}    //     (+,0)      \\
-      if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, 0);}    //     (-,0)      \\
+      if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED > Doubles.KTR)){drivetrain.Drive(0, -rightDriveSpeed);}  //     (0,+)      \\
+      if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED < -Doubles.KTR)){drivetrain.Drive(0, rightDriveSpeed);}  //     (0,-)      \\
+      if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, 0);}   //     (+,0)      \\
+      if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, 0);}   //     (-,0)      \\
                                                                                                                        //________________\\
     }
-  }                                                                                               //This code prints the encoder values scaled to 1ft = ~1 
+  }                                                                                               
   
   
   //This code runs whenever the robot is turned on reguardless of state

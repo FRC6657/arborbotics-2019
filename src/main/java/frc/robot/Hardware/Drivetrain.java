@@ -24,7 +24,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     private WPI_TalonSRX motorFR = new WPI_TalonSRX(Ports.frontRightMotor.value);//Declares the Front Right Motor
     private WPI_TalonSRX motorBL = new WPI_TalonSRX(Ports.backLeftMotor.value);  //Declares the Back Left Motor
     private WPI_TalonSRX motorBR = new WPI_TalonSRX(Ports.backRightMotor.value); //Declares the Back Right Motor
-    //private PigeonIMU gyro = new PigeonIMU(Ports.gyro.value);
+    private PigeonIMU gyro = new PigeonIMU(Ports.gyro.value);
     //This code is just incase we ever get a pid source
     //public final PIDController turnController;
 
@@ -75,12 +75,12 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         while((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){   //    !(0,0)      \\   
             if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
             if((LED > Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
-            if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, rightDriveSpeed);}              //     (+,-)      \\
-            if((LED > -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, -rightDriveSpeed);}             //     (-,+)      \\
-            if((!(LED < -Doubles.KTR) & !(LED > Doubles.KTR) & RED > Doubles.KTR)){Drive(0, -rightDriveSpeed);}   //     (0,+)      \\
-            if((!(LED < -Doubles.KTR) & !(LED > Doubles.KTR) & RED < -Doubles.KTR)){Drive(0, rightDriveSpeed);}   //     (0,-)      \\
-            if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED > Doubles.KTR)){Drive(-leftDriveSpeed, 0);}    //     (+,0)      \\
-            if((!(RED < -Doubles.KTR) & !(RED > Doubles.KTR) & LED < -Doubles.KTR)){Drive(leftDriveSpeed, 0);}    //     (-,0)      \\
+            if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){Drive(leftDriveSpeed, -rightDriveSpeed);}              //     (+,-)      \\
+            if((LED > -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(-leftDriveSpeed, rightDriveSpeed);}             //     (-,+)      \\
+            if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED > Doubles.KTR)){Drive(0, -rightDriveSpeed);}  //     (0,+)      \\
+            if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED < -Doubles.KTR)){Drive(0, rightDriveSpeed);}  //     (0,-)      \\
+            if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED > Doubles.KTR)){Drive(-leftDriveSpeed, 0);}   //     (+,0)      \\
+            if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED < -Doubles.KTR)){Drive(leftDriveSpeed, 0);}   //     (-,0)      \\
                                                                                                                   //________________\\
         }
     }
