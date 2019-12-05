@@ -67,13 +67,13 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     //Code to drive the robot with driver control
     public void TeleDrive(){
         //Checks if the joystick is over one of the deadbands deadband
-        if ((Robot.controllers.getJoystickAxis(2) > Doubles.driveDeadband || Robot.controllers.getJoystickAxis(2) < -Doubles.driveDeadband) || (Robot.controllers.getJoystickAxis(1) > Doubles.turnDeadband || Robot.controllers.getJoystickAxis(1) < -Doubles.turnDeadband)){
+        if ((Robot.oi.getJoystickAxis(2) > Doubles.driveDeadband || Robot.oi.getJoystickAxis(2) < -Doubles.driveDeadband) || (Robot.oi.getJoystickAxis(1) > Doubles.turnDeadband || Robot.oi.getJoystickAxis(1) < -Doubles.turnDeadband)){
         
-            double drive = -Robot.controllers.getJoystickAxis(2) * Doubles.driveSpeedMod;
-            double turn = Robot.controllers.getJoystickAxis(1) * Doubles.turnSpeedMod;
+            double drive = -Robot.oi.getJoystickAxis(2) * Doubles.driveSpeedMod;
+            double turn = Robot.oi.getJoystickAxis(1) * Doubles.turnSpeedMod;
     
-            if ((!(Robot.controllers.getJoystickAxis(2) > Doubles.driveDeadband) || !(Robot.controllers.getJoystickAxis(2) < -Doubles.driveDeadband))){drive = 0;}
-            if ((!(Robot.controllers.getJoystickAxis(1) > Doubles.turnDeadband) || !(Robot.controllers.getJoystickAxis(1) < -Doubles.turnDeadband))){turn = 0;}
+            if ((!(Robot.oi.getJoystickAxis(2) > Doubles.driveDeadband) || !(Robot.oi.getJoystickAxis(2) < -Doubles.driveDeadband))){drive = 0;}
+            if ((!(Robot.oi.getJoystickAxis(1) > Doubles.turnDeadband) || !(Robot.oi.getJoystickAxis(1) < -Doubles.turnDeadband))){turn = 0;}
 
             //Calculates the motor powers for the left and right of the drivetrain
             double leftPower = drive + turn;

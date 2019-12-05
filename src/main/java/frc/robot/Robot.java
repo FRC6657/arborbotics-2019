@@ -20,7 +20,7 @@ import frc.robot.Constants.Speeds;
 import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
-import frc.robot.Hardware.Controllers;
+import frc.robot.Hardware.OI;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import frc.robot.Commands.*;
 
@@ -30,8 +30,8 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain = new Drivetrain();
   public static Carriage carriage = new Carriage();
   public static Lift lift = new Lift();
-  public static Controllers controllers = new Controllers();
 
+  public static OI oi;
   //Creates Power Variables That Can be Printed
   private double leftPower = 0;
   private double rightPower = 0;
@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
   //This code runs when the robot code is turned on
   @Override
   public void robotInit() {
+    oi = new OI();
     //This code prints the encoder values scaled to 1ft = ~1
     SmartDashboard.putNumber("Left Encoder: ", drivetrain.getLeftEncoderDistance());
     SmartDashboard.putNumber("Right Encoder: ", drivetrain.getRightEncoderDistance());

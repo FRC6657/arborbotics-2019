@@ -19,12 +19,11 @@ import frc.robot.Constants.Ports;
 /**
  * Add your docs here.
  */
-public class Controllers extends Subsystem {
+public class OI extends Subsystem {
 
   private Joystick joystick = new Joystick(Ports.joyStick.value);
   private XboxController controller = new XboxController(Ports.Controller.value);
 
-  public class OI{
     public JoystickButton liftUp;
     public JoystickButton liftDown;
     public JoystickButton squishyIn;
@@ -55,7 +54,6 @@ public class Controllers extends Subsystem {
       hingeDown.whileHeld(hd);
 
     }
-  }
   
 
   public double getJoystickAxis(int axis){return joystick.getRawAxis(axis);}
