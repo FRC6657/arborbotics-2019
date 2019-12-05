@@ -44,11 +44,15 @@ public class Controllers extends Subsystem {
       LiftDown ld = new LiftDown();
       SquishyIn  si = new SquishyIn();
       SquishyOut so = new SquishyOut();
+      HingeUp hu = new HingeUp();
+      HingeDown hd = new HingeDown();
 
       liftUp.whileHeld(lu);
       liftDown.whileHeld(ld);
       squishyIn.whileHeld(si);
       squishyOut.whileHeld(so);
+      hingeUp.whileHeld(hu);
+      hingeDown.whileHeld(hd);
 
     }
   }
