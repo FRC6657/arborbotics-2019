@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.*;
+import frc.robot.Robot;
 import frc.robot.Constants.*;
 //The comment in the class title is for if we ever get a pid source
 public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
@@ -62,6 +63,25 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         motorFL.set(leftPower);
         motorFR.set(-rightPower); //Right side is reversed so forward is + on each side
 
+    }
+    //Code to drive the robot with driver control
+    public void TeleDrive(){
+        //Checks if the joystick is over one of the deadbands deadband
+        if ((Robot.controllers.getJoystickAxis(2) > Doubles.driveDeadband || Robot.controllers.getJoystickAxis(2) < -Doubles.driveDeadband) || (Robot.controllers.getJoystickAxis(1) > Doubles.turnDeadband || Robot.controllers.getJoystickAxis(1) < -Doubles.turnDeadband)){
+        
+            double drive = -Robot.controllers.getJoystickAxis(2) * Doubles.driveSpeedMod;
+            double turn = Robot.controllers.getJoystickAxis(1) * Doubles.turnSpeedMod;
+    
+            if ((!(Robot.controllers.getJoystickAxis(2) > Doubles.driveDeadband) || !(Robot.controllers.getJoystickAxis(2) < -Doubles.driveDeadband))){drive = 0;}
+            if ((!(Robot.controllers.getJoystickAxis(1) > Doubles.turnDeadband) || !(Robot.controllers.getJoystickAxis(1) < -Doubles.turnDeadband))){turn = 0;}
+
+            //Calculates the motor powers for the left and right of the drivetrain
+            double leftPower = drive + turn;
+            double rightPower = drive - turn;
+
+            //Drives
+            Drive(leftPower,rightPower);
+        }
     }
     public void driveRobotToTargetWithEncoders(double targetL, double targetR){
         //Localization of Encoder Distances scaled to 1ft = ~1
@@ -119,7 +139,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
             if (gyroGetAngle() < angle){Drive(scaleTurnSpeedBasedOnTargetWithGyro(-angle), scaleTurnSpeedBasedOnTargetWithGyro(angle));}
         }
     }
-    public void gyroReset(){}//gyro.setFusedHeading(0);}
+    public void gyroReset(){gyro.setFusedHeading(0);}
     public double scaleTurnSpeedBasedOnTargetWithGyro(double targetAngle){
 
         double Fast = Speeds.Fast;

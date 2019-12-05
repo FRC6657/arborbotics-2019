@@ -20,6 +20,7 @@ import frc.robot.Constants.Speeds;
 import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
+import frc.robot.Hardware.Controllers;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import frc.robot.Commands.*;
 
@@ -29,9 +30,8 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain = new Drivetrain();
   public static Carriage carriage = new Carriage();
   public static Lift lift = new Lift();
-  //Controller Initialization
-  private Joystick driveStick;
-  private XboxController controller;
+  public static Controllers controllers = new Controllers();
+
   //Creates Power Variables That Can be Printed
   private double leftPower = 0;
   private double rightPower = 0;
@@ -81,15 +81,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
-    double speed = -driveStick.getRawAxis(2) * Doubles.DriveSpeed;
-    double turn = driveStick.getRawAxis(1) * Doubles.DriveSpeed;
-    
-    //Calculates the motor powers for the left and right of the drivetrain
-    double leftPower = speed + turn;
-    double rightPower = speed - turn;
+    drivetrain.TeleDrive();
 
-    //Drives
-    drivetrain.Drive(leftPower,rightPower);
   }                                                                                               
   
   
