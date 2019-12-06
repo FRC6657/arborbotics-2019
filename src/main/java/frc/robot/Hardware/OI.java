@@ -15,9 +15,6 @@ import frc.robot.Commands.*;
 
 import frc.robot.Constants.Ports;
 
-/**
- * Add your docs here.
- */
 public class OI extends Subsystem {
 
   private Joystick joystick = new Joystick(Ports.joyStick.value);
@@ -53,7 +50,6 @@ public class OI extends Subsystem {
       hingeDown.whileHeld(hd);
 
     }
-  
 
   public double getJoystickAxis(int axis){return joystick.getRawAxis(axis);}
   public double getControllerAxis(int axis){return controller.getRawAxis(axis);}

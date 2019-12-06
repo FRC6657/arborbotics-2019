@@ -19,7 +19,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     private WPI_TalonSRX motorFR = new WPI_TalonSRX(Ports.frontRightMotor.value);//Declares the Front Right Motor
     private WPI_TalonSRX motorBL = new WPI_TalonSRX(Ports.backLeftMotor.value);  //Declares the Back Left Motor
     private WPI_TalonSRX motorBR = new WPI_TalonSRX(Ports.backRightMotor.value); //Declares the Back Right Motor
-    private PigeonIMU gyro = new PigeonIMU(Ports.gyro.value);
+    private PigeonIMU gyro = new PigeonIMU(motorFL);
     //This code is just incase we ever get a pid source
     //public final PIDController turnController;
 
