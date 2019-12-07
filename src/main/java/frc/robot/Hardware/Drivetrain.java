@@ -133,6 +133,14 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
             if (gyroGetAngle() < angle){Drive(scaleTurnSpeedBasedOnTargetWithGyro(-angle), scaleTurnSpeedBasedOnTargetWithGyro(angle));}
         }
     }
+    public void turnTo0(){
+
+        while (((gyroGetAngle() > 1) || (gyroGetAngle() < -1))){   
+            if (gyroGetAngle() > 0){Drive(scaleTurnSpeedBasedOnTargetWithGyro(0), scaleTurnSpeedBasedOnTargetWithGyro(0));}
+            if (gyroGetAngle() < 0){Drive(scaleTurnSpeedBasedOnTargetWithGyro(0), scaleTurnSpeedBasedOnTargetWithGyro(0));}
+        }
+
+    }
     public void gyroReset(){gyro.setFusedHeading(0);}
     public double scaleTurnSpeedBasedOnTargetWithGyro(double targetAngle){
 

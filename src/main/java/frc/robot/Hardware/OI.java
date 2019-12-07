@@ -19,15 +19,16 @@ public class OI extends Subsystem {
 
   private Joystick joystick = new Joystick(Ports.joyStick.value);
   private XboxController controller = new XboxController(Ports.Controller.value);
-
+    //Button Declaration
     public JoystickButton liftUp;
     public JoystickButton liftDown;
     public JoystickButton squishyIn;
     public JoystickButton squishyOut;
     public JoystickButton hingeUp;
     public JoystickButton hingeDown;
-
+    //Main OI Stuff
     public OI(){
+      //Assignation of button values to buttons
       liftUp = new JoystickButton(joystick, 1);
       liftDown = new JoystickButton(joystick, 2);
       squishyIn = new JoystickButton(joystick,4);
