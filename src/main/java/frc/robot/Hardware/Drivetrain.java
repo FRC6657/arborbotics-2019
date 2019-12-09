@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Robot;
 import frc.robot.Constants.*;
 //The comment in the class title is for if we ever get a pid source
-public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
+public class Drivetrain extends Subsystem {
     //Encoder Declarations
     private Encoder leftDriveEncoder = new Encoder(0, 1, true, EncodingType.k2X);  //Declares Left E4T Encoder and Sets it to Medium Precition
     private Encoder rightDriveEncoder = new Encoder(2, 3, false, EncodingType.k2X);//Declares Right E4T Encoder and Sets it to Medium Precition
@@ -20,12 +20,6 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     private WPI_TalonSRX motorBL = new WPI_TalonSRX(Ports.backLeftMotor.value);  //Declares the Back Left Motor
     private WPI_TalonSRX motorBR = new WPI_TalonSRX(Ports.backRightMotor.value); //Declares the Back Right Motor
     private PigeonIMU gyro = new PigeonIMU(motorFL);
-    //This code is just incase we ever get a pid source
-    //public final PIDController turnController;
-
-    //private final double kP = 0;
-    //private final double kI = 0;
-    //private final double kD = 0;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
     private NetworkTableEntry xPositionEntry = tab.add("X:", 0).getEntry();
@@ -47,8 +41,6 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
         rightDriveEncoder.setMaxPeriod(15);//sets the max speed the robot can go to be considered moving.
 
         gyro.configFactoryDefault();
-
-        //turnController = new PIDController(kP, kI, kD, source, this);
 
     }
     //Function that we use whenever we want to drive the robot
@@ -77,6 +69,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
             Drive(leftPower,rightPower);
         }
     }
+    public void lockRobotInPositionn(){driveRobotToTargetWithEncoders(0, 0);}
     public void driveRobotToTargetWithEncoders(double targetL, double targetR){
         //Localization of Encoder Distances scaled to 1ft = ~1
         double LED = getLeftEncoderDistance();
@@ -97,6 +90,7 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
             if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED < -Doubles.KTR)){Drive(leftDriveSpeed, 0);}   //     (-,0)      \\
                                                                                                                   //________________\\
         }
+        
     }
     //Code to stop the motors
     public void Stop(){
@@ -195,11 +189,4 @@ public class Drivetrain extends Subsystem /*implements PIDOutput*/ {
     @Override
     protected void initDefaultCommand() {}
 
-    /*@Override
-    public void pidWrite(double output) {
-  
-        Drive(-output, output);
-
-    }
-    */
 }
