@@ -7,7 +7,6 @@ public enum Ports{
     frontRightMotor(2),
     backLeftMotor(3),
     backRightMotor(4),
-    gyro(5),
     armJointMotor(6),
     liftMotor(7),
     //PWM

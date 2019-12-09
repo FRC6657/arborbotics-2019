@@ -9,29 +9,26 @@ package frc.robot.Hardware;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Commands.*;
 
 import frc.robot.Constants.Ports;
 
-/**
- * Add your docs here.
- */
 public class OI extends Subsystem {
 
   private Joystick joystick = new Joystick(Ports.joyStick.value);
   private XboxController controller = new XboxController(Ports.Controller.value);
-
+    //Button Declaration
     public JoystickButton liftUp;
     public JoystickButton liftDown;
     public JoystickButton squishyIn;
     public JoystickButton squishyOut;
     public JoystickButton hingeUp;
     public JoystickButton hingeDown;
-
+    //Main OI Stuff
     public OI(){
+      //Assignation of button values to buttons
       liftUp = new JoystickButton(joystick, 1);
       liftDown = new JoystickButton(joystick, 2);
       squishyIn = new JoystickButton(joystick,4);
@@ -54,7 +51,6 @@ public class OI extends Subsystem {
       hingeDown.whileHeld(hd);
 
     }
-  
 
   public double getJoystickAxis(int axis){return joystick.getRawAxis(axis);}
   public double getControllerAxis(int axis){return controller.getRawAxis(axis);}

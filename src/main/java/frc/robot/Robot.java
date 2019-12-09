@@ -7,16 +7,9 @@
 
 package frc.robot;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode.PixelFormat;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Doubles;
-import frc.robot.Constants.Speeds;
 import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
@@ -30,8 +23,8 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain = new Drivetrain();
   public static Carriage carriage = new Carriage();
   public static Lift lift = new Lift();
-
   public static OI oi;
+
   //Creates Power Variables That Can be Printed
   private double leftPower = 0;
   private double rightPower = 0;
@@ -86,7 +79,6 @@ public class Robot extends TimedRobot {
 
   }                                                                                               
   
-  
   //This code runs whenever the robot is turned on reguardless of state
   @Override
   public void robotPeriodic() {
@@ -96,13 +88,13 @@ public class Robot extends TimedRobot {
     //This code prints the motor powers
     SmartDashboard.putNumber("Left Power: ", leftPower);
     SmartDashboard.putNumber("Right Power: ", rightPower);
-
+    //Print the Gyro Z Axis Angle
     SmartDashboard.putNumber("Gyro Angle: ", drivetrain.gyroGetAngle());
-
-    SmartDashboard.putString("Rio Accelerometer Value: X: ", accel.getX() + " Y: " + accel.getY()); //The Rio has a 3 axis Accelerometer but why would we ever need to use the Z axis
-
+    //Prints the X and Y accelerometer Values No Z Because why would we ever need it
+    SmartDashboard.putString("Rio Accelerometer Value: X: ", accel.getX() + " Y: " + accel.getY());
+    //This allows us to set a custom value for the robot to go to
     SmartDashboard.putData("Drive To Location: ",new DriveToLocation(drivetrain.shuffleboardGetY(),drivetrain.shuffleboardGetX()));//Drive(F/B, R/L) Direction is same as on coordinate plane
-
+    //Prevents the gyro angle from going over 360*
     drivetrain.gyroOverflowPrevention(); //Prevents gyro angle from getting over 360 or -360
   }
   //This code runs when test mode is started
