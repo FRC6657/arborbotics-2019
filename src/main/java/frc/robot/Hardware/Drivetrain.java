@@ -75,8 +75,17 @@ public class Drivetrain extends Subsystem {
         double LED = getLeftEncoderDistance();
         double RED = getRightEncoderDistance();
         //Gets the motor power that is scaled based on how far away the encoders are from the target
-        double leftDriveSpeed = scaleLeftSpeedWithEncoders(targetL);  //Value In Constructor is Target
-        double rightDriveSpeed = scaleRightSpeedWithEncoders(targetR);//Value In Constructor is Target
+        double leftDriveSpeed = 0.5;  //Value In Constructor is Target
+        double rightDriveSpeed = 0.5;//Value In Constructor is Target
+
+        double angle = gyroGetAngle();
+
+        while(angle > 1 || angle < -1){
+            if(angle >= 15){leftDriveSpeed = 0.2; rightDriveSpeed = 0.9;}
+            if(angle < 15 & angle >= 7.5){leftDriveSpeed = 0.3; rightDriveSpeed = 0.8;}
+            if(angle < 7.5 & angle >= 3.25){leftDriveSpeed = 0.4; rightDriveSpeed = 0.7;}
+        }
+        
                                                                                                                   //________________\\ 
         //This thicc code brick is what allows the robot to move to its target encoder positions                  // Robot Position \\  
         while((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){   //    !(0,0)      \\   
@@ -92,8 +101,23 @@ public class Drivetrain extends Subsystem {
         }
         
     }
+    public void driveRobotToTargetWithEncodersAndGyroStabilization(double targetL, double targetR)   {
+
+        double LED = getLeftEncoderDistance();
+        double RED = getRightEncoderDistance();
+        //Gets the motor power that is scaled based on how far away the encoders are from the target
+        double leftDriveSpeed = scaleLeftSpeedWithEncoders(targetL);  //Value In Constructor is Target
+        double rightDriveSpeed = scaleRightSpeedWithEncoders(targetR);//Value In Constructor is Target
+                                                                                                                  //________________\\ 
+        if ((LED < -Doubles.KTR || LED > Doubles.KTR) || (RED < -Doubles.KTR || RED > Doubles.KTR)){
+
+            if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
+            if((LED > Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, -rightDriveSpeed);}
+
+        }
+    }                                                                                    
     //Code to stop the motors
-    public void Stop(){
+    public void Stop(){ 
         //Sets each motor to 0
         motorFL.set(0);
         motorFR.set(0);
