@@ -59,18 +59,21 @@ public class Robot extends TimedRobot {
     double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);  //Value In Constructor is Target
     double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);//Value In Constructor is Target
 
-    boolean isLeftInTollerance = true;
-    boolean isRightInTollerance = true;
+    boolean LeftInTollerance = true;
+    boolean RightInTollerance = true;
 
-    if(Math.abs(LED) < Doubles.KTR){isLeftInTollerance = true;}
-    if(Math.abs(LED) > Doubles.KTR){isLeftInTollerance = false;}
-    if(Math.abs(RED) < Doubles.KTR){isLeftInTollerance = true;}
-    if(Math.abs(RED) > Doubles.KTR){isLeftInTollerance = false;}
+    int leftDirection = 0;
+    int rightDirection = 0;
 
-    if(!isLeftInTollerance & isRightInTollerance){if(LED < 0){drivetrain.Drive(leftDriveSpeed, 0);}else{drivetrain.Drive(-leftDriveSpeed, 0);}}
-    if(isLeftInTollerance & !isRightInTollerance){if(LED < 0){drivetrain.Drive(0, rightDriveSpeed);}else{drivetrain.Drive(0, -rightDriveSpeed);}}
-    if(!isLeftInTollerance & !isRightInTollerance){if(LED < 0){drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);}else{drivetrain.Drive(-leftDriveSpeed, -rightDriveSpeed);}}
-    if(isLeftInTollerance & isRightInTollerance){if(LED < 0){drivetrain.Drive(0, 0);}}
+    if(Math.abs(LED) < Doubles.KTR){LeftInTollerance = true;}
+    if(Math.abs(LED) > Doubles.KTR){LeftInTollerance = false;}
+    if(Math.abs(RED) < Doubles.KTR){RightInTollerance = true;}
+    if(Math.abs(RED) > Doubles.KTR){RightInTollerance = false;}
+
+    if(!LeftInTollerance){if(LED < 0){leftDirection = 1;}else{leftDirection = -1;}}
+    if(!RightInTollerance){if(RED < 0){rightDirection = 1;}else{rightDirection = -1;}}
+
+    drivetrain.Drive((leftDriveSpeed * leftDirection), (rightDriveSpeed * rightDirection));;
 
   }
   //This code runs when TeleOp is started
