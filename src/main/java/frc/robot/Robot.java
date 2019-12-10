@@ -14,7 +14,9 @@ import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
 import frc.robot.Hardware.OI;
-import frc.robot.PID.PIDDrivetrain;
+
+
+//import frc.robot.PID.PIDDrivetrain;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import frc.robot.Commands.*;
 
@@ -24,7 +26,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain = new Drivetrain();
   public static Carriage carriage = new Carriage();
   public static Lift lift = new Lift();
-  public static PIDDrivetrain pidDrivetrain = new PIDDrivetrain();
+  //public static PIDDrivetrain pidDrivetrain = new PIDDrivetrain();
   public static OI oi;
 
   //Creates Power Variables That Can be Printed
@@ -56,19 +58,20 @@ public class Robot extends TimedRobot {
     //Gets the motor power that is scaled based on how far away the encoders are from the target
     double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);  //Value In Constructor is Target
     double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);//Value In Constructor is Target
-                                                                                                                       //________________\\
-    //This thicc code brick is what allows the robot to move to its target encoder positions                           // Robot Position \\                                                                                                                  //(Robot Position)\\
-    if(((LED > Doubles.KTR) || (LED < -Doubles.KTR)) || ((RED > Doubles.KTR) || (RED < -Doubles.KTR))){                //    !(0,0)      \\                                                                                                       //    !(0,0)      \\    
-      if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
-      if((LED > Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
-      if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, -rightDriveSpeed);}              //     (+,-)      \\
-      if((LED > -Doubles.KTR) & (RED < -Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, rightDriveSpeed);}             //     (-,+)      \\
-      if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED > Doubles.KTR)){drivetrain.Drive(0, -rightDriveSpeed);}  //     (0,+)      \\
-      if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED < -Doubles.KTR)){drivetrain.Drive(0, rightDriveSpeed);}  //     (0,-)      \\
-      if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED > Doubles.KTR)){drivetrain.Drive(-leftDriveSpeed, 0);}   //     (+,0)      \\
-      if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED < -Doubles.KTR)){drivetrain.Drive(leftDriveSpeed, 0);}   //     (-,0)      \\
-                                                                                                                       //________________\\
-    }
+
+    boolean isLeftInTollerance = true;
+    boolean isRightInTollerance = true;
+
+    if(Math.abs(LED) < Doubles.KTR){isLeftInTollerance = true;}
+    if(Math.abs(LED) > Doubles.KTR){isLeftInTollerance = false;}
+    if(Math.abs(RED) < Doubles.KTR){isLeftInTollerance = true;}
+    if(Math.abs(RED) > Doubles.KTR){isLeftInTollerance = false;}
+
+    if(!isLeftInTollerance & isRightInTollerance){if(LED < 0){drivetrain.Drive(leftDriveSpeed, 0);}else{drivetrain.Drive(-leftDriveSpeed, 0);}}
+    if(isLeftInTollerance & !isRightInTollerance){if(LED < 0){drivetrain.Drive(0, rightDriveSpeed);}else{drivetrain.Drive(0, -rightDriveSpeed);}}
+    if(!isLeftInTollerance & !isRightInTollerance){if(LED < 0){drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);}else{drivetrain.Drive(-leftDriveSpeed, -rightDriveSpeed);}}
+    if(isLeftInTollerance & isRightInTollerance){if(LED < 0){drivetrain.Drive(0, 0);}}
+
   }
   //This code runs when TeleOp is started
   @Override

@@ -19,7 +19,7 @@ public class Drivetrain extends Subsystem {
     private WPI_TalonSRX motorFR = new WPI_TalonSRX(Ports.frontRightMotor.value);//Declares the Front Right Motor
     private WPI_TalonSRX motorBL = new WPI_TalonSRX(Ports.backLeftMotor.value);  //Declares the Back Left Motor
     private WPI_TalonSRX motorBR = new WPI_TalonSRX(Ports.backRightMotor.value); //Declares the Back Right Motor
-    private PigeonIMU gyro = new PigeonIMU(motorFL);
+    //private PigeonIMU gyro = new PigeonIMU(Ports.gyro.value);
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
     private NetworkTableEntry xPositionEntry = tab.add("X:", 0).getEntry();
@@ -40,7 +40,7 @@ public class Drivetrain extends Subsystem {
         leftDriveEncoder.setMaxPeriod(15); //sets the max speed the robot can go to be considered moving.
         rightDriveEncoder.setMaxPeriod(15);//sets the max speed the robot can go to be considered moving.
 
-        gyro.configFactoryDefault();
+        //gyro.configFactoryDefault();
 
     }
     //Function that we use whenever we want to drive the robot
@@ -159,7 +159,7 @@ public class Drivetrain extends Subsystem {
         }
 
     }
-    public void gyroReset(){gyro.setFusedHeading(0);}
+    public void gyroReset(){}//gyro.setFusedHeading(0);}
     public double scaleTurnSpeedBasedOnTargetWithGyro(double targetAngle){
 
         double Fast = Speeds.Fast;
@@ -204,7 +204,7 @@ public class Drivetrain extends Subsystem {
     public double getRightEncoderDistance(){return rightDriveEncoder.getDistance();}
     public double gyroGetAngle(){
         double [] ypr = new double[3];
-        gyro.getYawPitchRoll(ypr);
+        //gyro.getYawPitchRoll(ypr);
         return ypr[0];
     }
     public double shuffleboardGetX(){return xPositionEntry.getDouble(0);}

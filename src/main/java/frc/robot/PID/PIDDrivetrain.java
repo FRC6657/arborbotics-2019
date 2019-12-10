@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/*
 package frc.robot.PID;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -32,7 +32,6 @@ public class PIDDrivetrain extends Subsystem implements PIDOutput{
   private final double kP = 0;//Proportional
   private final double kI = 0;//Integral
   private final double kD = 0;//Derivative
-  private final double kF = 0;//Feed Forward
 
   public PIDDrivetrain(){
 
@@ -77,3 +76,4 @@ public class PIDDrivetrain extends Subsystem implements PIDOutput{
 
   }
 }
+*/
