@@ -72,6 +72,9 @@ public class Robot extends TimedRobot {
 
     if(!LeftInTollerance){if(LED < 0){leftDirection = 1;}else{leftDirection = -1;}}
     if(!RightInTollerance){if(RED < 0){rightDirection = 1;}else{rightDirection = -1;}}
+    if(LeftInTollerance){leftDirection = 0;}
+    if(RightInTollerance){rightDirection = 0;}
+
 
     drivetrain.Drive((leftDriveSpeed * leftDirection), (rightDriveSpeed * rightDirection));;
 
