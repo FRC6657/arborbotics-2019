@@ -80,7 +80,7 @@ public class Drivetrain extends Subsystem {
 
         double angle = gyroGetAngle();
 
-        while(angle > 1 || angle < -1){
+        if(angle > 1 || angle < -1){
             if(angle >= 15){leftDriveSpeed = 0.2; rightDriveSpeed = 0.9;}
             if(angle < 15 & angle >= 7.5){leftDriveSpeed = 0.3; rightDriveSpeed = 0.8;}
             if(angle < 7.5 & angle >= 3.25){leftDriveSpeed = 0.4; rightDriveSpeed = 0.7;}
@@ -88,7 +88,7 @@ public class Drivetrain extends Subsystem {
         
                                                                                                                   //________________\\ 
         //This thicc code brick is what allows the robot to move to its target encoder positions                  // Robot Position \\  
-        while((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){   //    !(0,0)      \\   
+        if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){   //    !(0,0)      \\   
             if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
             if((LED > Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
             if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){Drive(leftDriveSpeed, -rightDriveSpeed);}              //     (+,-)      \\
@@ -131,7 +131,7 @@ public class Drivetrain extends Subsystem {
         double angle = Math.atan(x/y);
         double hDistance = Math.sqrt((x*x)+(y*y));
 
-        while(((getLeftEncoderDistance() - hDistance > 0.1) || (getLeftEncoderDistance() - hDistance < -0.1)) & ((getRightEncoderDistance() - hDistance > 0.1) || (getRightEncoderDistance() - hDistance < -0.1))){
+        if(((getLeftEncoderDistance() - hDistance > 0.1) || (getLeftEncoderDistance() - hDistance < -0.1)) & ((getRightEncoderDistance() - hDistance > 0.1) || (getRightEncoderDistance() - hDistance < -0.1))){
             if(y > 0 & x < 0){gyroTurn(-angle);}
             else{if(y > 0 & x > 0){gyroTurn(angle);}
             else{if(y < 0 & x < 0){gyroTurn(180 - angle);}
@@ -146,14 +146,14 @@ public class Drivetrain extends Subsystem {
     public void gyroTurn(double angle){
         gyroReset();
         
-        while (((gyroGetAngle() > 1) || (gyroGetAngle() < -1))){   
+        if(((gyroGetAngle() > 1) || (gyroGetAngle() < -1))){   
             if (gyroGetAngle() > angle){Drive(scaleTurnSpeedBasedOnTargetWithGyro(-angle), scaleTurnSpeedBasedOnTargetWithGyro(angle));}
             if (gyroGetAngle() < angle){Drive(scaleTurnSpeedBasedOnTargetWithGyro(-angle), scaleTurnSpeedBasedOnTargetWithGyro(angle));}
         }
     }
     public void turnTo0(){
 
-        while (((gyroGetAngle() > 1) || (gyroGetAngle() < -1))){   
+        if(((gyroGetAngle() > 1) || (gyroGetAngle() < -1))){   
             if (gyroGetAngle() > 0){Drive(scaleTurnSpeedBasedOnTargetWithGyro(0), scaleTurnSpeedBasedOnTargetWithGyro(0));}
             if (gyroGetAngle() < 0){Drive(scaleTurnSpeedBasedOnTargetWithGyro(0), scaleTurnSpeedBasedOnTargetWithGyro(0));}
         }

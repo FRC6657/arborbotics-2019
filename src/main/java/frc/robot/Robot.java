@@ -59,22 +59,16 @@ public class Robot extends TimedRobot {
     double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);  //Value In Constructor is Target
     double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);//Value In Constructor is Target
 
-    boolean LeftInTollerance = true;
-    boolean RightInTollerance = true;
+    boolean LeftInTollerance = (Math.abs(LED) < Doubles.KTR); //Checks if the left side is over 
+    boolean RightInTollerance = (Math.abs(RED) < Doubles.KTR);
 
     int leftDirection = 0;
     int rightDirection = 0;
-
-    if(Math.abs(LED) < Doubles.KTR){LeftInTollerance = true;}
-    if(Math.abs(LED) > Doubles.KTR){LeftInTollerance = false;}
-    if(Math.abs(RED) < Doubles.KTR){RightInTollerance = true;}
-    if(Math.abs(RED) > Doubles.KTR){RightInTollerance = false;}
 
     if(!LeftInTollerance){if(LED < 0){leftDirection = 1;}else{leftDirection = -1;}}
     if(!RightInTollerance){if(RED < 0){rightDirection = 1;}else{rightDirection = -1;}}
     if(LeftInTollerance){leftDirection = 0;}
     if(RightInTollerance){rightDirection = 0;}
-
 
     drivetrain.Drive((leftDriveSpeed * leftDirection), (rightDriveSpeed * rightDirection));;
 

@@ -10,8 +10,8 @@ import frc.robot.Constants.Ports;
 public class Carriage extends Subsystem {
 
     public WPI_TalonSRX armJoint = new WPI_TalonSRX(Ports.armJointMotor.value);
-    public Spark wheelClawL = new Spark(Ports.wheelClawL.value);
-    public Spark wheelClawR = new Spark(Ports.wheelClawR.value);
+    public Spark wheelClawL = new Spark(Ports.wheelClawL.value); //Even thought the motor controller is a Talon SR in code its a spark.
+    public Spark wheelClawR = new Spark(Ports.wheelClawR.value); //Even thought the motor controller is a Talon SR in code its a spark.
 
     public Carriage(){
 

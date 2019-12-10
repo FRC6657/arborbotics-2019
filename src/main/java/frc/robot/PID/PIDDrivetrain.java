@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-/*
+
 package frc.robot.PID;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -38,42 +38,50 @@ public class PIDDrivetrain extends Subsystem implements PIDOutput{
     motorBL.follow(motorFL);//Sets back left motor to be the slave to the master front left motor 
     motorBR.follow(motorFR);//Sets back right motor to be the slave to the master front right motor
 
-    ahrs = new AHRS(SPI.Port.kMXP);
+    ahrs = new AHRS(SPI.Port.kMXP);//(Center RIO Port)
 
-    pid = new PIDController(kP, kI, kD, ahrs, this);
+    pid = new PIDController(kP, kI, kD, ahrs, this);//(P,I,D,Source,Controller)
 
-    pid.setInputRange(-180.0f,180.0f);
-    pid.setOutputRange(-0.45, 0.45);
-    pid.setAbsoluteTolerance(2.0f);
-    pid.setContinuous();
-
-  }
-
-  public void rotateDeg(double angle){
-
-    ahrs.reset();
-    pid.reset();
-    pid.setPID(kP, kI, kD);
-    pid.setSetpoint(angle);
-    pid.enable();
+    pid.setInputRange(-180.0f,180.0f); //This prevents the robot from rotating inefficiently aka over 180 in one direction.
+    pid.setOutputRange(-0.45, 0.45);//Sets output to a max of 45%
+    pid.setAbsoluteTolerance(2.0f);//Sets angle tollerance
+    pid.setContinuous(true);//Max and min are the same value so that the degrees run in a circle not a line
 
   }
+  //Rotates to a specific angle with the angle that the robot is in when the command is called being 0
+  public void rotateDegRelative(double angle){ //Robots current angle is 0
+
+    ahrs.reset();//Resets Gyro Angle
+    pid.reset();//Resets the PID Values just in case
+    pid.setPID(kP, kI, kD);//Reassigns the PID Values becasue the line before removed it
+    pid.setSetpoint(angle);//Sets the target angle
+    pid.enable();//Rotates to target
+
+  }
+  //Rotates to a specific angle with the angle that the robot is in when the command is called as the angle that the robot is in when the command is called.
+  public void rotateDegAbsolute(double angle){ //Robots current angle is the robots current angle
+
+    pid.reset();//Resets the PID Values just in case
+    pid.setPID(kP, kI, kD);//Reassigns the PID Values because the line before removed it
+    pid.setSetpoint(angle);//Sets the target angle
+    pid.enable();//Rotates to the target
+
+  }
+  //Drives Robot
   public void Drive(double leftPower, double rightPower){
     //Motor setting code for each master motor.
-    motorFL.set(leftPower);
-    motorFR.set(-rightPower); //Right side is reversed so forward is + on each side
+    motorFL.set(leftPower); //Left side is normal because clockwise goes forward
+    motorFR.set(-rightPower); //Right side is reversed because clockwise goes backward
 
 }
   @Override
-  public void initDefaultCommand() {
-
-  }
+  public void initDefaultCommand() {}
 
   @Override
   public void pidWrite(double output) {
     
-    Drive(output, output);
+    Drive(output, output);//Drives the robot to the angle
 
   }
 }
-*/
+
