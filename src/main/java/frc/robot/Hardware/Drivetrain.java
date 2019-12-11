@@ -27,9 +27,6 @@ public class Drivetrain extends Subsystem {
 
     //Drivetrain Function
     public Drivetrain() {
-        //Slave motor declaration
-        motorBL.follow(motorFL);//Sets back left motor to be the slave to the master front left motor 
-        motorBR.follow(motorFR);//Sets back right motor to be the slave to the master front right motor
         //Encoder 
         leftDriveEncoder.setMinRate(0.03); //sets the rate in ft/s that determines if the robot is stopped or not
         rightDriveEncoder.setMinRate(0.03); //sets the rate in ft/s that determines if the robot is stopped or not
@@ -48,6 +45,8 @@ public class Drivetrain extends Subsystem {
         //Motor setting code for each master motor.
         motorFL.set(leftPower);
         motorFR.set(-rightPower); //Right side is reversed so forward is + on each side
+        motorBL.set(rightPower);
+        motorBR.set(-rightPower);
 
     }
     //Code to drive the robot with driver control
@@ -77,16 +76,7 @@ public class Drivetrain extends Subsystem {
         //Gets the motor power that is scaled based on how far away the encoders are from the target
         double leftDriveSpeed = 0.5;  //Value In Constructor is Target
         double rightDriveSpeed = 0.5;//Value In Constructor is Target
-
-        double angle = gyroGetAngle();
-
-        if(angle > 1 || angle < -1){
-            if(angle >= 15){leftDriveSpeed = 0.2; rightDriveSpeed = 0.9;}
-            if(angle < 15 & angle >= 7.5){leftDriveSpeed = 0.3; rightDriveSpeed = 0.8;}
-            if(angle < 7.5 & angle >= 3.25){leftDriveSpeed = 0.4; rightDriveSpeed = 0.7;}
-        }
-        
-                                                                                                                  //________________\\ 
+                                                                                                         //________________\\ 
         //This thicc code brick is what allows the robot to move to its target encoder positions                  // Robot Position \\  
         if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){   //    !(0,0)      \\   
             if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
@@ -188,16 +178,21 @@ public class Drivetrain extends Subsystem {
         else{System.out.println("Left Encoder Value Out of Bounds"); return Stop;}}}} //This is here so code works also so that if the robot doesnt agree with math it doesnt take over the world.
     }
     public double scaleRightSpeedWithEncoders(double targetPos){
-        double Fast = Speeds.Fast;
-        double Medium = Speeds.Medium;
-        double Slow = Speeds.Slow;
-        double Stop = Speeds.Stop;
 
-        if(getRightEncoderDistance() - targetPos >= 5){return Fast;}
-        else{if(getRightEncoderDistance() - targetPos <= 5){return Medium;}
-        else{if(getRightEncoderDistance() - targetPos <= 2){return Slow;}
-        else{if(getRightEncoderDistance() - targetPos < Doubles.KTR){return Stop;}
-        else{System.out.println("Right Encoder Value Out of Bounds"); return Stop;}}}}
+        double speed;
+        //Possible Scaling Ideas:
+
+        //Quadratic Approach:
+        //Speed = -(5x^2 - 5*x^2) Pro:Fast Con:The longer the distance the less time to stop
+
+        //Linear Approach:
+        //Speed = (current - target) /-target Pro:Slows Down Consistantly Con: This is slow
+
+        //Mixed Linear Approach:
+        //If(current < target - 1) speed = 1 If(current > target - 1) speed = (current - target)/-target Pro: Faster than normal linear Con: Stops abruptly, but consistantly
+
+        return 0;
+
     }
 
     public double getLeftEncoderDistance(){return leftDriveEncoder.getDistance();}

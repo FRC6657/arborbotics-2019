@@ -29,9 +29,13 @@ public class Robot extends TimedRobot {
   //public static PIDDrivetrain pidDrivetrain = new PIDDrivetrain();
   public static OI oi;
 
+  private int leftDirection = 0;
+  private int rightDirection = 0;
+
   //Creates Power Variables That Can be Printed
   private double leftPower = 0;
   private double rightPower = 0;
+
   //Initialization of the Rio's built in accelerometer
   private BuiltInAccelerometer accel = new BuiltInAccelerometer();
   //This code runs when the robot code is turned on
@@ -47,7 +51,11 @@ public class Robot extends TimedRobot {
   }
   //This code runs when autonomous is started
   @Override
-  public void autonomousInit() {drivetrain.ResetEncoders();}
+  public void autonomousInit() {
+    drivetrain.ResetEncoders();
+    leftDirection = 0;
+    rightDirection = 0;
+  }
   //This code is a loop that runs when autonomous is happening
   @Override
   public void autonomousPeriodic() {
@@ -56,21 +64,15 @@ public class Robot extends TimedRobot {
     double LED = drivetrain.getLeftEncoderDistance();
     double RED = drivetrain.getRightEncoderDistance();
     //Gets the motor power that is scaled based on how far away the encoders are from the target
-    double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(0);  //Value In Constructor is Target
-    double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(0);//Value In Constructor is Target
+    double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(2);  //Value In Constructor is Target
+    double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(2);//Value In Constructor is Target
 
-    boolean LeftInTollerance = (Math.abs(LED) < Doubles.KTR); //Checks if the left side is over 
-    boolean RightInTollerance = (Math.abs(RED) < Doubles.KTR);
+    if((RED < 6)){rightDirection = 1;}
+    if((LED < 6)){leftDirection = 1;}
+    if(RED > 6){rightDirection = 0;}
+    if(LED > 6){leftDirection = 0;}
 
-    int leftDirection = 0;
-    int rightDirection = 0;
-
-    if(!LeftInTollerance){if(LED < 0){leftDirection = 1;}else{leftDirection = -1;}}
-    if(!RightInTollerance){if(RED < 0){rightDirection = 1;}else{rightDirection = -1;}}
-    if(LeftInTollerance){leftDirection = 0;}
-    if(RightInTollerance){rightDirection = 0;}
-
-    drivetrain.Drive((leftDriveSpeed * leftDirection), (rightDriveSpeed * rightDirection));;
+    drivetrain.Drive((leftDriveSpeed * leftDirection), (rightDriveSpeed * rightDirection));
 
   }
   //This code runs when TeleOp is started
@@ -99,6 +101,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Rio Accelerometer Value: X: ", accel.getX() + " Y: " + accel.getY());
     //This allows us to set a custom value for the robot to go to
     SmartDashboard.putData("Drive To Location: ",new DriveToLocation(drivetrain.shuffleboardGetY(),drivetrain.shuffleboardGetX()));//Drive(F/B, R/L) Direction is same as on coordinate plane
+    SmartDashboard.putNumber("LeftDirection", leftDirection);
+    SmartDashboard.putNumber("RightDirection", rightDirection);
+    //SmartDashboard.putBoolean("LeftInTollerance", LeftInZone);
+    //SmartDashboard.putBoolean("RightInTollerance", RightInZone);
+    
     //Prevents the gyro angle from going over 360*
     drivetrain.gyroOverflowPrevention(); //Prevents gyro angle from getting over 360 or -360
   }
