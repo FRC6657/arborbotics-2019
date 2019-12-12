@@ -64,15 +64,10 @@ public class Robot extends TimedRobot {
     double LED = drivetrain.getLeftEncoderDistance();
     double RED = drivetrain.getRightEncoderDistance();
     //Gets the motor power that is scaled based on how far away the encoders are from the target
-    double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(2);  //Value In Constructor is Target
-    double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(2);//Value In Constructor is Target
+    double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(5,4,0.7);  //Value In Constructor is Target
+    double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(5,4,0.7);//Value In Constructor is Target
 
-    if((RED < 6)){rightDirection = 1;}
-    if((LED < 6)){leftDirection = 1;}
-    if(RED > 6){rightDirection = 0;}
-    if(LED > 6){leftDirection = 0;}
-
-    drivetrain.Drive((leftDriveSpeed * leftDirection), (rightDriveSpeed * rightDirection));
+    drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);
 
   }
   //This code runs when TeleOp is started

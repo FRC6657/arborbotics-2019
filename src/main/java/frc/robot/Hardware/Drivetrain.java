@@ -31,8 +31,8 @@ public class Drivetrain extends Subsystem {
         leftDriveEncoder.setMinRate(0.03); //sets the rate in ft/s that determines if the robot is stopped or not
         rightDriveEncoder.setMinRate(0.03); //sets the rate in ft/s that determines if the robot is stopped or not
 
-        leftDriveEncoder.setDistancePerPulse(0.005); //scales the encoder value to 1ft = ~1
-        rightDriveEncoder.setDistancePerPulse(0.005);//scales the encoder value to 1ft = ~1
+        leftDriveEncoder.setDistancePerPulse(0.006); //scales the encoder value to 1ft = ~1
+        rightDriveEncoder.setDistancePerPulse(0.006);//scales the encoder value to 1ft = ~1
 
         leftDriveEncoder.setMaxPeriod(15); //sets the max speed the robot can go to be considered moving.
         rightDriveEncoder.setMaxPeriod(15);//sets the max speed the robot can go to be considered moving.
@@ -96,9 +96,8 @@ public class Drivetrain extends Subsystem {
         double LED = getLeftEncoderDistance();
         double RED = getRightEncoderDistance();
         //Gets the motor power that is scaled based on how far away the encoders are from the target
-        double leftDriveSpeed = scaleLeftSpeedWithEncoders(targetL);  //Value In Constructor is Target
-        double rightDriveSpeed = scaleRightSpeedWithEncoders(targetR);//Value In Constructor is Target
-                                                                                                                  //________________\\ 
+        double leftDriveSpeed = scaleLeftSpeedWithEncoders(targetL,0.5,1);  //Value In Constructor is Target
+        double rightDriveSpeed = scaleRightSpeedWithEncoders(targetR,0.5,1);                                     //________________\\ 
         if ((LED < -Doubles.KTR || LED > Doubles.KTR) || (RED < -Doubles.KTR || RED > Doubles.KTR)){
 
             if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
@@ -164,34 +163,38 @@ public class Drivetrain extends Subsystem {
         else{return Stop;}}}}
     }
     //Code to scale motor speed based on how far off the encoders position is relative to the target position
-    public double scaleLeftSpeedWithEncoders(double targetPos) {
-        //Localizes the speed variables fx rom the speeds file
-        double Fast = Speeds.Fast;
-        double Medium = Speeds.Medium;
-        double Slow = Speeds.Slow;
-        double Stop = Speeds.Stop;
+    public double scaleLeftSpeedWithEncoders(double targetPos,double stopDistance,double topSpeed) {
+        double stopZone = stopDistance;
+        double distance = getRightEncoderDistance();
+        double maxSpeed = topSpeed;
+        double target = targetPos;
+        double h = (target - stopZone);
+        double a = 1/(Math.pow((stopZone),2));
 
-        if(getLeftEncoderDistance() - targetPos >= 5 || getLeftEncoderDistance() - targetPos <= -5 ){return Fast;} //If the left side is 5 or more feet away go fast
-        else{if(((getLeftEncoderDistance() - targetPos < 5) & getLeftEncoderDistance() - targetPos > 2) || ((getLeftEncoderDistance() - targetPos > -5) & getLeftEncoderDistance() - targetPos < -2 )){return Medium;} //If the left side is less than 5 feet away go medium speed
-        else{if(((getLeftEncoderDistance() - targetPos <= 2) & getLeftEncoderDistance() - targetPos > Doubles.KTR) || ((getLeftEncoderDistance() - targetPos > -2) & getLeftEncoderDistance() - targetPos < -Doubles.KTR)){return Slow;} //If the left side is less than 2 feet away go fast
-        else{if(getLeftEncoderDistance() - targetPos < Doubles.KTR || getLeftEncoderDistance() - targetPos > -Doubles.KTR){return Stop;} //If the left side is within the location tollerence
-        else{System.out.println("Left Encoder Value Out of Bounds"); return Stop;}}}} //This is here so code works also so that if the robot doesnt agree with math it doesnt take over the world.
-    }
-    public double scaleRightSpeedWithEncoders(double targetPos){
+        double speed = -a * Math.pow((distance - h),2) + maxSpeed;
+        
+        if(distance < h){speed = 1;}
 
-        double speed;
-        //Possible Scaling Ideas:
+        if(targetPos < -Doubles.KTR){return -speed;}
+        else{if(targetPos > Doubles.KTR){return speed;}
+        else{return speed * 0;}}
+    }   
+    public double scaleRightSpeedWithEncoders(double targetPos, double stopDistance, double topSpeed){
 
-        //Quadratic Approach:
-        //Speed = -(5x^2 - 5*x^2) Pro:Fast Con:The longer the distance the less time to stop
+        double stopZone = stopDistance;
+        double distance = getRightEncoderDistance();
+        double maxSpeed = topSpeed;
+        double target = targetPos;
+        double h = (target - stopZone);
+        double a = 1/(Math.pow((stopZone),2));
 
-        //Linear Approach:
-        //Speed = (current - target) /-target Pro:Slows Down Consistantly Con: This is slow
+        double speed = -a * Math.pow((distance - h),2) + maxSpeed;
 
-        //Mixed Linear Approach:
-        //If(current < target - 1) speed = 1 If(current > target - 1) speed = (current - target)/-target Pro: Faster than normal linear Con: Stops abruptly, but consistantly
+        if(distance < h){speed = 1;}
 
-        return 0;
+        if(targetPos < -Doubles.KTR){return -speed;}
+        else{if(targetPos > Doubles.KTR){return speed;}
+        else{return speed * 0;}}
 
     }
 
