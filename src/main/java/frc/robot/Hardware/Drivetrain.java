@@ -70,27 +70,18 @@ public class Drivetrain extends Subsystem {
     }
     public void lockRobotInPositionn(){driveRobotToTargetWithEncoders(0, 0);}
     public void driveRobotToTargetWithEncoders(double targetL, double targetR){
+        
         //Localization of Encoder Distances scaled to 1ft = ~1
         double LED = getLeftEncoderDistance();
         double RED = getRightEncoderDistance();
         //Gets the motor power that is scaled based on how far away the encoders are from the target
-        double leftDriveSpeed = 0.5;  //Value In Constructor is Target
-        double rightDriveSpeed = 0.5;//Value In Constructor is Target
-                                                                                                         //________________\\ 
-        //This thicc code brick is what allows the robot to move to its target encoder positions                  // Robot Position \\  
-        if((!(LED < Doubles.KTR) & !(LED > -Doubles.KTR)) ||(!(RED < Doubles.KTR) & !(RED > -Doubles.KTR))){   //    !(0,0)      \\   
-            if((LED < -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(leftDriveSpeed, rightDriveSpeed);}              //     (-,-)      \\
-            if((LED > Doubles.KTR) & (RED > Doubles.KTR)){Drive(-leftDriveSpeed, -rightDriveSpeed);}              //     (+,+)      \\
-            if((LED < -Doubles.KTR) & (RED > Doubles.KTR)){Drive(leftDriveSpeed, -rightDriveSpeed);}              //     (+,-)      \\
-            if((LED > -Doubles.KTR) & (RED < -Doubles.KTR)){Drive(-leftDriveSpeed, rightDriveSpeed);}             //     (-,+)      \\
-            if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED > Doubles.KTR)){Drive(0, -rightDriveSpeed);}  //     (0,+)      \\
-            if((!(LED < -Doubles.KTR) || !(LED > Doubles.KTR) & RED < -Doubles.KTR)){Drive(0, rightDriveSpeed);}  //     (0,-)      \\
-            if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED > Doubles.KTR)){Drive(-leftDriveSpeed, 0);}   //     (+,0)      \\
-            if((!(RED < -Doubles.KTR) || !(RED > Doubles.KTR) & LED < -Doubles.KTR)){Drive(leftDriveSpeed, 0);}   //     (-,0)      \\
-                                                                                                                  //________________\\
-        }
-        
+        double leftDriveSpeed = scaleLeftSpeedWithEncoders(5,4,0.7);  //Value In Constructor is Target
+        double rightDriveSpeed = scaleRightSpeedWithEncoders(5,4,0.7);//Value In Constructor is Target
+
+        Drive(leftDriveSpeed, rightDriveSpeed);
+
     }
+        
     public void driveRobotToTargetWithEncodersAndGyroStabilization(double targetL, double targetR)   {
 
         double LED = getLeftEncoderDistance();
@@ -173,7 +164,7 @@ public class Drivetrain extends Subsystem {
 
         double speed = -a * Math.pow((distance - h),2) + maxSpeed;
         
-        if(distance < h){speed = 1;}
+        if(distance < h){if(targetPos < 0){speed = -1;}else{speed = 1;}}
 
         if(targetPos < -Doubles.KTR){return -speed;}
         else{if(targetPos > Doubles.KTR){return speed;}
@@ -190,7 +181,7 @@ public class Drivetrain extends Subsystem {
 
         double speed = -a * Math.pow((distance - h),2) + maxSpeed;
 
-        if(distance < h){speed = 1;}
+        if(distance < h){if(targetPos < 0){speed = -1;}else{speed = 1;}}
 
         if(targetPos < -Doubles.KTR){return -speed;}
         else{if(targetPos > Doubles.KTR){return speed;}

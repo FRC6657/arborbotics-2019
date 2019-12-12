@@ -12,15 +12,15 @@ import frc.robot.Robot;
 
 public class DriveToLocation extends Command {
 
-  Double X;
-  Double Y;
+  Double TarL;
+  Double TarR;
 
-  public DriveToLocation(double x, double y) {
+  public DriveToLocation(double tarL, double tarR) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);
-    X = x;
-    Y = y;
+    TarL = tarL;
+    TarR = tarR;
   }
   
   // Called just before this Command runs the first time
@@ -31,10 +31,10 @@ public class DriveToLocation extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    try{
-    Robot.drivetrain.driveRobotToCoordinate(X,Y);
-    }
-    catch(InterruptedException e){e.printStackTrace();}
+   
+  while((Math.abs(Robot.drivetrain.getLeftEncoderDistance()) < Math.abs(TarL) || Math.abs(Robot.drivetrain.getLeftEncoderDistance()) < Math.abs(TarR)))  {
+    Robot.drivetrain.driveRobotToTargetWithEncoders(TarL, TarR);
+    } 
   }
 
   // Make this return true when this Command no longer needs to run execute()

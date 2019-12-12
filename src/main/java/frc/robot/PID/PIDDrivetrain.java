@@ -27,7 +27,7 @@ public class PIDDrivetrain extends Subsystem implements PIDOutput{
   
   public final PIDController pid;
 
-  private final AHRS ahrs;
+  AHRS navX;
 
   private final double kP = 0;//Proportional
   private final double kI = 0;//Integral
@@ -38,9 +38,9 @@ public class PIDDrivetrain extends Subsystem implements PIDOutput{
     motorBL.follow(motorFL);//Sets back left motor to be the slave to the master front left motor 
     motorBR.follow(motorFR);//Sets back right motor to be the slave to the master front right motor
 
-    ahrs = new AHRS(SPI.Port.kMXP);//(Center RIO Port)
+    navX = new AHRS(SPI.Port.kMXP);// (Center RIO Port)
 
-    pid = new PIDController(kP, kI, kD, ahrs, this);//(P,I,D,Source,Controller)
+    pid = new PIDController(kP, kI, kD, navX, this);//(P,I,D,Source,Controller)
 
     pid.setInputRange(-180.0f,180.0f); //This prevents the robot from rotating inefficiently aka over 180 in one direction.
     pid.setOutputRange(-0.45, 0.45);//Sets output to a max of 45%
@@ -51,7 +51,7 @@ public class PIDDrivetrain extends Subsystem implements PIDOutput{
   //Rotates to a specific angle with the angle that the robot is in when the command is called being 0
   public void rotateDegRelative(double angle){ //Robots current angle is 0
 
-    ahrs.reset();//Resets Gyro Angle
+    navX.reset();//Resets Gyro Angle
     pid.reset();//Resets the PID Values just in case
     pid.setPID(kP, kI, kD);//Reassigns the PID Values becasue the line before removed it
     pid.setSetpoint(angle);//Sets the target angle
