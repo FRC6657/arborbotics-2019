@@ -27,15 +27,9 @@ public class Drivetrain extends Subsystem {
 
     //Drivetrain Function
     public Drivetrain() {
-        //Encoder 
-        leftDriveEncoder.setMinRate(0.03); //sets the rate in ft/s that determines if the robot is stopped or not
-        rightDriveEncoder.setMinRate(0.03); //sets the rate in ft/s that determines if the robot is stopped or not
 
-        leftDriveEncoder.setDistancePerPulse(0.006); //scales the encoder value to 1ft = ~1
-        rightDriveEncoder.setDistancePerPulse(0.006);//scales the encoder value to 1ft = ~1
-
-        leftDriveEncoder.setMaxPeriod(15); //sets the max speed the robot can go to be considered moving.
-        rightDriveEncoder.setMaxPeriod(15);//sets the max speed the robot can go to be considered moving.
+        leftDriveEncoder.setDistancePerPulse(2*((1/2048)* 6 * Math.PI)); //scales the encoder value to 1 = ~6in
+        rightDriveEncoder.setDistancePerPulse(2*((1/2048)* 6 * Math.PI));//scales the encoder value to 1 = ~6in
 
         //gyro.configFactoryDefault();
 
@@ -70,7 +64,7 @@ public class Drivetrain extends Subsystem {
     }
     public void lockRobotInPositionn(){driveRobotToTargetWithEncoders(0, 0);}
     public void driveRobotToTargetWithEncoders(double targetL, double targetR){
-        
+
         //Localization of Encoder Distances scaled to 1ft = ~1
         double LED = getLeftEncoderDistance();
         double RED = getRightEncoderDistance();

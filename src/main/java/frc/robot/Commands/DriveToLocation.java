@@ -32,15 +32,21 @@ public class DriveToLocation extends Command {
   @Override
   protected void execute() {
    
-  while((Math.abs(Robot.drivetrain.getLeftEncoderDistance()) < Math.abs(TarL) || Math.abs(Robot.drivetrain.getLeftEncoderDistance()) < Math.abs(TarR)))  {
     Robot.drivetrain.driveRobotToTargetWithEncoders(TarL, TarR);
-    } 
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
-    return false;
+  protected boolean isFinished() { 
+    
+    if(Math.abs(Robot.drivetrain.getLeftEncoderDistance()) > Math.abs(TarL) && Math.abs(Robot.drivetrain.getRightEncoderDistance()) > Math.abs(TarR)){
+
+      return true;
+      
+    }
+    else{return false;}
+
   }
 
   // Called once after isFinished returns true

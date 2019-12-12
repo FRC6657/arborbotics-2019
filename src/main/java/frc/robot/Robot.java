@@ -60,14 +60,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    //Localization of Encoder Distances scaled to 1ft = ~1
-    double LED = drivetrain.getLeftEncoderDistance();
-    double RED = drivetrain.getRightEncoderDistance();
-    //Gets the motor power that is scaled based on how far away the encoders are from the target
-    double leftDriveSpeed = drivetrain.scaleLeftSpeedWithEncoders(5,4,0.7);  //Value In Constructor is Target
-    double rightDriveSpeed = drivetrain.scaleRightSpeedWithEncoders(5,4,0.7);//Value In Constructor is Target
-
-    drivetrain.Drive(leftDriveSpeed, rightDriveSpeed);
+    drivetrain.driveRobotToTargetWithEncoders(5, 5); //Drive forward 5 ft
 
   }
   //This code runs when TeleOp is started
