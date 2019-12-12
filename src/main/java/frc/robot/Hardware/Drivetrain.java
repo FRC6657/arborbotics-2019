@@ -28,8 +28,8 @@ public class Drivetrain extends Subsystem {
     //Drivetrain Function
     public Drivetrain() {
 
-        leftDriveEncoder.setDistancePerPulse(2*((1/2048)* 6 * Math.PI)); //scales the encoder value to 1 = ~6in
-        rightDriveEncoder.setDistancePerPulse(2*((1/2048)* 6 * Math.PI));//scales the encoder value to 1 = ~6in
+        leftDriveEncoder.setDistancePerPulse(((1/2048)* 6 * Math.PI)); //scales the encoder value to 1 = ~6in
+        rightDriveEncoder.setDistancePerPulse(((1/2048)* 6 * Math.PI));//scales the encoder value to 1 = ~6in
 
         //gyro.configFactoryDefault();
 
@@ -154,7 +154,7 @@ public class Drivetrain extends Subsystem {
         double maxSpeed = topSpeed;
         double target = targetPos;
         double h = (target - stopZone);
-        double a = 1/(Math.pow((stopZone),2));
+        double a = maxSpeed/(Math.pow((stopZone),2));
 
         double speed = -a * Math.pow((distance - h),2) + maxSpeed;
         
@@ -171,7 +171,7 @@ public class Drivetrain extends Subsystem {
         double maxSpeed = topSpeed;
         double target = targetPos;
         double h = (target - stopZone);
-        double a = 1/(Math.pow((stopZone),2));
+        double a = maxSpeed/(Math.pow((stopZone),2));
 
         double speed = -a * Math.pow((distance - h),2) + maxSpeed;
 
