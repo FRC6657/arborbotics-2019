@@ -9,7 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.Doubles;
+import frc.robot.Commands.DriveToLocation;
 import frc.robot.Hardware.Carriage;
 import frc.robot.Hardware.Drivetrain;
 import frc.robot.Hardware.Lift;
@@ -18,7 +18,6 @@ import frc.robot.Hardware.OI;
 
 //import frc.robot.PID.PIDDrivetrain;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import frc.robot.Commands.*;
 
 //Main Code File For the Robot
 public class Robot extends TimedRobot {
@@ -52,7 +51,7 @@ public class Robot extends TimedRobot {
   //This code runs when autonomous is started
   @Override
   public void autonomousInit() {
-    drivetrain.ResetEncoders();
+    drivetrain.reset();
     leftDirection = 0;
     rightDirection = 0;
   }
@@ -60,12 +59,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    drivetrain.driveRobotToTargetWithEncoders(5, 5); //Drive forward 5 ft
+    drivetrain.driveRobotToTargetWithEncoders(10, 2, 0.25); //Drive forward 5 ft
 
   }
   //This code runs when TeleOp is started
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {drivetrain.reset();}
   //This code is a loop that runs when TeleOp is happening
   @Override
   public void teleopPeriodic() {
@@ -88,7 +87,6 @@ public class Robot extends TimedRobot {
     //Prints the X and Y accelerometer Values No Z Because why would we ever need it
     SmartDashboard.putString("Rio Accelerometer Value: X: ", accel.getX() + " Y: " + accel.getY());
     //This allows us to set a custom value for the robot to go to
-    SmartDashboard.putData("Drive To Location: ",new DriveToLocation(drivetrain.shuffleboardGetY(),drivetrain.shuffleboardGetX()));//Drive(F/B, R/L) Direction is same as on coordinate plane
     SmartDashboard.putNumber("LeftDirection", leftDirection);
     SmartDashboard.putNumber("RightDirection", rightDirection);
     //SmartDashboard.putBoolean("LeftInTollerance", LeftInZone);

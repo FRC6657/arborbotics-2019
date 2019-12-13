@@ -11,9 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.*;
-import frc.robot.Robot;
 import frc.robot.Constants.*;
 
 

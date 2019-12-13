@@ -1,14 +1,15 @@
 package frc.robot.Hardware;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Robot;
-import frc.robot.Constants.*;
+import frc.robot.Constants.Doubles;
+import frc.robot.Constants.Ports;
+import frc.robot.Constants.Speeds;
 //The comment in the class title is for if we ever get a pid source
 public class Drivetrain extends Subsystem {
     //Encoder Declarations
@@ -21,15 +22,17 @@ public class Drivetrain extends Subsystem {
     private WPI_TalonSRX motorBR = new WPI_TalonSRX(Ports.backRightMotor.value); //Declares the Back Right Motor
     //private PigeonIMU gyro = new PigeonIMU(Ports.gyro.value);
 
-    private ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-    private NetworkTableEntry xPositionEntry = tab.add("X:", 0).getEntry();
+    private ShuffleboardTab tab = Shuffleboard.getTab("SmartDashboard");
+    private NetworkTableEntry xPositionEntry = tab.add("X: ", 0).getEntry();
     private NetworkTableEntry yPositionEntry = tab.add("Y: ", 0).getEntry();
+    
 
     //Drivetrain Function
     public Drivetrain() {
 
-        leftDriveEncoder.setDistancePerPulse(((1/2048)* 6 * Math.PI)); //scales the encoder value to 1 = ~6in
-        rightDriveEncoder.setDistancePerPulse(((1/2048)* 6 * Math.PI));//scales the encoder value to 1 = ~6in
+        double distancePerPulse = ((1/2048)*6*Math.PI);
+        leftDriveEncoder.setDistancePerPulse(0.00919921875); //scales the encoder value to 1 = ~6in
+        rightDriveEncoder.setDistancePerPulse(0.00919921875);//scales the encoder value to 1 = ~6in
 
         //gyro.configFactoryDefault();
 
@@ -62,17 +65,14 @@ public class Drivetrain extends Subsystem {
             Drive(leftPower,rightPower);
         }
     }
-    public void lockRobotInPositionn(){driveRobotToTargetWithEncoders(0, 0);}
-    public void driveRobotToTargetWithEncoders(double targetL, double targetR){
+    public void lockRobotInPositionn(){driveRobotToTargetWithEncoders(0, 0, 0);}
+    public void driveRobotToTargetWithEncoders(double target,double stopTime,double maxSpeed){
 
-        //Localization of Encoder Distances scaled to 1ft = ~1
-        double LED = getLeftEncoderDistance();
-        double RED = getRightEncoderDistance();
         //Gets the motor power that is scaled based on how far away the encoders are from the target
-        double leftDriveSpeed = scaleLeftSpeedWithEncoders(5,4,0.7);  //Value In Constructor is Target
-        double rightDriveSpeed = scaleRightSpeedWithEncoders(5,4,0.7);//Value In Constructor is Target
+        double leftDriveSpeed = scaleLeftSpeedWithEncoders(target,stopTime,maxSpeed);  //Value In Constructor is Target
+        double rightDriveSpeed = scaleRightSpeedWithEncoders(target,stopTime,maxSpeed);//Value In Constructor is Target
 
-        Drive(leftDriveSpeed, rightDriveSpeed);
+        Drive(leftDriveSpeed*maxSpeed, rightDriveSpeed*maxSpeed);
 
     }
         
@@ -99,7 +99,7 @@ public class Drivetrain extends Subsystem {
     }
     //Code to reset the encoders on each side of the drivetrain
     public void ResetEncoders(){leftDriveEncoder.reset(); rightDriveEncoder.reset();} 
-
+    public void reset(){ResetEncoders();Stop();}
     public void driveRobotToCoordinate(double x, double y) throws InterruptedException {
 
         double angle = Math.atan(x/y);
@@ -112,7 +112,7 @@ public class Drivetrain extends Subsystem {
             else{if(y < 0 & x > 0){gyroTurn(-180 + angle);}
             else{gyroTurn(0);}}}}
             Thread.sleep(5);
-            driveRobotToTargetWithEncoders(hDistance, hDistance);
+            driveRobotToTargetWithEncoders(hDistance, 1, 0.5);
         }
     }
     public void gyroOverflowPrevention(){if((gyroGetAngle() > 360) || (gyroGetAngle() < -360)){gyroReset();}}
@@ -148,38 +148,54 @@ public class Drivetrain extends Subsystem {
         else{return Stop;}}}}
     }
     //Code to scale motor speed based on how far off the encoders position is relative to the target position
-    public double scaleLeftSpeedWithEncoders(double targetPos,double stopDistance,double topSpeed) {
+    public Double scaleLeftSpeedWithEncoders(double targetPos,double stopDistance,double topSpeed) {
         double stopZone = stopDistance;
         double distance = getRightEncoderDistance();
         double maxSpeed = topSpeed;
         double target = targetPos;
         double h = (target - stopZone);
-        double a = maxSpeed/(Math.pow((stopZone),2));
+        double a = maxSpeed/(stopZone*stopZone);
 
-        double speed = -a * Math.pow((distance - h),2) + maxSpeed;
-        
-        if(distance < h){if(targetPos < 0){speed = -1;}else{speed = 1;}}
+        Double speed = -a * ((distance - h)*(distance-h)) + maxSpeed;
 
-        if(targetPos < -Doubles.KTR){return -speed;}
-        else{if(targetPos > Doubles.KTR){return speed;}
-        else{return speed * 0;}}
+        if(getLeftEncoderDistance()>target){return 0.0;}
+
+        if(distance < h){
+            if(targetPos < -Doubles.KTR){return -1.0;}
+            else{if(targetPos > Doubles.KTR){return 1.0;}
+            else{return 0.0;}}
+        }
+        else if(distance > h){
+            if(targetPos < -Doubles.KTR){return -speed;}
+            else{if(targetPos > Doubles.KTR){return speed;}
+            else{reset();return 0.0;}}
+        } 
+        else{return null;}
     }   
-    public double scaleRightSpeedWithEncoders(double targetPos, double stopDistance, double topSpeed){
+    public Double scaleRightSpeedWithEncoders(double targetPos, double stopDistance, double topSpeed){
 
         double stopZone = stopDistance;
         double distance = getRightEncoderDistance();
         double maxSpeed = topSpeed;
         double target = targetPos;
         double h = (target - stopZone);
-        double a = maxSpeed/(Math.pow((stopZone),2));
+        double a = maxSpeed/(stopZone*stopZone);
 
-        double speed = -a * Math.pow((distance - h),2) + maxSpeed;
+        Double speed = -a * ((distance - h)*(distance-h)) + maxSpeed;
+        
+        if(getRightEncoderDistance()>target){return 0.0;}
 
-        if(distance < h){if(targetPos < 0){speed = -1;}else{speed = 1;}}
-
-        if(targetPos < -Doubles.KTR){return -speed;}
-        else{if(targetPos > Doubles.KTR){return speed;}
-        else{return speed * 0;}}
+        if(distance < h){
+            if(targetPos < -Doubles.KTR){return -1.0;}
+            else{if(targetPos > Doubles.KTR){return 1.0;}
+            else{return speed * 0;}}
+        }
+        else if(distance > h){
+            if(targetPos < -Doubles.KTR){return -speed;}
+            else{if(targetPos > Doubles.KTR){return speed;}
+            else{reset();return speed * 0;}}
+        } 
+        else{return null;}
 
     }
 

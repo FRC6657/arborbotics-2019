@@ -8,6 +8,6 @@ public interface Doubles {
     public double driveSpeedMod = 0.7; //Drive Speed Modifier
     public double turnSpeedMod = 0.7; //Turn Speed Modifier
 
-    public double KTR = 0.1; //Kick the robot testing encoder deadbands
+    public double KTR = 0.2; //Kick the robot testing encoder deadbands
     
 }

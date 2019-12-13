@@ -12,15 +12,18 @@ import frc.robot.Robot;
 
 public class DriveToLocation extends Command {
 
-  Double TarL;
-  Double TarR;
+  double Target;
+  double StopDistance;
+  double Speed;
 
-  public DriveToLocation(double tarL, double tarR) {
+  public DriveToLocation(double target,double stopDistance,double speed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);
-    TarL = tarL;
-    TarR = tarR;
+    Target = target;
+    StopDistance = stopDistance;
+    Speed = speed;
+    
   }
   
   // Called just before this Command runs the first time
@@ -32,7 +35,7 @@ public class DriveToLocation extends Command {
   @Override
   protected void execute() {
    
-    Robot.drivetrain.driveRobotToTargetWithEncoders(TarL, TarR);
+    Robot.drivetrain.driveRobotToTargetWithEncoders(Target,StopDistance,Speed);
   
   }
 
@@ -40,7 +43,7 @@ public class DriveToLocation extends Command {
   @Override
   protected boolean isFinished() { 
     
-    if(Math.abs(Robot.drivetrain.getLeftEncoderDistance()) > Math.abs(TarL) && Math.abs(Robot.drivetrain.getRightEncoderDistance()) > Math.abs(TarR)){
+    if(Math.abs(Robot.drivetrain.getLeftEncoderDistance()) > Math.abs(Target) && Math.abs(Robot.drivetrain.getRightEncoderDistance()) > Math.abs(Target)){
 
       return true;
       
